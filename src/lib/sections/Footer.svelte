@@ -1,291 +1,283 @@
+<script lang="ts">
+	const footerDate = String(new Date().getFullYear());
+</script>
+
 <footer id="footer" class="">
-  <div class="footer-wrapper">
-    <div class="top-footer-content">
-      <div class="left-footer-content">
-        <div class="h-8">
-          <img
-            src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/header/mindplexTxt.png"
-            alt="Logo"
-            class="footer-logo"
-          />
-        </div>
-        <p class="footer-desc text-base">
-          Mindplex is an AI startup, a futuristic media platform, and a network
-          providing a dynamic space for science enthusiasts, creators,
-          influencers, and media aficionados to connect and collaborate
-        </p>
-      </div>
+	<div class="footer-wrapper">
+		<div class="top-footer-content">
+			<div class="left-footer-content">
+				<div class="h-8">
+					<img
+						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/header/mindplexTxt.png"
+						alt="Logo"
+						class="footer-logo"
+					/>
+				</div>
+				<p class="footer-desc text-base">
+					Mindplex is an AI startup, a futuristic media platform, and a network providing a dynamic
+					space for science enthusiasts, creators, influencers, and media aficionados to connect and
+					collaborate
+				</p>
+			</div>
 
-      <div class="center-footer-content">
-        <h1 class="mb-2">Quick links</h1>
-        <div>
-          <ul>
-            <li class="text-base">
-              <a href="https://magazine.mindplex.ai/terms/">Terms and Privacy</a
-              >
-            </li>
-            <li class="text-base">
-              <a href="https://magazine.mindplex.ai/news/">News</a>
-            </li>
-            <li class="text-base">
-              <a href="https://magazine.mindplex.ai/coming-soon/"
-                >Content Factory</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="center-footer-content">
-        <h1 class="mb-2">About us</h1>
-        <div>
-          <ul>
-            <li>
-              <a
-                class="text-base"
-                href="https://magazine.mindplex.ai/coming-soon/?type=newsletter"
-                >Newsletter</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="right-footer-content">
-        <h1 class="mb-2">Contact</h1>
-        <div>
-          <ul>
-            <li class="text-base cursor-pointer">
-              <span id="openModalFooter">Team</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="bottom-footer-content">
-      <div class="social-icons flex">
-        <a href="https://twitter.com/Mindplex_AI" target="_blank">
-          <img
-            src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/twitter.svg"
-            alt="twitter"
-          />
-        </a>
-        <a href=" https://www.facebook.com/MindplexAI" target="_blank">
-          <img
-            src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/facebook.svg"
-            alt="facebook"
-          />
-        </a>
-        <a
-          href="https://www.youtube.com/channel/UCUwdBITXX-aDXgt2ZmBD-IA"
-          target="_blank"
-        >
-          <img
-            src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/youtube.svg"
-            alt="youtube"
-          />
-        </a>
+			<div class="center-footer-content">
+				<h1 class="mb-2">Quick links</h1>
+				<div>
+					<ul>
+						<li class="text-base">
+							<a href="https://magazine.mindplex.ai/terms/">Terms and Privacy</a>
+						</li>
+						<li class="text-base">
+							<a href="https://magazine.mindplex.ai/news/">News</a>
+						</li>
+						<li class="text-base">
+							<a href="https://magazine.mindplex.ai/coming-soon/">Content Factory</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="center-footer-content">
+				<h1 class="mb-2">About us</h1>
+				<div>
+					<ul>
+						<li>
+							<a class="text-base" href="https://magazine.mindplex.ai/coming-soon/?type=newsletter"
+								>Newsletter</a
+							>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="right-footer-content">
+				<h1 class="mb-2">Contact</h1>
+				<div>
+					<ul>
+						<li class="text-base cursor-pointer">
+							<span id="openModalFooter">Team</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="bottom-footer-content">
+			<div class="social-icons flex">
+				<a href="https://twitter.com/Mindplex_AI" target="_blank">
+					<img
+						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/twitter.svg"
+						alt="twitter"
+					/>
+				</a>
+				<a href=" https://www.facebook.com/MindplexAI" target="_blank">
+					<img
+						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/facebook.svg"
+						alt="facebook"
+					/>
+				</a>
+				<a href="https://www.youtube.com/channel/UCUwdBITXX-aDXgt2ZmBD-IA" target="_blank">
+					<img
+						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/youtube.svg"
+						alt="youtube"
+					/>
+				</a>
 
-        <a href="https://www.linkedin.com/company/79915299/" target="_blank">
-          <img
-            src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/linkedin.svg"
-            alt="linkedin"
-            width="20px"
-            style="padding-bottom: 5px"
-          />
-        </a>
-        <a href="https://t.me/mindplex_ai" target="_blank">
-          <img
-            src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/telegram.svg"
-            alt="telegram"
-          />
-        </a>
-      </div>
-      <p class="footer-copy">
-        © <span id="date-footer"></span> Mindplex all rights reserved
-      </p>
-    </div>
-  </div>
+				<a href="https://www.linkedin.com/company/79915299/" target="_blank">
+					<img
+						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/linkedin.svg"
+						alt="linkedin"
+						width="20px"
+						style="padding-bottom: 5px"
+					/>
+				</a>
+				<a href="https://t.me/mindplex_ai" target="_blank">
+					<img
+						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/telegram.svg"
+						alt="telegram"
+					/>
+				</a>
+			</div>
+			<p class="footer-copy">
+				© <span>{footerDate}</span> Mindplex all rights reserved
+			</p>
+		</div>
+	</div>
 </footer>
 
-<script>
-  const footerDate = document.querySelector("#date-footer");
-  footerDate && (footerDate.textContent = String(new Date().getFullYear()));
-</script>
 <style>
-  .center-footer-content ul,
-  .right-footer-content ul {
-    padding: 0;
-  }
-  footer {
-    background-color: #050e24;
-  }
-  .footer-wrapper {
-    color: var(--color-white-universal);
-    padding: 30px 30px;
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    flex-direction: column;
-    padding-bottom: 0;
-  }
+	.center-footer-content ul,
+	.right-footer-content ul {
+		padding: 0;
+	}
+	footer {
+		background-color: #050e24;
+	}
+	.footer-wrapper {
+		color: var(--color-white-universal);
+		padding: 30px 30px;
+		display: flex;
+		flex-wrap: wrap;
+		position: relative;
+		flex-direction: column;
+		padding-bottom: 0;
+	}
 
-  .top-footer-content {
-    padding-bottom: 27px;
-    border-bottom: 1px solid var(--color-gray-200);
-    display: flex;
-    flex-wrap: wrap;
-    min-width: 250px;
-  }
+	.top-footer-content {
+		padding-bottom: 27px;
+		border-bottom: 1px solid var(--color-gray-200);
+		display: flex;
+		flex-wrap: wrap;
+		min-width: 250px;
+	}
 
-  .left-footer-content {
-    display: flex;
-    flex-direction: column;
-    flex: 2;
-    margin-left: 20px;
-  }
+	.left-footer-content {
+		display: flex;
+		flex-direction: column;
+		flex: 2;
+		margin-left: 20px;
+	}
 
-  .top-footer-content > * {
-    margin-right: 10px;
-  }
+	.top-footer-content > * {
+		margin-right: 10px;
+	}
 
-  .footer-logo {
-    margin-bottom: 21px;
-    width: 100px;
-  }
+	.footer-logo {
+		margin-bottom: 21px;
+		width: 100px;
+	}
 
-  .footer-desc {
-    color: rgba(168, 164, 164, 1);
-    font-size: 0.8rem;
-    max-width: 533px;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-  }
+	.footer-desc {
+		color: rgba(168, 164, 164, 1);
+		font-size: 0.8rem;
+		max-width: 533px;
+		font-style: normal;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 17px;
+	}
 
-  .center-footer-content {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-width: 200px;
-  }
+	.center-footer-content {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		min-width: 200px;
+	}
 
-  .right-footer-content {
-    margin-right: 215px;
-  }
+	.right-footer-content {
+		margin-right: 215px;
+	}
 
-  .center-footer-content h1,
-  .right-footer-content h1 {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 20px;
-    color: rgba(168, 164, 164, 1);
-  }
+	.center-footer-content h1,
+	.right-footer-content h1 {
+		font-style: normal;
+		font-weight: 700;
+		font-size: 16px;
+		line-height: 20px;
+		color: rgba(168, 164, 164, 1);
+	}
 
-  .center-footer-content ul,
-  .right-footer-content ul {
-    font-size: 0.8rem;
-    color: rgba(168, 164, 164, 1);
-  }
+	.center-footer-content ul,
+	.right-footer-content ul {
+		font-size: 0.8rem;
+		color: rgba(168, 164, 164, 1);
+	}
 
-  .center-footer-content ul,
-  .right-footer-content ul {
-    list-style: none;
-  }
+	.center-footer-content ul,
+	.right-footer-content ul {
+		list-style: none;
+	}
 
-  .bottom-footer-content {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin: 16px 0;
-  }
+	.bottom-footer-content {
+		display: flex;
+		flex-direction: row-reverse;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		margin: 16px 0;
+	}
 
-  .footer-copy {
-    color: rgba(168, 164, 164, 1);
-  }
+	.footer-copy {
+		color: rgba(168, 164, 164, 1);
+	}
 
-  .social-icons > * {
-    margin: 0 0.5rem;
-    width: 1.5rem;
-  }
+	.social-icons > * {
+		margin: 0 0.5rem;
+		width: 1.5rem;
+	}
 
-  @media screen and (max-width: 768px) {
-    .top-footer-content {
-      display: flex;
-      flex-direction: row;
-    }
+	@media screen and (max-width: 768px) {
+		.top-footer-content {
+			display: flex;
+			flex-direction: row;
+		}
 
-    .footer-wrapper {
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: space-between;
-    }
+		.footer-wrapper {
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+		}
 
-    .footer-desc {
-      color: #a8a4a4;
-      font-family: Barlow;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-      width: 97px;
-    }
+		.footer-desc {
+			color: #a8a4a4;
+			font-family: Barlow;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: normal;
+			width: 97px;
+		}
 
-    .center-footer-content h1,
-    .right-footer-content h1 {
-      color: #e3e1e1;
-      font-family: Barlow;
-      font-size: 13px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 20px;
-      margin-bottom: 15px;
-    }
+		.center-footer-content h1,
+		.right-footer-content h1 {
+			color: #e3e1e1;
+			font-family: Barlow;
+			font-size: 13px;
+			font-style: normal;
+			font-weight: 700;
+			line-height: 20px;
+			margin-bottom: 15px;
+		}
 
-    .center-footer-content ul,
-    .right-footer-content ul {
-      color: #a8a4a4;
-      font-family: Barlow;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 12px;
-    }
+		.center-footer-content ul,
+		.right-footer-content ul {
+			color: #a8a4a4;
+			font-family: Barlow;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 12px;
+		}
 
-    .right-footer-content {
-      margin-right: 17px;
-    }
-    .center-footer-content {
-      min-width: 80px;
-    }
+		.right-footer-content {
+			margin-right: 17px;
+		}
+		.center-footer-content {
+			min-width: 80px;
+		}
 
-    .left-footer-content {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      margin-left: 20px;
-      margin-right: 54px;
-    }
+		.left-footer-content {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			margin-left: 20px;
+			margin-right: 54px;
+		}
 
-    .footer-copy {
-      color: #7a7979;
-      font-family: Barlow;
-      font-size: 9px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
+		.footer-copy {
+			color: #7a7979;
+			font-family: Barlow;
+			font-size: 9px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: normal;
+		}
 
-    .bottom-footer-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+		.bottom-footer-content {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
-    .social-icons > * {
-      width: auto;
-    }
-  }
+		.social-icons > * {
+			width: auto;
+		}
+	}
 </style>

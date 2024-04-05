@@ -40,7 +40,6 @@
 	"type": "module",
 	"dependencies": {
 		"@splinetool/runtime": "^1.0.91",
-		"bits-ui": "^0.21.2",
-		"rehype": "^13.0.1"
+		"bits-ui": "^0.21.2"
 	}
 }
