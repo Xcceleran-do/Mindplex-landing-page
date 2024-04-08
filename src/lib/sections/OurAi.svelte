@@ -1,7 +1,7 @@
----
-import CardLayout from "../../layouts/CardLayout.astro";
-const cardContent = await Astro.glob("../../content/ourAi/*.md");
----
+<script>
+// import CardLayout from "../../layouts/CardLayout.astro";
+import { ourAi } from '$lib/content/index';
+</script>
 
 <section class="our_ai_section my-32" id="ourAi">
   <div class="our_ai_section__header flex flex-col gap-3">
@@ -10,13 +10,12 @@ const cardContent = await Astro.glob("../../content/ourAi/*.md");
     <img src="/line.svg" alt="line" class="mb-6 w-64" />
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {
-      cardContent.map((card) => {
-        const { title, image, description } = card.frontmatter;
-        return (
+    {#each ourAi as { title, image,description}}
+   
+      
           <div class="card cursor-pointer transition-all ease-in-out duration-300 bg-black bg-opacity-25 rounded-3xl flex justify-center items-center relative max-w-sm min-h-[24rem]">
             <div class=" bg-no-repeat bg-center opacity-20 bg-cover w-full h-full absolute">
-              <img src={image} class="w-full h-full card-img" />
+              <img src={image} alt="" class="w-full h-full card-img" />
             </div>
 
             <div class="card-heading flex justify-center items-center z-50">
@@ -32,9 +31,7 @@ const cardContent = await Astro.glob("../../content/ourAi/*.md");
               <p class="text-sm">{description}</p>
             </div>
           </div>
-        );
-      })
-    }
+          {/each}
   </div>
 </section>
 

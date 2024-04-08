@@ -1,8 +1,8 @@
----
-import GlowingBtn from "../GlowingBtn.astro";
----
+<script>
+import GlowingBtn from '$lib/ui/GlowingBtn.svelte';
+</script>
 
-<section class="join_section">
+<section class="join_section mt-24">
   <div class="join_section__content_wrapper text-center">
     <div
       class="top_wrapper flex flex-col md:flex-row justify-center items-center gap-10"
