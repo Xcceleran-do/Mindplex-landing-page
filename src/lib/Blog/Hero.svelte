@@ -1,0 +1,155 @@
+<script>
+	export let id = '';
+	export let post_slug = '';
+	export let title = '';
+	export let description = '';
+	export let photo_url = '';
+	import GlowingBtn from '$lib/ui/GlowingBtn.svelte';
+
+	const url = `/blog/${post_slug}`;
+</script>
+
+<section class="hero justify-around">
+	<div class="hero__background"></div>
+	<div class="hero__background__decoration"></div>
+	<div class="hero__content">
+		<h1 class="hero__title">{title}</h1>
+		<div class="hero__description">
+			<p>{@html description}</p>
+		</div>
+		<div class="hero__cta">
+			<GlowingBtn href={url} text="Read more" fontSize="20px" />
+		</div>
+	</div>
+	<div class="hero__image m-auto md:m-0">
+		<img src={photo_url} alt="description" />
+	</div>
+</section>
+
+<style>
+	.hero {
+		display: flex;
+		justify-content: space-between;
+		flex-direction: column-reverse;
+		/* align-items: center; */
+		margin-top: 14px;
+	}
+
+	.hero__content {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		margin-bottom: 15px;
+		width: 100%;
+		max-width: 745px;
+		text-align: center;
+	}
+	.hero__title {
+		font-weight: 700;
+		/* backdrop-filter: blur(10px); */
+		font-size: 26px;
+		line-height: 36px;
+	}
+	.hero__title span {
+		color: #49ffb3;
+	}
+	.hero__text {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+	}
+	.hero__description {
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 34px;
+		margin-bottom: 30px;
+		margin-top: 30px;
+	}
+	.hero__cta {
+		display: flex;
+		align-items: center;
+		align-self: center;
+		cursor: pointer;
+	}
+	.hero__cta button {
+		background: #ff8b92;
+		border-radius: 40px;
+		border: none;
+		padding: 4px 23px;
+		color: #343045;
+		font-weight: 700;
+		font-size: 16px;
+		line-height: 28px;
+		cursor: pointer;
+	}
+	.hero_cta_img {
+		display: none;
+	}
+	.hero__image img {
+		width: 100%;
+		max-width: 270px;
+	}
+	@media screen and (min-width: 790px) {
+		.hero {
+			display: flex;
+			justify-content: space-between;
+			flex-direction: column-reverse;
+		}
+
+		.hero__image img {
+			width: 100%;
+			max-width: 715px;
+			border-radius: 10px;
+		}
+		.hero_cta_img {
+			display: block;
+		}
+	}
+	@media screen and (min-width: 952px) {
+		.hero {
+			flex-direction: row;
+			margin-bottom: 50px;
+		}
+		.hero__content {
+			text-align: left;
+			background: none;
+		}
+		.hero__cta {
+			align-self: baseline;
+		}
+		.hero__image {
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+			max-width: 500px;
+			max-height: 570px;
+			pointer-events: none;
+		}
+		.hero__title {
+			font-size: 46px;
+			line-height: 56px;
+		}
+		.hero__background {
+			position: absolute;
+			background: url('/hero_ellipse.svg');
+			width: 100%;
+			height: 109%;
+			background-repeat: no-repeat;
+			right: 0;
+			top: -67px;
+			max-width: 797px;
+			z-index: -1;
+		}
+		.hero__background__decoration {
+			position: absolute;
+			/* background: url("/hero_blurred.svg"); */
+			width: 100%;
+			height: 115%;
+			background-repeat: no-repeat;
+			right: 30%;
+			top: 40px;
+			max-width: 797px;
+			z-index: -1;
+		}
+	}
+</style>

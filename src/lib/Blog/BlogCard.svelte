@@ -1,0 +1,91 @@
+<script lang='ts'>
+    export let url='';
+    export let title='';
+    export let image='';
+    export let description='';
+    export let created_at='';
+ 
+import { formatTimeAgo } from "$lib/utils/fomatAgo";
+
+function cropText(text: string, limit: number) {
+  const words = text.split(" ");
+  return words.length > limit ? words.slice(0, limit).join(" ") + "..." : text;
+}
+
+function stripHtml(dirtyString: string) {
+  return dirtyString.replace(/(<([^>]+)>)/gi, "");
+}
+</script>
+
+
+
+<a class="card" href={`/blog/${url}`}>
+  <div class="left">
+    <span>{formatTimeAgo(created_at)}</span>
+    <h1 class="mb-1 font-bold">{cropText(title, 10)}</h1>
+    <div class="mt-2 font-extralight">
+      {stripHtml(cropText(description, 10))}
+    </div>
+  </div>
+  <img class="card-img" src={image} alt="title" />
+</a>
+
+<style>
+  .card {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(
+      180deg,
+      rgba(67, 61, 96, 0.25) 0%,
+      rgba(73, 255, 179, 0.25) 100%
+    );
+    border-radius: 10px;
+    max-width: 580px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .card-img {
+    width: 100%;
+    max-width: 40%;
+    /* height: 274px; */
+    border-radius: 0px 10px 10px 0px;
+  }
+  .left {
+    display: flex;
+    flex-direction: column;
+    padding: 26px 13px;
+    word-wrap: break-word;
+  }
+  .left span {
+    font-size: 15px;
+    color: var(--gray-6, #f2f2f2);
+  }
+  .left h1 {
+    font-size: 20px;
+    margin-top: 20px;
+  }
+  .left p {
+    font-size: 14px;
+    margin-top: 20px;
+    font-family: Montserrat;
+    font-weight: 400;
+    color: var(--gray-6, #f2f2f2);
+  }
+
+  @media screen and (max-width: 1127px) {
+    .card {
+      margin: auto;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .card {
+      display: flex;
+      flex-direction: column-reverse;
+      margin: auto;
+    }
+    .card-img {
+      max-width: 100%;
+    }
+  }
+</style>
