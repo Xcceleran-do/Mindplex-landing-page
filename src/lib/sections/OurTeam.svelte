@@ -1,13 +1,15 @@
----
-const teams = await Astro.glob("../../content/team/*.md");
----
+<script>
+// const teams = await Astro.glob("../../content/team/*.md");
+
+import {ourTeam} from '$lib/content/ourTeam'
+</script>
 
 <section class="our_team my-32" id="team">
   <div class="our_team_text">
     <div
       class="flex items-center justify-center gap-4 w-full overflow-hidden mb-8"
     >
-      <img src="/line.svg" alt=" " class="transform rotate-180" />
+      <img src="/line.svg" alt=" " class="transform rotate-180 max-w-48" />
       <h2 class="text-lg min-w-fit md:text-4xl uppercase font-semibold">
         Our team
       </h2>
@@ -22,11 +24,8 @@ const teams = await Astro.glob("../../content/team/*.md");
   <div
     class="grid grid-cols-1 mt-10 gap-x-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 lg:gap-x-12 gap-y-8"
   >
-    {
-      teams.map((team) => {
-        const { name, position, imageUrl, socialLink, customImageStyle } =
-          team.frontmatter;
-        return (
+   
+        { #each ourTeam as {name, position, imageUrl, socialLink, customImageStyle} } 
           <div class="relative flex flex-col items-center team-card  md:w-84 xl:w-96 h-72 transition-all ease-in-out duration-300">
             <img
               src={imageUrl}
@@ -52,9 +51,7 @@ const teams = await Astro.glob("../../content/team/*.md");
               </div>
             </div>
           </div>
-        );
-      })
-    }
+      {/each}
   </div>
 </section>
 

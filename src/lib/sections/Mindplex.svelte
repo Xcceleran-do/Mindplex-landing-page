@@ -1,3 +1,5 @@
+
+
 <section class="mt-14 flex flex-col lg:flex-row items-center" id="about">
 	<img
 		src="/mindplex_ai.png"
