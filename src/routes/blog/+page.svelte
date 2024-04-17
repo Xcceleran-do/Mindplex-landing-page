@@ -7,7 +7,6 @@
 
 	import type { BlogContent } from '$lib/types/blog';
 	export let data: PageData;
-	console.log(data);
 
 	const blogs = data.blogs.blogs;
 
