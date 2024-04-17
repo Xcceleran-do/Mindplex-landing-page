@@ -1,10 +1,12 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+
 	import { MetaTags, JsonLd } from 'svelte-meta-tags';
 
 	export let data: PageData;
 	console.log(data);
 	const blog = data.blogs.blogs;
+
 
 	const pageTitle = blog[0]?.title.substring(0, 50);
 	const url = `http://localhost:5173/${blog[0]?.title}`;
@@ -42,6 +44,7 @@
 		imageAlt: 'blog image'
 	}}
 />
+
 
 <section class=" mx-96 my-24">
 	<div class="hero__background bg-[url('/hero_ellipse.svg') w-full"></div>

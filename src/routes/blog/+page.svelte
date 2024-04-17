@@ -4,7 +4,9 @@
 	import Hero from '$lib/Blog/Hero.svelte';
 	import BlogCard from '$lib/Blog/BlogCard.svelte';
 	import ResponsiveCards from '$lib/layout/ResponsiveCards.svelte';
+
 	import { MetaTags, JsonLd } from 'svelte-meta-tags';
+
 
 	import type { BlogContent } from '$lib/types/blog';
 	export let data: PageData;
@@ -13,6 +15,7 @@
 	const blogs = data.blogs.blogs;
 
 	const latestBlog = blogs ? blogs[0] : null;
+
 	console.log(latestBlog);
 	const pageTitle = latestBlog?.title.substring(0, 50);
 
@@ -51,6 +54,7 @@
 		imageAlt: 'blog image'
 	}}
 />
+
 <section class=" my-6 mx-20">
 	<div>
 		<Hero {...latestBlog} />
