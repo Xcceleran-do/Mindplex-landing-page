@@ -1,13 +1,6 @@
 <script lang="ts">
 	import Footer from '$lib/sections/Footer.svelte';
-	// import ModalForm from '$lib/Modal/ModalForm.svelte';
 	import Navbar from '$lib/sections/Navbar.svelte';
-	// export interface Props {
-	//   title: string;
-	// }
-
-	// const { title } = Astro.props;
-	export let title: string;
 </script>
 
 <section id="layout" class="">
