@@ -1,11 +1,9 @@
-<script>
-	export let id = '';
-	export let post_slug = '';
-	export let title = '';
-	export let description = '';
-	export let photo_url = '';
+<script lang="ts">
 	import GlowingBtn from '$lib/ui/GlowingBtn.svelte';
 
+	import type { BlogContent } from '$lib/types/blog';
+
+	const { id, description, title, photo_url, post_slug }: BlogContent = $props();
 	const url = `/blog/${post_slug}`;
 </script>
 
@@ -15,7 +13,7 @@
 	<div class="hero__content flex flex-col w-1/2 mr-36 gap-8">
 		<h1 class="hero__title text-4xl font-bold">{title}</h1>
 		<div class="hero__description">
-			<p>{@html description}</p>
+			{@html description}
 		</div>
 		<div class="hero__cta max-w-36">
 			<GlowingBtn href={url} text="Read more" fontSize="text-lg" />
