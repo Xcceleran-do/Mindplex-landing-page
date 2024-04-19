@@ -4,9 +4,8 @@
 	import Hero from '$lib/Blog/Hero.svelte';
 	import BlogCard from '$lib/Blog/BlogCard.svelte';
 	import ResponsiveCards from '$lib/layout/ResponsiveCards.svelte';
-
+	import Seo from '$lib/Seo.svelte';
 	import { MetaTags, JsonLd } from 'svelte-meta-tags';
-
 
 	import type { BlogContent } from '$lib/types/blog';
 	export let data: PageData;
@@ -20,39 +19,24 @@
 	const pageTitle = latestBlog?.title.substring(0, 50);
 
 	const pageDescription = latestBlog?.description.substring(0, 150);
+
 	const blogsWithoutFirstPost = blogs?.filter((blog: any) => blog.id !== latestBlog?.id);
+
+	function htmlToPlainText(html: any) {
+		// Create a temporary element
+		const tempElement = document.createElement('div');
+		// Set its innerHTML to the provided HTML
+		tempElement.innerHTML = html;
+		// Get the text content of the temporary element
+		return tempElement.textContent || tempElement.innerText || '';
+	}
 </script>
 
-<MetaTags
+<Seo
 	title={pageTitle}
-	titleTemplate="%s | Mindplex"
 	description={pageDescription}
-	canonical="http://localhost:5173/blog"
-	openGraph={{
-		type: 'website',
-		url: 'https://mindplex.ai/',
-		title: pageTitle,
-		description: pageDescription,
-		images: [
-			{
-				url: latestBlog.photo_url,
-				alt: 'mindplex',
-				width: 800,
-				height: 400,
-				secureUrl: '/mindplex_ai.png',
-				type: 'image/png'
-			}
-		]
-	}}
-	twitter={{
-		handle: '@handle',
-		site: '@mindplex',
-		cardType: 'summary',
-		title: pageTitle,
-		description: pageDescription,
-		image: latestBlog.photo_url,
-		imageAlt: 'blog image'
-	}}
+	canonicalUrl="http://localhost:5173/blog"
+	imageUrl={latestBlog.photo_url}
 />
 
 <section class=" my-6 mx-20">
