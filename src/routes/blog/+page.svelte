@@ -7,9 +7,8 @@
 	import Seo from '$lib/Seo.svelte';
 	import { MetaTags, JsonLd } from 'svelte-meta-tags';
 
-	import type { BlogContent } from '$lib/types/blog';
 	export let data: PageData;
-	console.log(data);
+
 
 	const blogs = data.blogs.blogs;
 
@@ -22,14 +21,7 @@
 
 	const blogsWithoutFirstPost = blogs?.filter((blog: any) => blog.id !== latestBlog?.id);
 
-	function htmlToPlainText(html: any) {
-		// Create a temporary element
-		const tempElement = document.createElement('div');
-		// Set its innerHTML to the provided HTML
-		tempElement.innerHTML = html;
-		// Get the text content of the temporary element
-		return tempElement.textContent || tempElement.innerText || '';
-	}
+
 </script>
 
 <Seo
