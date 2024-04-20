@@ -19,7 +19,7 @@
 	imageUrl={blog.photo_url}
 />
 
-<section class="">
+<section>
 	<div
 		class="hero__background absolute bg-[url('/hero_ellipse.svg')] w-full h-[109%] bg-no-repeat right-0 top-[-67px] max-w-[797px] z-[-1] hidden md:block"
 	></div>
