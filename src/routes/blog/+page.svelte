@@ -18,7 +18,7 @@
 		<div class="pb-4">
 			<ResponsiveCards gap="112px" width="580px">
 				{#each blogsWithoutFirstPost as { description, id, photo_url, title, post_slug, created_at }}
-					<BlogCard {title} {description} image={photo_url} url={post_slug} {created_at} />
+					<BlogCard {title} {description} image={photo_url} url={id} {created_at} />
 				{/each}
 			</ResponsiveCards>
 		</div>

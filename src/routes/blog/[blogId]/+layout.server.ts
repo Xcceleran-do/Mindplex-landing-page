@@ -5,9 +5,9 @@ import { error } from '@sveltejs/kit';
 export const load = (async ({ fetch, params }) => {
 
     const { blogId } = params;
+
     if (!blogId) return { status: 404 };
     const API_URL = `${PUBLIC_API_URL}/blogs/${blogId}`;
-
     try {
         const blogs = await fetch(API_URL)
         const blogsData = await blogs.json()

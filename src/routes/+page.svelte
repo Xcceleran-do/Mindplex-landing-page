@@ -4,7 +4,7 @@
 	import MindplexTokens from '$lib/sections/MindplexTokens.svelte';
 	import JoinUs from '$lib/sections/Joinus.svelte';
 	import OurAi from '$lib/sections/OurAi.svelte';
-	import OurTeam from '$lib/sections/OurTeam.svelte'
+	import OurTeam from '$lib/sections/OurTeam.svelte';
 	// import OurTeam from '$lib/sections/OurTeam.svelte';
 	// import Roadmap from '$lib/sections/Roadmap.svelte';
 </script>
@@ -13,13 +13,9 @@
 	<Hero />
 	<Mindplex />
 	<MindplexTokens />
-	<JoinUs /> 
+	<JoinUs />
 	<OurAi />
 	<OurTeam />
 </main>
-<!-- 
-<Roadmap />
 
-
--->
-
+<!-- <Roadmap /> -->
