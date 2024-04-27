@@ -11,6 +11,7 @@ export const load = (async ({ fetch, params }) => {
     // const API_URL = url + '/roadmap/2024';
     // filter q1, q3, q4, q1 
     const filteredData = roadmapData.filter(item => item.quarter.includes(quarter));
+    const contentData = roadmapData.filter(item => item.quarter.includes(`Q1_${quarter}`));
     console.log(filteredData)
-    return { filteredData };
+    return { filteredData, contentData };
 }) satisfies LayoutServerLoad;

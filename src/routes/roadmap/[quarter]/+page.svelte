@@ -3,7 +3,9 @@
 	export let data: PageData;
 
 	const roadmap = data.filteredData;
-	console.log(roadmap);
+	const roadmapContent = data.contentData;
+	const filteredContent = roadmapContent[0].steps;
+	console.log(roadmapContent[0].steps);
 	let count = 0;
 	let opacity: any;
 </script>
@@ -36,24 +38,23 @@
 			{/each}
 		</div>
 	</div>
-
-	{#each roadmap as { steps }}
+	{#each filteredContent as { step, content }}
 		<div>
 			<h1 class={` text-4xl mt-20 text-center`}>
-				{steps.step.content.title}
+				{step}
 			</h1>
 		</div>
 		<div class="flex flex-row mb-6 w-full mt-12 gap-4 md:gap-28 lg:gap-36">
 			<div
 				class={`  py-5 px-2 rounded-xl text-center text-xs sm:px-8 sm:text-sm w-[251px]  lg:w-[985px] md:text-2xl lg:px-20 `}
 			>
-				{steps.step.content.title}
+				{content.title}
 			</div>
 
 			<div class=" w-full flex flex-row gap-4 lg:gap-10">
 				<div class={`  min-w-[8px] rounded-2xl sm:min-w-[15px]`} />
 				<p class=" w-full text-xs sm:text-sm sm:w-fit md:text-2xl">
-					{steps.step.content.description}
+					{content.description}
 				</p>
 			</div>
 		</div>
