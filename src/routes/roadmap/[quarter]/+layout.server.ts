@@ -10,8 +10,19 @@ export const load = (async ({ fetch, params }) => {
     // const { roadmapData, currentYear } = await parent()
     // const API_URL = url + '/roadmap/2024';
     // filter q1, q3, q4, q1 
-    const filteredData = roadmapData.filter(item => item.quarter.includes(quarter));
-    const contentData = roadmapData.filter(item => item.quarter.includes(`Q1_${quarter}`));
-    console.log(filteredData)
-    return { filteredData, contentData };
+
+    const filteredData = roadmapData.filter((item: { quarter: string | string[]; }) => item.quarter.includes(quarter));
+    const filteredId = filteredData[0].id;
+
+
+    const navigationData = roadmapData.filter((item: { id: any; }) => {
+        const id = item.id;
+
+        return id >= filteredId - 1 && id <= filteredId + 2;
+    });
+
+
+    const contentData = roadmapData.filter((item: { quarter: string | string[]; }) => item.quarter.includes(`${quarter}`));
+
+    return { navigationData, contentData };
 }) satisfies LayoutServerLoad;
