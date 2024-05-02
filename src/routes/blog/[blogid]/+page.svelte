@@ -3,13 +3,14 @@
 
 	import { MetaTags, JsonLd } from 'svelte-meta-tags';
 	import Seo from '$lib/Seo.svelte';
+
 	export let data: PageData;
-	console.log(data);
 	const blog = data.blogs.blogs;
 
 	const pageTitle = blog[0]?.title.substring(0, 50);
 	const url = `http://localhost:5173/${blog[0]?.title}`;
 	const pageDescription = blog[0]?.description.substring(0, 150);
+
 </script>
 
 <Seo
@@ -35,10 +36,8 @@
 		<div
 			class="blog-content my-8 prose prose-invert prose-p:text-left prose:lg prose-p:text-[#f2f2f2] prose-p:font-montserrat prose-p:text-xl prose-p:leading-10 prose-figure:w-full prose-img:w-full prose-figcaption:text-center prose-a:text-cyan-700 md:prose-xl"
 		>
+
 			{@html blog[0]?.description}
 		</div>
 	</div>
 </section>
-
-<style>
-</style>

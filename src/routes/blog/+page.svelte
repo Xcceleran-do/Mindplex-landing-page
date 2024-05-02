@@ -7,9 +7,7 @@
 	import Seo from '$lib/Seo.svelte';
 	import { MetaTags, JsonLd } from 'svelte-meta-tags';
 
-	import type { BlogContent } from '$lib/types/blog';
 	export let data: PageData;
-	console.log(data);
 
 	const blogs = data.blogs.blogs;
 

@@ -1,11 +1,9 @@
-<script>
-	export let id = '';
-	export let post_slug = '';
-	export let title = '';
-	export let description = '';
-	export let photo_url = '';
+<script lang="ts">
 	import GlowingBtn from '$lib/ui/GlowingBtn.svelte';
 
+	import type { BlogContent } from '$lib/types/blog';
+
+	const { id, description, title, photo_url, post_slug }: BlogContent = $props();
 	const url = `/blog/${post_slug}`;
 </script>
 
@@ -14,6 +12,7 @@
 		class="hero__background absolute bg-[url('/hero_ellipse.svg')] w-full h-[109%] bg-no-repeat right-0 top-[-67px] max-w-[797px] z-[-1] hidden md:block"
 	></div>
 	<div class="hero__background__decoration"></div>
+
 	<div class="flex flex-col-reverse gap-10 sm:justify-center md:flex-row">
 		<div class="hero__content flex flex-col mr-36 gap-8 w-full md:w-1/2">
 			<h1 class="hero__title text-4xl font-bold">{title}</h1>
