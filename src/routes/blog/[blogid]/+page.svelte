@@ -7,7 +7,6 @@
 	export let data: PageData;
 	const blog = data.blogs.blogs;
 
-
 	const pageTitle = blog[0]?.title.substring(0, 50);
 	const url = `http://localhost:5173/${blog[0]?.title}`;
 	const pageDescription = blog[0]?.description.substring(0, 150);
