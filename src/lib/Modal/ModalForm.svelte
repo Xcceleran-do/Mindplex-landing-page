@@ -1,5 +1,11 @@
 <script>
-	const API_URL = import.meta.env.PUBLIC_API_MESSAGE_URL;
+	import GlowingBtn from '$lib/ui/GlowingBtn.svelte';
+	import { Dialog, Separator, Label } from 'bits-ui';
+	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
+	import { PUBLIC_API_MESSAGE_URL } from '$env/static/public';
+
+	const API_URL = PUBLIC_API_MESSAGE_URL;
 
 	const sendUserMessage = async (data) => {
 		return fetch(API_URL, {
@@ -10,93 +16,72 @@
 			}
 		});
 	};
-	const closeModalButton = document.getElementById('closeModal');
-	const modal = document.getElementById('contactModal');
-	const form = document.getElementById('contactForm');
-	const openModal = document.getElementById('openModal');
-	const spinner = document.getElementById('spinner');
-	const formContainer = document.getElementById('formContainer');
-	const successMessage = document.getElementById('successMessage');
-	const failureMessage = document.getElementById('failureMessage');
-	const openModalFooter = document.getElementById('openModalFooter');
-	if (
-		closeModalButton &&
-		modal &&
-		form &&
-		openModal &&
-		spinner &&
-		formContainer &&
-		successMessage &&
-		failureMessage &&
-		openModalFooter
-	) {
-		closeModalButton.addEventListener('click', function () {
-			modal.style.display = 'none';
+
+	let spinnerVisible = false;
+	let successVisible = false;
+	let failureVisible = false;
+
+	async function handleSubmit(event) {
+		event.preventDefault();
+
+		const formData = new FormData(event.target);
+
+		const data = {};
+		console.log(data);
+		formData.forEach((value, key) => {
+			data[key] = value;
 		});
 
-		modal.addEventListener('click', function (event) {
-			if (!formContainer.contains(event.target)) {
-				modal.style.display = 'none';
+		spinnerVisible = true;
+		try {
+			const res = await sendUserMessage(data);
+			console.log(res);
+			if (!res.ok) {
+				throw new Error('Error sending message');
 			}
-		});
-
-		openModal.addEventListener('click', function () {
-			modal.style.display = 'block';
-		});
-		openModalFooter.addEventListener('click', function () {
-			modal.style.display = 'block';
-		});
-		form.addEventListener('submit', async function (event) {
-			event.preventDefault();
-			const formData = new FormData(event.target);
-			const data = {};
-			formData.forEach((value, key) => {
-				data[key] = value;
-			});
-
-			spinner.style.display = 'flex';
-			try {
-				const res = await sendUserMessage(data);
-				if (!res.ok) {
-					throw new Error('Error sending message');
-				}
-				spinner.style.display = 'none';
-				successMessage.style.display = 'flex';
-			} catch (error) {
-				console.log('error');
-				failureMessage.style.display = 'flex';
-				spinner.style.display = 'none';
-			}
-		});
-	} else {
-		console.error('Element not found');
+			successVisible = true;
+		} catch (error) {
+			console.error(error);
+			failureVisible = true;
+			setTimeout(() => {
+				failureVisible = false;
+				event.target.reset();
+			}, 3000);
+		} finally {
+			spinnerVisible = false;
+		}
 	}
 </script>
 
-<section>
-	<div class="modal z-50" id="contactModal">
-		<div
-			class="fixed inset-0 bg-[#3d4f834f] bg-opacity-75 flex items-center justify-center"
-			id="contactModal"
-		>
-			<div class="bg-[#1D253D] p-4 rounded-lg w-full max-w-md" id="formContainer">
-				<span class="absolute top-0 right-0 p-4 cursor-pointer text-5xl" id="closeModal"
-					>&times;</span
-				>
-				<form id="contactForm" class="relative z-30">
-					<div class="mb-4">
-						<label for="name" class="block text-sm font-medium">Full name:</label>
-						<input
-							type="text"
-							id="fullname"
-							name="fullname"
-							required
-							class="mt-1 p-2 w-full border rounded-md text-black"
-						/>
-					</div>
+<Dialog.Portal>
+	<Dialog.Overlay
+		transition={fade}
+		transitionConfig={{ duration: 150 }}
+		class="fixed inset-0 z-50 bg-[#18304a] opacity-70"
+	/>
+	<Dialog.Content
+		class="fixed flex flex-col left-[50%] top-[50%] z-50 w-full max-w-[94%] translate-x-[-50%] translate-y-[-50%] rounded-card-lg 
+		border bg-gradient-to-br from-[#1b3049] to-[#205d5c] p-5 shadow-popover outline-none sm:max-w-[490px] md:w-full"
+	>
+		<Dialog.Title class="text-3xl mb-5 font-montserrat mt-6 text-center ">Contact Us</Dialog.Title>
+		<Separator.Root class="" />
 
-					<div class="mb-4">
-						<label for="email" class="block text-sm font-medium">Email:</label>
+		<Dialog.Description class=""></Dialog.Description>
+		<form class="formContainer" onsubmit={handleSubmit}>
+			<div class="my-2">
+				<Label.Root for="fullname" class="font-montserrat ">Full name</Label.Root>
+				<div class="my-2">
+					<input
+						type="text"
+						id="fullname"
+						name="fullname"
+						required
+						class="mt-1 p-2 w-full border rounded-md text-black"
+					/>
+				</div>
+				<div class="my-2">
+					<Label.Root for="email" class="font-montserrat ">Email</Label.Root>
+					<div class="my-2">
 						<input
 							type="email"
 							id="email"
@@ -105,85 +90,65 @@
 							class="mt-1 p-2 w-full border rounded-md text-black"
 						/>
 					</div>
-					<div class="mb-4">
-						<label for="message" class="block text-sm font-medium">Message:</label>
-						<textarea
-							id="message"
-							name="message"
-							required
-							class="mt-1 p-2 w-full border rounded-md text-black"
-							rows="4"
-						></textarea>
+					<div class="my-2">
+						<Label.Root for="message" class="font-montserrat ">Message</Label.Root>
+						<div class="my-2">
+							<textarea
+								id="message"
+								name="message"
+								required
+								class="mt-1 p-2 w-full border rounded-md text-black"
+								rows="4"
+							></textarea>
+						</div>
 					</div>
-					<input
-						type="submit"
-						value="Submit"
-						class="px-4 py-2 text-white bg-[#34947A] rounded-md"
-					/>
+					<div class="">
+						<div class=" px-4 py-2 text-white bg-[#34947A] mt-5 rounded-md max-w-32 text-center">
+							<input
+								type="submit"
+								id="submit"
+								name="submit"
+								value="Submit"
+								class="text-center"
+								required
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div
+					class="absolute inset-0 flex items-center justify-center"
+					id="spinner"
+					style="display: {spinnerVisible ? 'flex' : 'none'};"
+				>
 					<div
-						class="absolute inset-0 flex items-center justify-center"
-						id="spinner"
-						style="display: none;"
-					>
-						<div
-							class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"
-						></div>
+						class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"
+					></div>
+				</div>
+				<div
+					class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#1b3049] to-[#205d5c]"
+					id="successMessage"
+					style="display: {successVisible ? 'flex' : 'none'}"
+				>
+					<p class="text-green-500 font-black text-2xl px-9">Form submitted successfully!</p>
+				</div>
+				<div
+					class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#1b3049] to-[#205d5c]"
+					id="failureMessage"
+					style="display: {failureVisible ? 'flex' : 'none'}"
+				>
+					<p class="text-red-500 font-black text-xl px-9">
+						Form submission failed. Please try again later.
+					</p>
+				</div>
+				<Dialog.Close
+					class="absolute right-5 top-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-98"
+				>
+					<div class="bg-[#1b3049] p-5 rounded-full w-8 h-8 flex justify-center items-center">
+						<span class=" text-xl">X</span>
 					</div>
-					<div
-						class="absolute inset-0 flex items-center justify-center bg-[#1D253D]"
-						id="successMessage"
-						style="display: none;"
-					>
-						<p class="text-green-500 font-black text-2xl">Form submitted successfully!</p>
-					</div>
-					<div
-						class="absolute inset-0 flex items-center justify-center bg-[#1D253D]"
-						id="failureMessage"
-						style="display: none;"
-					>
-						<p class="text-red-500 font-black text-2xl">
-							Form submission failed. Please try again later.
-						</p>
-					</div>
-				</form>
+				</Dialog.Close>
 			</div>
-		</div>
-	</div>
-</section>
-
-<style>
-	.modal {
-		display: none;
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
-	}
-	@keyframes spin {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(360deg);
-		}
-	}
-	.modal-content {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		background-color: white;
-		padding: 20px;
-		border: 1px solid black;
-	}
-
-	.close {
-		position: absolute;
-		top: 0;
-		right: 0;
-		padding: 10px;
-		cursor: pointer;
-	}
-</style>
+		</form></Dialog.Content
+	>
+</Dialog.Portal>

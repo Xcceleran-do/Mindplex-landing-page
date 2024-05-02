@@ -4,13 +4,38 @@
 	import Hero from '$lib/Blog/Hero.svelte';
 	import BlogCard from '$lib/Blog/BlogCard.svelte';
 	import ResponsiveCards from '$lib/layout/ResponsiveCards.svelte';
+	import Seo from '$lib/Seo.svelte';
+	import { MetaTags, JsonLd } from 'svelte-meta-tags';
 
 	export let data: PageData;
 
-	const blogs = data.blogs;
-	const latestBlog = blogs[0];
-	const blogsWithoutFirstPost = blogs?.filter((blog) => blog.id !== latestBlog?.id);
+	const blogs = data.blogs.blogs;
+
+	const latestBlog = blogs ? blogs[0] : null;
+
+	console.log(latestBlog);
+	const pageTitle = latestBlog?.title.substring(0, 50);
+
+	const pageDescription = latestBlog?.description.substring(0, 150);
+
+	const blogsWithoutFirstPost = blogs?.filter((blog: any) => blog.id !== latestBlog?.id);
+
+	function htmlToPlainText(html: any) {
+		// Create a temporary element
+		const tempElement = document.createElement('div');
+		// Set its innerHTML to the provided HTML
+		tempElement.innerHTML = html;
+		// Get the text content of the temporary element
+		return tempElement.textContent || tempElement.innerText || '';
+	}
 </script>
+
+<Seo
+	title={pageTitle}
+	description={pageDescription}
+	canonicalUrl="http://localhost:5173/blog"
+	imageUrl={latestBlog.photo_url}
+/>
 
 <section class=" my-6 mx-20">
 	<div>
