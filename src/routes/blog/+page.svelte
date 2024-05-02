@@ -9,7 +9,7 @@
 
 	export let data: PageData;
 
-	const blogs = data.blogs.blogs;
+	const blogs = data.blogs;
 
 	const latestBlog = blogs ? blogs[0] : null;
 
@@ -19,22 +19,13 @@
 	const pageDescription = latestBlog?.description.substring(0, 150);
 
 	const blogsWithoutFirstPost = blogs?.filter((blog: any) => blog.id !== latestBlog?.id);
-
-	function htmlToPlainText(html: any) {
-		// Create a temporary element
-		const tempElement = document.createElement('div');
-		// Set its innerHTML to the provided HTML
-		tempElement.innerHTML = html;
-		// Get the text content of the temporary element
-		return tempElement.textContent || tempElement.innerText || '';
-	}
 </script>
 
 <Seo
 	title={pageTitle}
 	description={pageDescription}
 	canonicalUrl="http://localhost:5173/blog"
-	imageUrl={latestBlog.photo_url}
+	imageUrl=".com"
 />
 
 <section class=" my-6 mx-20">

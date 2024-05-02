@@ -4,12 +4,10 @@
 
 	const roadmap = data.navigationData;
 	const roadmapContent = data.contentData;
-	console.log(roadmap);
+
 	const filteredContent = roadmapContent[0].steps;
 
-	let count = 0;
-	let opacity: any;
-	const ccolor = '#83E9FF';
+	const active = data.active;
 </script>
 
 <section class="roadmap my-32 mx-6">
@@ -20,7 +18,7 @@
 				<div>
 					<div>
 						<h3 class={` text-xs w-full sm:text-sm md:text-3xl`} style="color: {color};">
-							{quarter}
+							{quarter.replace(/_/g, ' ')}
 						</h3>
 					</div>
 					<a href={`/roadmap/${quarter}`} rel="external">
@@ -29,9 +27,9 @@
 							style="background-color: {backgroundColor};"
 						></div>
 						<div
-							class="w-8 h-8 absolute top-7 ml-3 rounded-full md:top-12"
+							class={`w-8 h-8 absolute top-7 ml-3 rounded-full md:top-12 ${quarter == active ? 'opacity-100' : 'opacity-20'}`}
 							style="background-color: {backgroundColor};"
-						/>
+						></div>
 					</a>
 				</div>
 			{/each}
@@ -56,9 +54,9 @@
 					<div
 						class="min-w-[8px] rounded-2xl sm:min-w-[15px]`"
 						style="background-color: {content.sectionColor};"
-					/>
+					></div>
 					<p
-						class={`py-5 px-2 rounded-xl text-center text-xs sm:px-8 sm:text-sm w-[251px] lg:w-[985px] md:text-2xl lg:px-20`}
+						class={`py-5 px-2 rounded-xl text-left text-xs sm:px-8 sm:text-sm w-[251px] lg:w-[985px] md:text-2xl lg:px-20`}
 					>
 						{content.description}
 					</p>

@@ -2,27 +2,37 @@ import { getContext } from 'svelte';
 import type { LayoutServerLoad } from './$types';
 const url = "http://localhost:8787"
 export const load = (async ({ fetch, params }) => {
-    // api/roadmap/q9_2024
+
     const API_URL = url + '/roadmaps';
     const roadmap = await fetch(API_URL)
     const roadmapData = await roadmap.json()
     const { quarter } = params
-    // const { roadmapData, currentYear } = await parent()
-    // const API_URL = url + '/roadmap/2024';
-    // filter q1, q3, q4, q1 
 
     const filteredData = roadmapData.filter((item: { quarter: string | string[]; }) => item.quarter.includes(quarter));
+
     const filteredId = filteredData[0].id;
 
 
     const navigationData = roadmapData.filter((item: { id: any; }) => {
         const id = item.id;
 
-        return id >= filteredId - 1 && id <= filteredId + 2;
+        let start = (filteredId - 1 + roadmapData.length) % roadmapData.length;
+        let end = (filteredId + 2) % roadmapData.length;
+
+        if (end < start) {
+            return id >= start - end;
+        } else if (start < 1) {
+
+            return id >= start + 1 && id <= end + 1;
+        } else {
+            return id >= start && id <= end;
+        }
+
+
     });
 
 
     const contentData = roadmapData.filter((item: { quarter: string | string[]; }) => item.quarter.includes(`${quarter}`));
-
-    return { navigationData, contentData };
+    const active = filteredData[0].quarter
+    return { navigationData, contentData, active };
 }) satisfies LayoutServerLoad;

@@ -1,5 +1,6 @@
 <script>
 	import GlowingBtn from '$lib/ui/GlowingBtn.svelte';
+	import { page } from '$app/stores';
 	import { Dialog, Separator, Label } from 'bits-ui';
 	import { fade } from 'svelte/transition';
 	import Modal from '$lib/Modal/ModalForm.svelte';
@@ -14,7 +15,7 @@
 	<div class="navbar_center flex flex-wrap flex-1 max-w-2xl justify-between items-center gap-4">
 		<a href="/#about" class="font-bold text-sm uppercase">About</a>
 		<a href="/#ourAi" class="font-bold text-sm uppercase">Our Ai</a>
-		<a href="/roadmap" class="font-bold text-sm uppercase"> Roadmap</a>
+		<a href="/roadmap" class="font-bold text-sm uppercase active:underline"> Roadmap</a>
 		<a href="/#mindplexTokens" class="font-bold text-sm uppercase"> Mindplex Tokens </a>
 		<a href="/blog" class="font-bold text-sm uppercase">Blog</a>
 		<a href="/#team" class="font-bold text-sm uppercase">Team</a>
