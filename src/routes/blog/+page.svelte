@@ -28,8 +28,6 @@
 		// Get the text content of the temporary element
 		return tempElement.textContent || tempElement.innerText || '';
 	}
-
-
 </script>
 
 <Seo

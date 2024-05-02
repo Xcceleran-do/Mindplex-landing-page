@@ -22,7 +22,6 @@
 			<div class="hero__cta max-w-36">
 				<GlowingBtn href={url} text="Read more" fontSize="text-lg" />
 			</div>
-
 		</div>
 		<div class="hero__image max-w-[500px] max-h-[570px] m-auto md:m-0">
 			<img src={photo_url} alt="description" class="w-full h-[289px] md:max-w-none" />

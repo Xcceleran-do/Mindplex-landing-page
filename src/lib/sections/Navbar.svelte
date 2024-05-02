@@ -1,5 +1,8 @@
 <script>
 	import GlowingBtn from '$lib/ui/GlowingBtn.svelte';
+	import { Dialog, Separator, Label } from 'bits-ui';
+	import { fade } from 'svelte/transition';
+	import Modal from '$lib/Modal/ModalForm.svelte';
 </script>
 
 <nav class="flex justify-between items-center gap-6 p-4 flex-col lg:flex-row">
@@ -20,12 +23,14 @@
 		</a>
 	</div>
 	<div class="navbar_right flex justify-between items-center gap-4">
-		<button
-			id="openModal"
-			class="navbar_right_contact rounded-full text-sm px-4 w-52 py-2 outline outline-2 outline-white uppercase"
-		>
-			Contact us
-		</button>
+		<Dialog.Root>
+			<Dialog.Trigger
+				class="navbar_right_contact rounded-full text-sm px-4 w-52 py-2 outline outline-2 outline-white uppercase"
+				>Contact us</Dialog.Trigger
+			>
+			<Modal />
+		</Dialog.Root>
+
 		<GlowingBtn
 			text="Join Mindplex"
 			href="https://magazine.mindplex.ai/?type=register&source=landingPage"
