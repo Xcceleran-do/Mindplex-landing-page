@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-
 	import { MetaTags, JsonLd } from 'svelte-meta-tags';
 	import Seo from '$lib/Seo.svelte';
 

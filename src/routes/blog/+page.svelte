@@ -29,6 +29,7 @@
 		return tempElement.textContent || tempElement.innerText || '';
 	}
 
+
 </script>
 
 <Seo
