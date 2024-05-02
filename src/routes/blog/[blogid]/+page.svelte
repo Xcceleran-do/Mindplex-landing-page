@@ -25,6 +25,7 @@
 		class="hero__background absolute bg-[url('/hero_ellipse.svg')] w-full h-[109%] bg-no-repeat right-0 top-[-67px] max-w-[797px] z-[-1] hidden md:block"
 	></div>
 
+
 	<div class="blog-content mx-4 flex flex-col items-center">
 		<h1
 			class="blog-heading font-bold text-left max-w-[820px] text-[#f2f2f2] font-montserrat text-4xl leading-normal my-8"
