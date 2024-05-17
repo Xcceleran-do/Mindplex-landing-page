@@ -1,9 +1,10 @@
 import { getContext } from 'svelte';
-import type { LayoutServerLoad } from './$types';
-const url = "http://localhost:8787"
+
+import type { LayoutServerLoad } from '../$types';
+const url = "/api"
 export const load = (async ({ fetch, params }) => {
 
-    const API_URL = url + '/roadmaps';
+    const API_URL = url + '/roadmap';
     const roadmap = await fetch(API_URL)
     const roadmapData = await roadmap.json()
     const { quarter } = params

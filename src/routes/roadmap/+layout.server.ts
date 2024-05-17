@@ -1,8 +1,8 @@
 import type { LayoutServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
-const url = "http://localhost:8787"
-export const load = (async ({ fetch, url }) => {
+
+export const load = (async ({ url }) => {
     const currentYear = new Date().getFullYear();
     const parentUrl = url.pathname.split('/').pop()
     if (parentUrl === 'roadmap') {
