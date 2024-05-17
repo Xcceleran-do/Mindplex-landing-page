@@ -5,9 +5,9 @@
 <section class="our_team my-32" id="team">
 	<div class="our_team_text">
 		<div class="flex items-center justify-center gap-4 w-full overflow-hidden mb-8">
-			<img src="/line.svg" alt=" " class="transform rotate-180 max-w-48" />
+			<img src="/line.svg" alt="line" class="transform rotate-180 max-w-48" />
 			<h2 class="text-lg min-w-fit md:text-4xl uppercase font-semibold">Our team</h2>
-			<img src="/line.svg" alt=" " class="max-w-48" />
+			<img src="/line.svg" alt="line" class="max-w-48" />
 		</div>
 		<p class="text-center text-gray-300 font-barlow text-sm md:text-2xl font-normal leading-6">
 			Meet the Mindplex team – the visionaries behind the future of media.
