@@ -60,7 +60,7 @@
 		class="fixed inset-0 z-50 bg-[#18304a] opacity-70 "
 	/>
 	<Dialog.Content
-		class="fixed flex flex-col left-[50%] top-[50%] border-none z-50 w-full max-w-[94%] translate-x-[-50%] translate-y-[-50%] rounded-tr-3xl
+		class="fixed flex flex-col left-[50%] top-[50%] border-none z-50 w-full max-w-[94%] translate-x-[-50%] translate-y-[-50%] rounded-lg
 		border bg-gradient-to-br from-[#1b3049] to-[#205d5c] p-5 shadow-popover outline-none sm:max-w-[490px] md:w-full"
 	>
 		<Dialog.Title class="text-3xl mb-5 font-montserrat mt-6 text-center ">Contact Us</Dialog.Title>
