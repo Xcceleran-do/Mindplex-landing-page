@@ -12,7 +12,7 @@
 
 <section class="roadmap my-32 mx-6">
 	<div class="relative w-full">
-		<img alt="" src="/3-version-line.svg" class="w-full" />
+		<img alt="line" src="/3-version-line.svg" class="w-full" />
 		<div class="absolute -top-10 flex flex-row justify-evenly w-full md:-top-14">
 			{#each roadmap as { quarter, backgroundColor, color }}
 				<div>

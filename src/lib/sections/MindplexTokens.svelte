@@ -24,11 +24,11 @@
 		<div
 			class="flex flex-row items-center justify-center gap-6 w-full overflow-hidden mb-8 max-w-5xl mx-auto"
 		>
-			<img src="/line.svg" alt=" " class="transform rotate-180 w-full max-w-sm" />
+			<img src="/line.svg" alt="line" class="transform rotate-180 w-full max-w-sm" />
 			<h2 class="text-lg md:text-4xl uppercase font-semibold min-w-fit text-center">
 				Mindplex Tokens
 			</h2>
-			<img src="/line.svg" alt=" " class="w-full max-w-sm" />
+			<img src="/line.svg" alt="line" class="w-full max-w-sm" />
 		</div>
 		<p
 			class="text-white font-montserrat text-sm md:text-lg font-normal leading-5 mb-12 md:px-12 max-w-6xl mx-auto"
@@ -52,14 +52,18 @@
 						<img
 							src="/icons/minus-icon.svg"
 							class="w-8 cursor-pointer minus-icon absolute bottom-5 right-5"
-							alt=" "
+							alt="icon"
 						/>
 					</div>
 					<h2 class="text-2xl font-semibold uppercase text-left mb-5">
 						{title}
 					</h2>
-					<img src={imageSource} class="w-full h-full" alt=" " />
-					<img src="/icons/plus-icon.svg" class="w-8 self-end cursor-pointer plus-icon" alt=" " />
+					<img src={imageSource} class="w-full h-full" alt="cardimage" />
+					<img
+						src="/icons/plus-icon.svg"
+						class="w-8 self-end cursor-pointer plus-icon"
+						alt="icon"
+					/>
 				</div>
 			</div>
 		{/each}
