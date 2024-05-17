@@ -11,11 +11,11 @@
 		<h1 class="font-bold text-[36px] leading-[44px] md:text-left pl-[11px] text-center">
 			MINDPLEX
 		</h1>
-		<h5
+		<h2
 			class="font-light my-[10px] text-[16px] leading-[27px] text-center md:text-left pl-[11px] md:text-[30px]"
 		>
 			WHERE THE FUTURE IS [SUR]REAL
-		</h5>
+		</h2>
 		<img src="/line.svg" alt="line" class="w-[90%] mb-[35px] md:w-[61%]" />
 		<p
 			class="font-light px-1 text-[16px] leading-[27px] text-left md:px-[14px_10px] pb-[27px] md:text-[19px]"
