@@ -36,7 +36,7 @@
 			/>
 			<img
 				src="/hero_arrow.svg"
-				alt=" "
+				alt="hero"
 				class="hidden md:block transition-transform duration-300 hover:translate-x-2.5"
 			/>
 		</div>
