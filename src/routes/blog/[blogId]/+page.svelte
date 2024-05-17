@@ -15,10 +15,10 @@
 				iframe.height = '315';
 				iframe.src = `https://www.youtube.com/embed/${videoId}`;
 				iframe.title = 'YouTube video player';
-				iframe.frameborder = '0';
+				iframe.frameBorder = '0';
 				iframe.allow =
 					'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-				iframe.allowfullscreen = true;
+				iframe.allowFullscreen = true;
 				link.replaceWith(iframe);
 			}
 		});
