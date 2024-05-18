@@ -5,9 +5,9 @@
 <section class="our_team my-32" id="team">
 	<div class="our_team_text">
 		<div class="flex items-center justify-center gap-4 w-full overflow-hidden mb-8">
-			<img src="/line.svg" alt="line" class="transform rotate-180 max-w-48" />
+			<enhanced:img src="/line.svg" alt="line" class="transform rotate-180 max-w-48" />
 			<h2 class="text-lg min-w-fit md:text-4xl uppercase font-semibold">Our team</h2>
-			<img src="/line.svg" alt="line" class="max-w-48" />
+			<enhanced:img src="/line.svg" alt="line" class="max-w-48" />
 		</div>
 		<p class="text-center text-gray-300 font-barlow text-sm md:text-2xl font-normal leading-6">
 			Meet the Mindplex team – the visionaries behind the future of media.
@@ -20,7 +20,7 @@
 			<div
 				class="relative flex flex-col items-center team-card md:w-84 xl:w-96 h-72 transition-all ease-in-out duration-300"
 			>
-				<img
+				<enhanced:img
 					src={imageUrl}
 					class="about-avatar rounded-2xl max-w-280 w-full h-full object-cover object-center"
 					alt={name}
@@ -37,7 +37,7 @@
 						</p>
 						<div class="mt-3">
 							<a target="_blank" href={socialLink} class="cursor-pointer">
-								<img
+								<enhanced:img
 									src="https://magazine.mindplex.ai/wp-content/plugins/mp-general/public/assets/linkedin.svg"
 									alt="Linkedin"
 								/>

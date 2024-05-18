@@ -9,7 +9,7 @@
 				<h2 class="text-2xl md:text-4xl font-bold mb-3">Mindplexes</h2>
 				<p class="text-2xl md:text-xl">Join Our Network</p>
 			</div>
-			<img
+			<enhanced:img
 				src="/line.svg"
 				alt="line"
 				class="mindplex_section__line w-full max-w-xs md:max-w-none md:w-auto mx-auto md:mx-0"

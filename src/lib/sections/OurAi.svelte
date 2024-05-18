@@ -6,7 +6,7 @@
 	<div class="our_ai_section__header flex flex-col gap-3">
 		<h1 class="text-4xl font-bold uppercase mb-4">Our AI</h1>
 		<p class="font-light text-3xl">Powered Media Solutions.</p>
-		<img src="/line.svg" alt="line" class="mb-6 w-64" />
+		<enhanced:img src="/line.svg" alt="line" class="mb-6 w-64" />
 	</div>
 	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 		{#each ourAi as { title, image, description }}
@@ -14,7 +14,7 @@
 				class="card cursor-pointer transition-all ease-in-out duration-300 bg-black bg-opacity-25 rounded-3xl flex justify-center items-center relative max-w-sm min-h-[24rem]"
 			>
 				<div class=" bg-no-repeat bg-center opacity-20 bg-cover w-full h-full absolute">
-					<img src={image} alt="" class="w-full h-full card-img" />
+					<enhanced:img src={image} alt="" class="w-full h-full card-img" />
 				</div>
 
 				<div class="card-heading flex justify-center items-center z-50">
