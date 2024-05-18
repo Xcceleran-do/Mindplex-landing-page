@@ -1,5 +1,5 @@
 <section class="mt-14 flex flex-col lg:flex-row items-center" id="about">
-	<enhanced:img
+	<img
 		src="/mindplex_ai.png"
 		alt="mindplex"
 		class="max-h-52 max-w-sm lg:block z-10 lg:max-w-xl lg:max-h-[640px]"
@@ -16,7 +16,7 @@
 		>
 			WHERE THE FUTURE IS [SUR]REAL
 		</h2>
-		<enhanced:img src="/line.svg" alt="line" class="w-[90%] mb-[35px] md:w-[61%]" />
+		<img src="/line.svg" alt="line" class="w-[90%] mb-[35px] md:w-[61%]" />
 		<p
 			class="font-light px-1 text-[16px] leading-[27px] text-left md:px-[14px_10px] pb-[27px] md:text-[19px]"
 		>

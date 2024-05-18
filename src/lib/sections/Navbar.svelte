@@ -9,7 +9,7 @@
 <nav class="flex justify-between items-center gap-6 p-4 flex-col lg:flex-row">
 	<div class="mindplex__logo">
 		<a href="/">
-			<enhanced:img src="/logo.svg" alt="Mindplex" class="w-36 md:w-64" />
+			<img src="/logo.svg" alt="Mindplex" class="w-36 md:w-64" />
 		</a>
 	</div>
 	<div class="navbar_center flex flex-wrap flex-1 max-w-2xl justify-between items-center gap-4">

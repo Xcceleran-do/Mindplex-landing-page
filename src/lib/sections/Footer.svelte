@@ -7,7 +7,7 @@
 		<div class="top-footer-content flex justify-evenly flex-wrap pb-8">
 			<div class="left-footer-content flex flex-col flex-2 ml-5">
 				<div class="h-8 mb-5">
-					<enhanced:img
+					<img
 						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/header/mindplexTxt.png"
 						alt="Logo"
 						class="footer-logo w-24 mb-5"
@@ -19,7 +19,6 @@
 					collaborate
 				</p>
 			</div>
-
 			<div class="center-footer-content flex flex-col flex-1 min-w-48 mx-5">
 				<h1 class="mb-2 font-bold text-gray-500">Quick links</h1>
 				<div>
@@ -72,13 +71,13 @@
 		>
 			<div class="social-icons flex space-x-3">
 				<a href="https://twitter.com/Mindplex_AI" target="_blank" class="w-6">
-					<enhanced:img
+					<img
 						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/twitter.svg"
 						alt="twitter"
 					/>
 				</a>
 				<a href=" https://www.facebook.com/MindplexAI" target="_blank" class="w-6">
-					<enhanced:img
+					<img
 						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/facebook.svg"
 						alt="facebook"
 					/>
@@ -88,20 +87,20 @@
 					target="_blank"
 					class="w-6"
 				>
-					<enhanced:img
+					<img
 						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/youtube.svg"
 						alt="youtube"
 					/>
 				</a>
 
 				<a href="https://www.linkedin.com/company/79915299/" target="_blank" class="w-5 pb-1">
-					<enhanced:img
+					<img
 						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/linkedin.svg"
 						alt="linkedin"
 					/>
 				</a>
 				<a href="https://t.me/mindplex_ai" target="_blank" class="w-6">
-					<enhanced:img
+					<img
 						src="https://magazine.mindplex.ai/wp-content/themes/Mindplex-Theme/assets/footer/telegram.svg"
 						alt="telegram"
 					/>
