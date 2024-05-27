@@ -1,24 +1,34 @@
 import { getContext } from 'svelte';
-
+import { PUBLIC_ROADMAP_URL } from '$env/static/public'
 import type { LayoutServerLoad } from '../$types';
-const url = "/api"
+
 export const load = (async ({ fetch, params }) => {
 
-    const API_URL = url + '/roadmap';
-    const roadmap = await fetch(API_URL)
+    // const API_URL = ;
+    const roadmap = await fetch(PUBLIC_ROADMAP_URL)
     const roadmapData = await roadmap.json()
-    const { quarter } = params
+  
+    const { quarter }:any = params
+   
+     const roadmaps= roadmapData.roadmaps
+    
+     const roadmapsWithId = roadmaps.map((item:any, index:any) => ({
+        ...item,
+        id: index + 1 // Assigning a unique id starting from 1
+      }));
+      const contentData = roadmapsWithId.filter((item: { slug: string | undefined }) => item.slug && item.slug.includes(quarter));
 
-    const filteredData = roadmapData.filter((item: { quarter: string | string[]; }) => item.quarter.includes(quarter));
+        
+    const filteredId = contentData[0].id;
 
-    const filteredId = filteredData[0].id;
-
-
-    const navigationData = roadmapData.filter((item: { id: any; }) => {
+   
+    let navigationData = roadmapsWithId.filter((item: any) => {
         const id = item.id;
+    
+        let start = (filteredId - 1 + roadmapsWithId.length) % roadmapsWithId.length;
+        let end = (filteredId + 2) % roadmapsWithId.length;
 
-        let start = (filteredId - 1 + roadmapData.length) % roadmapData.length;
-        let end = (filteredId + 2) % roadmapData.length;
+     
 
         if (end < start) {
             return id >= start - end;
@@ -28,12 +38,41 @@ export const load = (async ({ fetch, params }) => {
         } else {
             return id >= start && id <= end;
         }
+        
 
 
     });
-
-
-    const contentData = roadmapData.filter((item: { quarter: string | string[]; }) => item.quarter.includes(`${quarter}`));
-    const active = filteredData[0].quarter
+  
+  navigationData=  navigationData.map((item: any) => {
+    if(item.slug.includes('2023')){
+        return {
+            ...item,
+            background_color: '#83E9FF', 
+            color: '#83E9FF'
+          };
+        } else if(item.slug.includes('2024')){
+            return {
+                ...item,
+                background_color: '#EE83FF', 
+                color: '#EE83FF' 
+              };
+        }else if(item.slug.includes('2025')){
+            return {
+                ...item,
+                background_color: '#5BFFB0', 
+                color: '#5BFFB0' 
+              };
+        }else{
+            return {
+                ...item,
+                background_color: '#5BFFB0', 
+                color: '#5BFFB0' 
+              };
+        }
+});
+   
+    
+    const active = contentData[0].slug
+     
     return { navigationData, contentData, active };
 }) satisfies LayoutServerLoad;

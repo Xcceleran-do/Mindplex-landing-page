@@ -6,7 +6,7 @@ export const load = (async ({ url }) => {
     const currentYear = new Date().getFullYear();
     const parentUrl = url.pathname.split('/').pop()
     if (parentUrl === 'roadmap') {
-        redirect(301, `/roadmap/Q1_${currentYear}`)
+        redirect(301, `/roadmap/q1_${currentYear}`)
     }
     // /roadmap/2024
     // console.log(roadmapData)
