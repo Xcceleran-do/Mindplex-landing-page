@@ -20,13 +20,13 @@
 	];
 
 	const aboutLinks = [
-		{ name: 'Newsletter', url: 'https://magazine.mindplex.ai/coming-soon/?type=newsletter' },
+		{ name: 'Newsletter', url: 'https://magazine.mindplex.ai/#newsletter' },
 		{ name: 'Our Team', url: '#team' }
 	];
 
 	const legalLinks = [
-		{ name: 'Privacy Policy', url: '/privacy' },
-		{ name: 'Terms of Service', url: '/terms' }
+		{ name: 'Privacy Policy', url: 'https://magazine.mindplex.ai/privacy-policy' },
+		{ name: 'Terms of Service', url: 'https://magazine.mindplex.ai/terms' }
 	];
 
 	const contactInfo = {
