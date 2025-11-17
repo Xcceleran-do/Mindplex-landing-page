@@ -78,8 +78,7 @@
 								{token.description}
 							</p>
 
-							<!-- Learn More Link -->
-							<div
+							<!-- <div
 								class="mt-6 flex items-center gap-2 text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 							>
 								<span class="text-sm font-medium">Learn more</span>
@@ -96,7 +95,7 @@
 										d="M9 5l7 7-7 7"
 									></path>
 								</svg>
-							</div>
+							</div> -->
 						</div>
 
 						<!-- Corner accent -->
