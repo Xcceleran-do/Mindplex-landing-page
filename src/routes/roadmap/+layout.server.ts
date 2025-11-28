@@ -6,6 +6,6 @@ export const load = (async ({ url }) => {
     const parentUrl = url.pathname.split('/').pop();
 
     if (parentUrl === 'roadmap') {
-        redirect(301, `/roadmap/q2_${currentYear}`);
+        redirect(301, `/roadmap/q2-${currentYear}`);
     }
 }) satisfies LayoutServerLoad;

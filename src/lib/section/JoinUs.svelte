@@ -48,7 +48,7 @@
 
 				<div class="pt-8">
 					<a
-						href="https://social.mindplex.ai/public/local"
+						href="https://magazine.mindplex.ai/social"
 						class="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-secondary px-12 py-6 text-xl font-bold text-primary-foreground transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/30 md:text-2xl"
 					>
 						<div

@@ -6,21 +6,29 @@ export const load = (async ({ fetch, params }) => {
     const roadmapEndpoint = `${PUBLIC_MINDPLEX_API_URL}/mp_roadmap/v1/roadmaps?page=1&per_page=30`;
     const roadmap = await fetch(roadmapEndpoint);
     const roadmapData = await roadmap.json();
-    const { quarter }: any = params;
+    const { quarter } = params;
     console.log({ roadmapData, quarter });
 
-    const roadmaps = roadmapData.roadmaps.sort((a: any, b: any) => {
-        const [aQ, aY] = a.slug.split('_');
-        const [bQ, bY] = b.slug.split('_');
-        const yearDiff = Number(aY) - Number(bY);
+    // Helper to parse slug with either underscore or hyphen
+    const parseSlug = (slug: string) => {
+        const delimiter = slug.includes('_') ? '_' : '-';
+        const [q, y] = slug.split(delimiter);
+        return { quarter: Number(q.replace('q', '')), year: Number(y) };
+    };
+
+    const roadmaps = roadmapData.roadmaps.sort((a, b) => {
+        const aParsed = parseSlug(a.slug);
+        const bParsed = parseSlug(b.slug);
+        const yearDiff = aParsed.year - bParsed.year;
         if (yearDiff !== 0) return yearDiff;
-        return Number(aQ.replace('q', '')) - Number(bQ.replace('q', ''));
+        return aParsed.quarter - bParsed.quarter;
     });
 
-    const currentIndex = roadmaps.findIndex(r => r.slug === quarter);
-    if (!roadmaps.find(r => r.slug === quarter)) {
+    const currentIndex = roadmaps.findIndex((r) => r.slug === quarter);
+    if (currentIndex === -1) {
         throw redirect(307, `/roadmap/${roadmaps[roadmaps.length - 1].slug}`);
     }
+
     let navigationData = [];
 
     if (currentIndex <= 1) {
