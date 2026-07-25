@@ -103,12 +103,30 @@ test('Archivo variable font loads with weight and width axes', async ({ page }) 
 	await page.goto('/');
 	await page.evaluate(() => document.fonts.ready);
 
-	const loaded = await page.evaluate(() =>
-		[...document.fonts].map((f) => `${f.family}|${f.weight}|${f.stretch}|${f.status}`)
+	const archivo = await page.evaluate(() =>
+		[...document.fonts]
+			.filter((f) => f.family === 'Archivo')
+			.map((f) => `${f.weight}|${f.stretch}|${f.status}`)
 	);
 
-	expect(loaded).toContain('Archivo|100 900|62% 125%|loaded');
-	expect(loaded).toContain('Michroma|400|normal|loaded');
+	expect(archivo).toContain('100 900|62% 125%|loaded');
+});
+
+/*
+ * Michroma is declared here but not applied to anything until the wordmark
+ * lands in Task 5, so its load status is legitimately not "loaded" yet.
+ * Asserting otherwise would require shipping runtime JS purely to satisfy
+ * a test.
+ */
+test('Michroma is declared, ready for the wordmark in a later task', async ({ page }) => {
+	await page.goto('/');
+	await page.evaluate(() => document.fonts.ready);
+
+	const michroma = await page.evaluate(
+		() => [...document.fonts].filter((f) => f.family === 'Michroma').length
+	);
+
+	expect(michroma).toBe(1);
 });
 
 test('body text renders in Archivo, not a system fallback', async ({ page }) => {
@@ -199,8 +217,8 @@ In `src/app.html`, after the `<meta name="viewport" ...>` line and before `%svel
 
 - [ ] **Step 6: Run test to verify it passes**
 
-Run: `pnpm test:e2e --grep "font"`
-Expected: PASS, 2 passed.
+Run: `pnpm test:e2e --grep "font|Michroma|Archivo"`
+Expected: PASS, 3 passed.
 
 - [ ] **Step 7: Commit**
 
