@@ -1553,7 +1553,7 @@ git commit -m "feat(motion): IntersectionObserver reveal action as the baseline"
 
 ### Task 8: Channel band
 
-The signature. Build this before the other sections because it is the piece the page is designed around.
+The signature, built as a controlled component. It does not own which channel is active; the Hero does, so the Hero can drive the lead image from the same state.
 
 **Files:**
 - Create: `src/lib/components/ChannelBand/ChannelBand.svelte`
@@ -1561,8 +1561,10 @@ The signature. Build this before the other sections because it is the piece the 
 - Test: `src/lib/components/ChannelBand/ChannelBand.svelte.test.ts`
 
 **Interfaces:**
-- Consumes: `channels` from `src/lib/design/channels.ts` (Task 2), `.label` from Task 3.
-- Produces: `<ChannelBand {stories} />` where `stories` is `Record<ChannelId, string>` mapping each channel to its current headline. Default export from `$lib/components/ChannelBand`.
+- Consumes: `channels`, `ChannelId` from `src/lib/design/channels.ts` (Task 2); `.label` from Task 3.
+- Produces: `<ChannelBand {stories} {active} onselect={fn} />` where `stories` is `Record<ChannelId, string>` mapping each desk to its current headline, `active` is a `ChannelId`, and `onselect` is `(id: ChannelId) => void`. Exported as a named export `ChannelBand` from `$lib/components/ChannelBand`.
+
+**Why each cell is a button, not a link.** A cell has exactly one job: make its desk active, which swaps the hero lead. Navigation to the story is the lead image's job. One action per control, so hover, focus and tap all mean the same thing.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -1570,7 +1572,7 @@ Create `src/lib/components/ChannelBand/ChannelBand.svelte.test.ts`:
 
 ```ts
 import { page } from '@vitest/browser/context';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import ChannelBand from './ChannelBand.svelte';
 
@@ -1583,35 +1585,48 @@ const stories = {
 
 describe('ChannelBand', () => {
 	it('renders one cell per desk', async () => {
-		const { container } = render(ChannelBand, { stories });
+		const { container } = render(ChannelBand, {
+			stories,
+			active: 'intelligence',
+			onselect: () => {}
+		});
 		expect(container.querySelectorAll('.band-cell')).toHaveLength(4);
 	});
 
 	it('labels each cell with its desk name', async () => {
-		render(ChannelBand, { stories });
+		render(ChannelBand, { stories, active: 'intelligence', onselect: () => {} });
 		for (const desk of ['Intelligence', 'Cosmos', 'Mind', 'Commons']) {
 			await expect.element(page.getByText(desk, { exact: true })).toBeInTheDocument();
 		}
 	});
 
-	it('makes every cell a link into a real beta topic route', async () => {
-		const { container } = render(ChannelBand, { stories });
-		const links = [...container.querySelectorAll('a.band-cell')];
-		expect(links).toHaveLength(4);
-		for (const link of links) {
-			expect(link.getAttribute('href')).toMatch(/^https:\/\/beta\.mindplex\.ai\/topics\//);
-		}
-	});
-
 	it('carries the current headline for each desk', async () => {
-		render(ChannelBand, { stories });
+		render(ChannelBand, { stories, active: 'intelligence', onselect: () => {} });
 		await expect.element(page.getByText('Artemis II flies by the Moon')).toBeInTheDocument();
 	});
 
+	it('marks exactly the active desk as pressed', async () => {
+		const { container } = render(ChannelBand, {
+			stories,
+			active: 'cosmos',
+			onselect: () => {}
+		});
+		const pressed = [...container.querySelectorAll('[aria-pressed="true"]')];
+		expect(pressed).toHaveLength(1);
+		expect(pressed[0].textContent).toContain('Cosmos');
+	});
+
+	it('reports the chosen desk when a cell is activated', async () => {
+		const onselect = vi.fn();
+		render(ChannelBand, { stories, active: 'intelligence', onselect });
+		await page.getByRole('button', { name: /Mind/ }).click();
+		expect(onselect).toHaveBeenCalledWith('mind');
+	});
+
 	it('describes itself for assistive technology', async () => {
-		render(ChannelBand, { stories });
+		render(ChannelBand, { stories, active: 'intelligence', onselect: () => {} });
 		await expect
-			.element(page.getByRole('navigation', { name: 'Mindplex editorial desks' }))
+			.element(page.getByRole('group', { name: 'Mindplex editorial desks' }))
 			.toBeInTheDocument();
 	});
 });
@@ -1633,33 +1648,42 @@ Create `src/lib/components/ChannelBand/ChannelBand.svelte`:
 	interface Props {
 		/** Current headline per desk. */
 		stories: Record<ChannelId, string>;
+		active: ChannelId;
+		onselect: (id: ChannelId) => void;
 	}
 
-	let { stories }: Props = $props();
+	let { stories, active, onselect }: Props = $props();
 </script>
 
 <!--
 	The signature.
 
-	Four desks, one page: the product argument stated as a layout rather
-	than as another headline. Doubles as topic navigation into the beta.
-	One channel is forward at a time; the rest recede to line-work.
+	Four desks along the foot of the hero. Choosing one swaps the hero's
+	lead story, so the page states its own argument (four desks, one place)
+	as a layout rather than as another headline.
 -->
-<nav class="channel-band" aria-label="Mindplex editorial desks">
+<div class="channel-band" role="group" aria-label="Mindplex editorial desks">
 	{#each channels as channel}
-		<a class="band-cell" style="--ch: {channel.hex}" href={channel.topicHref}>
+		<button
+			class="band-cell"
+			type="button"
+			style="--ch: {channel.hex}"
+			aria-pressed={channel.id === active}
+			onclick={() => onselect(channel.id)}
+			onmouseenter={() => onselect(channel.id)}
+			onfocus={() => onselect(channel.id)}
+		>
 			<span class="label desk">{channel.label}</span>
 			<span class="headline">{stories[channel.id]}</span>
-		</a>
+		</button>
 	{/each}
-</nav>
+</div>
 
 <style>
 	.channel-band {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
-		border-block: 1px solid var(--line);
-		background: var(--surface);
+		border-top: 1px solid var(--line);
 	}
 
 	.band-cell {
@@ -1667,11 +1691,16 @@ Create `src/lib/components/ChannelBand/ChannelBand.svelte`:
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		gap: 3rem;
-		min-height: 11rem;
-		padding: 1.35rem 1.25rem 1.5rem;
+		gap: 2rem;
+		min-height: 8.5rem;
+		padding: 1.15rem 1.15rem 1.35rem;
 		overflow: hidden;
+		border: 0;
 		border-right: 1px solid var(--line);
+		background: transparent;
+		color: inherit;
+		text-align: left;
+		cursor: pointer;
 		isolation: isolate;
 	}
 
@@ -1680,36 +1709,36 @@ Create `src/lib/components/ChannelBand/ChannelBand.svelte`:
 	}
 
 	/*
-	 * Resting state is near-monochrome: the channel is present as a hint,
-	 * not as a fill. Capped at 26% even when active, so the hue never
-	 * competes with the accent or the photography.
+	 * Resting state keeps the channel as a hint, not a fill. Capped at 26%
+	 * when active so the hue never competes with the accent or the lead
+	 * photography.
 	 */
 	.band-cell::before {
 		position: absolute;
 		inset: 0;
 		z-index: -1;
-		background: linear-gradient(to top, color-mix(in srgb, var(--ch) 10%, transparent), transparent);
-		opacity: 1;
+		background: linear-gradient(to top, color-mix(in srgb, var(--ch) 26%, transparent), transparent);
+		opacity: 0.38;
 		content: '';
 		transition: opacity 240ms var(--ease-out);
 	}
 
-	.band-cell::after {
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		background: linear-gradient(to top, color-mix(in srgb, var(--ch) 26%, transparent), transparent);
-		opacity: 0;
-		content: '';
-		transition: opacity 240ms var(--ease-out);
+	.band-cell[aria-pressed='true']::before {
+		opacity: 1;
 	}
 
 	.desk {
 		color: var(--ch);
+		opacity: 0.65;
+		transition: opacity 240ms var(--ease-out);
+	}
+
+	.band-cell[aria-pressed='true'] .desk {
+		opacity: 1;
 	}
 
 	.headline {
-		color: var(--ink-muted);
+		color: var(--ink-faint);
 		font-size: 0.9375rem;
 		font-variation-settings: 'wdth' 100, 'wght' 550;
 		line-height: 1.35;
@@ -1717,25 +1746,7 @@ Create `src/lib/components/ChannelBand/ChannelBand.svelte`:
 		transition: color 240ms var(--ease-out);
 	}
 
-	@media (hover: hover) and (pointer: fine) {
-		.channel-band:hover .band-cell:not(:hover) .headline {
-			color: var(--ink-faint);
-		}
-
-		.band-cell:hover::after {
-			opacity: 1;
-		}
-
-		.band-cell:hover .headline {
-			color: var(--ink);
-		}
-	}
-
-	.band-cell:focus-visible::after {
-		opacity: 1;
-	}
-
-	.band-cell:focus-visible .headline {
+	.band-cell[aria-pressed='true'] .headline {
 		color: var(--ink);
 	}
 
@@ -1760,7 +1771,7 @@ Create `src/lib/components/ChannelBand/ChannelBand.svelte`:
 
 		.band-cell {
 			min-height: auto;
-			gap: 1.25rem;
+			gap: 0.85rem;
 			border-right: 0;
 			border-bottom: 1px solid var(--line);
 		}
@@ -1772,7 +1783,7 @@ Create `src/lib/components/ChannelBand/ChannelBand.svelte`:
 
 	@media (prefers-reduced-motion: reduce) {
 		.band-cell::before,
-		.band-cell::after,
+		.desk,
 		.headline {
 			transition: none;
 		}
@@ -1791,18 +1802,21 @@ export { default as ChannelBand } from './ChannelBand.svelte';
 - [ ] **Step 5: Run test to verify it passes**
 
 Run: `pnpm test:unit --run src/lib/components/ChannelBand/`
-Expected: PASS, 5 passed.
+Expected: PASS, 6 passed.
 
 - [ ] **Step 6: Commit**
 
 ```bash
 git add src/lib/components/ChannelBand
-git commit -m "feat(home): channel band signature replacing the topic marquee"
+git commit -m "feat(home): channel band as a controlled desk selector"
 ```
 
 ---
 
+
 ### Task 9: Hero
+
+The hero is now the signature, not a headline sitting above one. It owns which desk is active, renders that desk's lead story as the image, and carries the channel band along its foot.
 
 **Files:**
 - Create: `src/lib/section/Hero.svelte`
@@ -1810,8 +1824,12 @@ git commit -m "feat(home): channel band signature replacing the topic marquee"
 - Test: `src/lib/section/Hero.svelte.test.ts`
 
 **Interfaces:**
-- Consumes: `.label`, `.display-xl`, `.body-l`, `.button`, `.media` from Task 3; `channelById` from Task 2.
-- Produces: `<Hero />`, no props. Renders the only `h1` on the homepage, with `id="hero-title"`.
+- Consumes: `channels`, `channelById`, `ChannelId` from Task 2; `.label`, `.display-xl`, `.body-l`, `.button`, `.media` from Task 3; `ChannelBand` from Task 8.
+- Produces: `<Hero />`, no props. Renders the only `h1` on the homepage, with `id="hero-title"`. Owns `activeId` state and passes it to `ChannelBand`.
+
+**Composition.** A three-row grid filling the first viewport: copy and lead side by side on top, channel band along the foot. Choosing a desk in the band swaps the lead image and the eyebrow. The headline, deck and CTAs are fixed; only the desk context changes, so the page never loses its primary message.
+
+**Four lead images are required.** Three exist. `commons` needs sourcing, and Task 14 handles it. Until then that slot renders on the `.media` surface with no image, which is the correct interim state.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -1823,6 +1841,10 @@ import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-svelte';
 import Hero from './Hero.svelte';
 
+/*
+ * @vitest/browser defaults to a 414x896 viewport, which trips the
+ * component's own breakpoints. Desktop assertions must set it explicitly.
+ */
 describe('Hero', () => {
 	it('renders exactly one level-one heading', async () => {
 		const { container } = render(Hero);
@@ -1830,11 +1852,13 @@ describe('Hero', () => {
 	});
 
 	it('leads with the platform CTA using the canonical label', async () => {
+		await page.viewport(1440, 900);
 		render(Hero);
 		await expect.element(page.getByRole('link', { name: 'Open Mindplex' })).toBeInTheDocument();
 	});
 
 	it('offers the editorial CTA using the canonical label', async () => {
+		await page.viewport(1440, 900);
 		render(Hero);
 		await expect
 			.element(page.getByRole('link', { name: 'Read the magazine' }))
@@ -1855,17 +1879,43 @@ describe('Hero', () => {
 		expect(copy!.children).toHaveLength(4);
 	});
 
-	it('gives the lead image a descriptive alternative text', async () => {
+	it('carries the channel band inside the hero', async () => {
 		const { container } = render(Hero);
-		const img = container.querySelector('.hero-story img');
-		expect(img!.getAttribute('alt')!.length).toBeGreaterThan(10);
+		const band = container.querySelector('.hero .channel-band');
+		expect(band).not.toBeNull();
 	});
 
-	it('reserves layout space for the lead image', async () => {
+	it('starts with one desk active and one lead visible', async () => {
 		const { container } = render(Hero);
-		const img = container.querySelector('.hero-story img');
-		expect(img!.getAttribute('width')).toBeTruthy();
-		expect(img!.getAttribute('height')).toBeTruthy();
+		expect(container.querySelectorAll('[aria-pressed="true"]')).toHaveLength(1);
+		expect(container.querySelectorAll('.hero-lead-image.is-active')).toHaveLength(1);
+	});
+
+	it('swaps the lead when another desk is chosen', async () => {
+		await page.viewport(1440, 900);
+		const { container } = render(Hero);
+
+		const before = container.querySelector('.hero-lead-image.is-active');
+		await page.getByRole('button', { name: /Commons/ }).click();
+		const after = container.querySelector('.hero-lead-image.is-active');
+
+		expect(after).not.toBe(before);
+		expect(container.querySelectorAll('.hero-lead-image.is-active')).toHaveLength(1);
+	});
+
+	it('names the active desk in the eyebrow', async () => {
+		await page.viewport(1440, 900);
+		const { container } = render(Hero);
+		await page.getByRole('button', { name: /Cosmos/ }).click();
+		expect(container.querySelector('.eyebrow')!.textContent).toContain('Cosmos');
+	});
+
+	it('reserves layout space for every lead image', async () => {
+		const { container } = render(Hero);
+		for (const img of container.querySelectorAll('.hero-lead-image img')) {
+			expect(img.getAttribute('width')).toBeTruthy();
+			expect(img.getAttribute('height')).toBeTruthy();
+		}
 	});
 });
 ```
@@ -1881,126 +1931,201 @@ Create `src/lib/section/Hero.svelte`:
 
 ```svelte
 <script lang="ts">
-	import { channelById } from '$lib/design/channels';
+	import { ChannelBand } from '$lib/components/ChannelBand';
+	import { channels, type ChannelId } from '$lib/design/channels';
 
 	const platformUrl = 'https://beta.mindplex.ai';
-	const cosmos = channelById('cosmos');
+
+	/*
+	 * One current story per desk. Hardcoded and curated for now; wiring
+	 * these to the beta API is open question 3 in the spec.
+	 */
+	const leads: Record<
+		ChannelId,
+		{ title: string; href: string; image: string | null; width: number; height: number }
+	> = {
+		intelligence: {
+			title: 'VR, AI, and the comings and goings of slop',
+			href: `${platformUrl}/post/up-and-down-and-all-around-with-vr-ai-and-the-comings-and-goings-of-slop`,
+			image: '/images/tony-parisi-interview.webp',
+			width: 2000,
+			height: 900
+		},
+		cosmos: {
+			title: 'Artemis II flies by the Moon',
+			href: `${platformUrl}/post/artemis-ii-flies-by-the-moon`,
+			image: '/images/artemis-moon-window.webp',
+			width: 1800,
+			height: 1271
+		},
+		mind: {
+			title: 'Who the f*** is Mark Fisher?',
+			href: `${platformUrl}/post/who-the-f-is-mark-fisher-and-why-you-should-care-they-made-a-film-about-making-a-film-about-mark-fisher`,
+			image: '/images/mark-fisher-film.webp',
+			width: 750,
+			height: 948
+		},
+		commons: {
+			title: 'What a reputation token is actually for',
+			href: `${platformUrl}/topics/blockchain`,
+			/* Task 14 sources this asset. Renders on the media surface until then. */
+			image: null,
+			width: 1600,
+			height: 1200
+		}
+	};
+
+	const headlines = Object.fromEntries(
+		channels.map((channel) => [channel.id, leads[channel.id].title])
+	) as Record<ChannelId, string>;
+
+	let activeId = $state<ChannelId>('intelligence');
+
+	const activeChannel = $derived(channels.find((c) => c.id === activeId)!);
+	const activeLead = $derived(leads[activeId]);
 </script>
 
-<section class="hero page-shell" aria-labelledby="hero-title">
-	<div class="hero-copy">
-		<p class="label eyebrow">AI, media, and community intelligence</p>
-		<h1 class="display-xl" id="hero-title">Make sense of what comes next.</h1>
-		<p class="body-l hero-deck">
-			Independent media, community intelligence, and emerging AI tools for people tracking the
-			future.
-		</p>
-		<div class="hero-actions">
-			<a class="button button-primary" href={platformUrl}>
-				Open Mindplex
-				<span aria-hidden="true">↗</span>
-			</a>
-			<a class="button button-secondary" href="{platformUrl}/magazine">Read the magazine</a>
+<section class="hero" aria-labelledby="hero-title">
+	<div class="hero-stage page-shell">
+		<div class="hero-copy">
+			<p class="label eyebrow" style="color: {activeChannel.hex}">{activeChannel.label}</p>
+			<h1 class="display-xl" id="hero-title">Make sense of what comes next.</h1>
+			<p class="body-l hero-deck">
+				Independent media, community intelligence, and emerging AI tools for people tracking the
+				future.
+			</p>
+			<div class="hero-actions">
+				<a class="button button-primary" href={platformUrl}>
+					Open Mindplex
+					<span aria-hidden="true">↗</span>
+				</a>
+				<a class="button button-secondary" href="{platformUrl}/magazine">Read the magazine</a>
+			</div>
 		</div>
+
+		<a class="hero-lead media" style="--ch: {activeChannel.hex}" href={activeLead.href}>
+			{#each channels as channel}
+				<span class="hero-lead-image" class:is-active={channel.id === activeId}>
+					{#if leads[channel.id].image}
+						<img
+							src={leads[channel.id].image}
+							alt=""
+							width={leads[channel.id].width}
+							height={leads[channel.id].height}
+							fetchpriority={channel.id === 'intelligence' ? 'high' : 'low'}
+							loading={channel.id === 'intelligence' ? 'eager' : 'lazy'}
+							decoding="async"
+						/>
+					{/if}
+				</span>
+			{/each}
+			<span class="hero-lead-scrim" aria-hidden="true"></span>
+			<span class="hero-lead-caption">
+				<span class="label" style="color: {activeChannel.hex}">{activeChannel.label}</span>
+				<strong>{activeLead.title}</strong>
+			</span>
+		</a>
 	</div>
 
-	<a
-		class="hero-story media"
-		style="--ch: {cosmos.hex}"
-		href="{platformUrl}/post/artemis-ii-flies-by-the-moon"
-	>
-		<img
-			src="/images/artemis-moon-window.webp"
-			alt="The Moon seen through the open hatch of the Artemis II spacecraft"
-			width="1800"
-			height="1271"
-			fetchpriority="high"
-		/>
-		<span class="story-scrim" aria-hidden="true"></span>
-		<span class="story-caption">
-			<span class="label" style="color: {cosmos.hex}">{cosmos.label}</span>
-			<strong>Artemis II flies by the Moon</strong>
-		</span>
-	</a>
+	<ChannelBand
+		stories={headlines}
+		active={activeId}
+		onselect={(id) => {
+			activeId = id;
+		}}
+	/>
 </section>
 
 <style>
 	.hero {
 		display: grid;
-		grid-template-columns: minmax(0, 1.03fr) minmax(25rem, 0.82fr);
-		align-items: center;
-		gap: clamp(2rem, 4vw, 5.5rem);
-		/*
-		 * Content is top-weighted inside the viewport rather than centred,
-		 * so it does not float in the middle of an empty field on a tall
-		 * display. Padding is capped so the hero never reads as a bug.
-		 */
-		min-height: min(calc(100dvh - 4.0625rem), 52rem);
-		padding-block: clamp(2.5rem, 6vh, 6rem) clamp(2rem, 4vh, 4rem);
+		grid-template-rows: 1fr auto;
+		min-height: calc(100dvh - 4.0625rem);
 	}
 
-	.hero-copy {
-		position: relative;
-		z-index: 2;
+	.hero-stage {
+		display: grid;
+		grid-template-columns: minmax(0, 1.02fr) minmax(24rem, 0.85fr);
+		align-items: center;
+		gap: clamp(2rem, 4vw, 5rem);
+		/* Capped so the copy never floats halfway down a tall display. */
+		padding-block: clamp(2.5rem, 5vh, 5rem) clamp(2rem, 4vh, 3.5rem);
 	}
 
 	.eyebrow {
-		margin-bottom: 1.75rem;
-		color: var(--accent);
+		margin-bottom: 1.5rem;
+		transition: color 240ms var(--ease-out);
 	}
 
 	.hero-deck {
-		margin-top: 1.75rem;
-		max-width: 35rem;
+		margin-top: 1.5rem;
+		max-width: 34rem;
 	}
 
 	.hero-actions {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.75rem;
-		margin-top: 2rem;
+		margin-top: 1.85rem;
 	}
 
-	.hero-story {
+	.hero-lead {
 		position: relative;
-		align-self: stretch;
 		display: block;
-		min-height: min(62dvh, 40rem);
+		align-self: stretch;
+		min-height: min(58dvh, 36rem);
 	}
 
 	/*
-	 * A separate scrim element, so the .media black-point lift on ::before
-	 * and the channel frame on ::after both stay intact. Overriding either
-	 * pseudo-element here would take this one image out of the grade system.
+	 * All four leads are stacked and crossfaded on opacity alone, so the
+	 * swap costs no layout and reads as one surface changing rather than
+	 * four images shuffling.
 	 */
-	.story-scrim {
+	.hero-lead-image {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		transition: opacity 420ms var(--ease-out);
+	}
+
+	.hero-lead-image.is-active {
+		opacity: 1;
+	}
+
+	.hero-lead-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.hero-lead-scrim {
 		position: absolute;
 		inset: 0;
 		z-index: 2;
-		background: linear-gradient(to top, var(--page) 2%, transparent 48%);
+		background: linear-gradient(to top, var(--page) 2%, transparent 52%);
 		pointer-events: none;
 	}
 
-	.story-caption {
+	.hero-lead-caption {
 		position: absolute;
 		right: 1.25rem;
 		bottom: 1.25rem;
 		left: 1.25rem;
 		z-index: 3;
 		display: grid;
-		gap: 0.45rem;
+		gap: 0.4rem;
 	}
 
-	.story-caption strong {
+	.hero-lead-caption strong {
 		max-width: 20ch;
-		font-size: clamp(1.2rem, 2vw, 1.65rem);
+		font-size: clamp(1.15rem, 1.9vw, 1.55rem);
 		font-variation-settings: 'wdth' 104, 'wght' 620;
 		letter-spacing: -0.03em;
-		line-height: 1.08;
+		line-height: 1.1;
 	}
 
 	@media (max-width: 68rem) {
-		.hero {
+		.hero-stage {
 			grid-template-columns: 1fr 0.78fr;
 			gap: 2rem;
 		}
@@ -2008,14 +2133,17 @@ Create `src/lib/section/Hero.svelte`:
 
 	@media (max-width: 48rem) {
 		.hero {
-			grid-template-columns: 1fr;
 			min-height: auto;
-			padding-block: 3.25rem 1rem;
 		}
 
-		.hero-story {
-			min-height: 27rem;
-			margin-top: 0.75rem;
+		.hero-stage {
+			grid-template-columns: 1fr;
+			padding-block: 3rem 1.5rem;
+		}
+
+		.hero-lead {
+			min-height: 24rem;
+			margin-top: 0.5rem;
 		}
 	}
 
@@ -2029,14 +2157,14 @@ Create `src/lib/section/Hero.svelte`:
 			width: 100%;
 		}
 
-		.hero-story {
-			min-height: 23rem;
+		.hero-lead {
+			min-height: 20rem;
 		}
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
 		.hero-copy > *,
-		.hero-story {
+		.hero-lead {
 			animation: hero-in 720ms var(--ease-out) both;
 		}
 
@@ -2052,8 +2180,15 @@ Create `src/lib/section/Hero.svelte`:
 			animation-delay: 180ms;
 		}
 
-		.hero-story {
+		.hero-lead {
 			animation-delay: 140ms;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero-lead-image,
+		.eyebrow {
+			transition: none;
 		}
 	}
 
@@ -2072,21 +2207,30 @@ Create `src/lib/section/Hero.svelte`:
 
 - [ ] **Step 4: Remove the superseded rules from `src/app.css`**
 
-Delete: `.hero`, `.hero-copy`, `.eyebrow`, `.hero h1`, `.hero-deck`, `.hero-actions`, `.hero-story`, `.hero-story::after`, `.hero-story img`, `.story-caption`, `.story-caption > span:first-child`, `.story-caption strong`, `.topic-rail`, `.topic-track, .topic-set`, `.topic-track`, `.topic-set a`, `.topic-set a::after`, and every `.hero*` or `.topic*` override inside the media-query blocks at the bottom of the file.
+Delete: `.hero`, `.hero-copy`, `.eyebrow`, `.hero h1`, `.hero-deck`, `.hero-actions`, `.hero-story`, `.hero-story::after`, `.hero-story img`, `.story-caption`, `.story-caption > span:first-child`, `.story-caption strong`, `.topic-rail`, `.topic-track, .topic-set`, `.topic-track`, `.topic-set a`, `.topic-set a::after`, `@keyframes topic-loop`, and every `.hero*`, `.story-caption*` or `.topic*` override inside the media-query blocks at the bottom of the file, including the `.hero-story:hover img` rule inside the hover block and the `.topic-track` / `.topic-set` rules inside the reduced-motion block.
+
+After this, verify nothing survives:
+
+```bash
+grep -n 'hero\|topic-\|story-caption' src/app.css
+```
+
+Expected: no matches.
 
 - [ ] **Step 5: Run test to verify it passes**
 
 Run: `pnpm test:unit --run src/lib/section/Hero.svelte.test.ts`
-Expected: PASS, 7 passed.
+Expected: PASS, 10 passed.
 
 - [ ] **Step 6: Commit**
 
 ```bash
 git add src/lib/section/Hero.svelte src/lib/section/Hero.svelte.test.ts src/app.css
-git commit -m "feat(home): rebuild hero with graded media and canonical CTAs"
+git commit -m "feat(home): hero carries the channel band and a rotating lead"
 ```
 
 ---
+
 
 ### Task 10: Manifesto, entry modes and workflow sections
 
@@ -2787,6 +2931,8 @@ git commit -m "feat(home): show reputation as a real byline instead of prose"
 - Consumes: `.display-l`, `.display-m`, `.heading`, `.body`, `.label`, `.media`, `.inline-link`, `.button` from Task 3; `channelById` from Task 2; `reveal` from Task 7.
 - Produces: `<Stories />`, `<Destinations />`, `<FinalCta />`, all no props.
 
+**The two stories here must not be any story the hero already leads with.** The hero now rotates through one current story per desk (`tony-parisi-interview.webp`, `artemis-moon-window.webp`, `mark-fisher-film.webp` and a Commons lead). Repeating any of them one screen later is a visible duplication. Write the component against `/images/story-a.webp` and `/images/story-b.webp` with the titles and desks left as placeholders in a clearly marked comment, and let Task 14 source the assets and supply the real titles. Until then the panels render on the `.media` surface with no image, which is the correct interim state.
+
 - [ ] **Step 1: Write the failing test**
 
 Create `src/lib/section/Destinations.svelte.test.ts`:
@@ -3318,7 +3464,6 @@ Replace the whole file:
 
 ```svelte
 <script lang="ts">
-	import { ChannelBand } from '$lib/components/ChannelBand';
 	import Hero from '$lib/section/Hero.svelte';
 	import Manifesto from '$lib/section/Manifesto.svelte';
 	import EntryModes from '$lib/section/EntryModes.svelte';
@@ -3328,18 +3473,6 @@ Replace the whole file:
 	import Community from '$lib/section/Community.svelte';
 	import Destinations from '$lib/section/Destinations.svelte';
 	import FinalCta from '$lib/section/FinalCta.svelte';
-	import type { ChannelId } from '$lib/design/channels';
-
-	/*
-	 * Current headline per desk. Hardcoded and curated for now; the spec's
-	 * open question 3 covers wiring these to the beta API.
-	 */
-	const deskStories: Record<ChannelId, string> = {
-		intelligence: 'VR, AI, and the comings and goings of slop',
-		cosmos: 'Artemis II flies by the Moon',
-		mind: 'Who the f*** is Mark Fisher?',
-		commons: 'What a reputation token is actually for'
-	};
 </script>
 
 <svelte:head>
@@ -3359,8 +3492,8 @@ Replace the whole file:
 </svelte:head>
 
 <main id="main-content">
+	<!-- Hero owns the channel band and the desk it makes active. -->
 	<Hero />
-	<ChannelBand stories={deskStories} />
 	<Manifesto />
 	<EntryModes />
 	<Stories />
@@ -3416,12 +3549,20 @@ Resolve the image assets the sections reference, and report any that cannot be s
 - Consumes: the `.media` grade from Task 3.
 - Produces: the three entry-panel assets referenced by `src/lib/section/EntryModes.svelte`.
 
-- [ ] **Step 1: Source the three entry-panel images**
+- [ ] **Step 1: Source the outstanding assets**
 
-Each panel needs one real editorial image at 900x1125 (4:5), WebP, under 180KB. Source them from the beta product's real library at `beta.mindplex.ai`:
+Six slots need real editorial imagery from the beta product's library at `beta.mindplex.ai`. All WebP, each under 180KB.
+
+Three entry panels at 900x1125 (4:5):
 - `entry-read.webp`: a magazine long-form piece
 - `entry-track.webp`: the newsroom index
 - `entry-contribute.webp`: a community discussion
+
+One hero lead at roughly 1600x1200, for the Commons desk, currently `image: null` in `src/lib/section/Hero.svelte`:
+- `commons-lead.webp`: a decentralization, governance or token-economics story. Update the `commons` entry's `image`, `width`, `height`, `title` and `href` to the real story.
+
+Two story panels for `src/lib/section/Stories.svelte`, which currently reference placeholders:
+- `story-a.webp` and `story-b.webp`. **Neither may be a story the hero already leads with**, or the page repeats itself one screen later. Supply the real titles and desk channels alongside the assets.
 
 **If an asset cannot be sourced, do not substitute it.** Leave the reference in place, add a comment in `EntryModes.svelte` naming the required dimensions, and report the missing slot in the task summary. A hand-rolled SVG or a generic stock photo is a worse outcome than a labelled gap.
 
