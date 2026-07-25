@@ -12,7 +12,7 @@
 
 	const communityLinks = [
 		{ name: 'Community hub', href: `${platformUrl}/community` },
-		{ name: 'Contribute', href: `${platformUrl}/contribute` },
+		{ name: 'Start writing', href: `${platformUrl}/contribute` },
 		{ name: 'Writers and editors', href: `${platformUrl}/writers` },
 		{ name: 'About', href: `${platformUrl}/about` },
 		{ name: 'FAQ', href: `${platformUrl}/faq` }
@@ -31,10 +31,9 @@
 		<div class="footer-lead">
 			<a class="brand footer-brand" href="/" aria-label="Mindplex home">
 				<img src="/mindplex-mark.svg" alt="" width="42" height="40" />
-				<span>Mindplex</span>
+				<span class="wordmark">Mindplex</span>
 			</a>
-			<h2>AI, media, and community intelligence.</h2>
-			<p>
+			<p class="body-l">
 				Mindplex brings together futurist writing, social discussion, and emerging AI tools for
 				people tracking what comes next.
 			</p>
@@ -42,7 +41,7 @@
 
 		<div class="footer-columns">
 			<div>
-				<h3>Explore</h3>
+				<h2 class="label">Explore</h2>
 				<nav aria-label="Explore Mindplex">
 					{#each productLinks as link}
 						<a href={link.href}>{link.name}</a>
@@ -51,7 +50,7 @@
 			</div>
 
 			<div>
-				<h3>Community</h3>
+				<h2 class="label">Community</h2>
 				<nav aria-label="Mindplex community">
 					{#each communityLinks as link}
 						<a href={link.href}>{link.name}</a>
@@ -60,7 +59,7 @@
 			</div>
 
 			<div>
-				<h3>Follow</h3>
+				<h2 class="label">Follow</h2>
 				<nav aria-label="Mindplex social channels">
 					{#each socialLinks as link}
 						<a href={link.href} target="_blank" rel="noreferrer">{link.name}</a>
@@ -70,7 +69,7 @@
 		</div>
 
 		<div class="footer-bottom">
-			<p>© {year} Mindplex. All rights reserved.</p>
+			<p class="caption">© {year} Mindplex. All rights reserved.</p>
 			<div>
 				<a href="{platformUrl}/terms">Terms</a>
 				<a href="{platformUrl}/privacy-policy">Privacy</a>
@@ -79,3 +78,27 @@
 		</div>
 	</div>
 </footer>
+
+<style>
+	.footer-brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.7rem;
+		margin-bottom: 1.75rem;
+	}
+
+	.footer-brand img {
+		width: 2rem;
+		height: auto;
+	}
+
+	.wordmark {
+		font-family: 'Michroma', sans-serif;
+		font-size: 0.9375rem;
+		letter-spacing: 0.06em;
+	}
+
+	.footer-lead {
+		max-width: 44rem;
+	}
+</style>
