@@ -32,28 +32,62 @@ describe('ChannelBand', () => {
 		await expect.element(page.getByText('Artemis II flies by the Moon')).toBeInTheDocument();
 	});
 
-	it('marks exactly the active desk as pressed', async () => {
+	it('marks exactly the active desk as checked', async () => {
 		const { container } = render(ChannelBand, {
 			stories,
 			active: 'cosmos',
 			onselect: () => {}
 		});
-		const pressed = [...container.querySelectorAll('[aria-pressed="true"]')];
-		expect(pressed).toHaveLength(1);
-		expect(pressed[0].textContent).toContain('Cosmos');
+		const checked = [...container.querySelectorAll('[aria-checked="true"]')];
+		expect(checked).toHaveLength(1);
+		expect(checked[0].textContent).toContain('Cosmos');
 	});
 
 	it('reports the chosen desk when a cell is activated', async () => {
 		const onselect = vi.fn();
 		render(ChannelBand, { stories, active: 'intelligence', onselect });
-		await page.getByRole('button', { name: /Mind/ }).click();
+		await page.getByRole('radio', { name: /Mind/ }).click();
 		expect(onselect).toHaveBeenCalledWith('mind');
 	});
 
 	it('describes itself for assistive technology', async () => {
 		render(ChannelBand, { stories, active: 'intelligence', onselect: () => {} });
 		await expect
-			.element(page.getByRole('group', { name: 'Mindplex editorial desks' }))
+			.element(page.getByRole('radiogroup', { name: 'Mindplex editorial desks' }))
 			.toBeInTheDocument();
+	});
+
+	it('selects a desk on hover, so pointer users need no click', async () => {
+		const onselect = vi.fn();
+		const { container } = render(ChannelBand, { stories, active: 'intelligence', onselect });
+
+		const cells = container.querySelectorAll<HTMLButtonElement>('.band-cell');
+		cells[1].dispatchEvent(new MouseEvent('mouseenter', { bubbles: false }));
+
+		expect(onselect).toHaveBeenCalledWith('cosmos');
+	});
+
+	it('selects a desk on focus, so keyboard users need no click', async () => {
+		const onselect = vi.fn();
+		const { container } = render(ChannelBand, { stories, active: 'intelligence', onselect });
+
+		container.querySelectorAll<HTMLButtonElement>('.band-cell')[3].focus();
+
+		expect(onselect).toHaveBeenCalledWith('commons');
+	});
+
+	it('exposes one tab stop and moves between desks with arrow keys', async () => {
+		const onselect = vi.fn();
+		const { container } = render(ChannelBand, { stories, active: 'intelligence', onselect });
+
+		const cells = [...container.querySelectorAll<HTMLButtonElement>('.band-cell')];
+		expect(cells.filter((cell) => cell.tabIndex === 0)).toHaveLength(1);
+		expect(cells[0].tabIndex).toBe(0);
+
+		cells[0].focus();
+		cells[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+
+		expect(document.activeElement).toBe(cells[1]);
+		expect(onselect).toHaveBeenCalledWith('cosmos');
 	});
 });

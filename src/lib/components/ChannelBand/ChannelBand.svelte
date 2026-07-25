@@ -9,6 +9,41 @@
 	}
 
 	let { stories, active, onselect }: Props = $props();
+
+	let cells = $state<HTMLButtonElement[]>([]);
+
+	/*
+	 * Roving tabindex: the group is one tab stop, arrows move within it.
+	 * Focusing a cell selects it, so moving focus and changing the desk are
+	 * the same gesture, which is what a radio group is expected to do.
+	 */
+	function moveFocus(from: number, delta: number) {
+		const next = (from + delta + channels.length) % channels.length;
+		cells[next]?.focus();
+	}
+
+	function onkeydown(event: KeyboardEvent, index: number) {
+		switch (event.key) {
+			case 'ArrowRight':
+			case 'ArrowDown':
+				event.preventDefault();
+				moveFocus(index, 1);
+				break;
+			case 'ArrowLeft':
+			case 'ArrowUp':
+				event.preventDefault();
+				moveFocus(index, -1);
+				break;
+			case 'Home':
+				event.preventDefault();
+				cells[0]?.focus();
+				break;
+			case 'End':
+				event.preventDefault();
+				cells[channels.length - 1]?.focus();
+				break;
+		}
+	}
 </script>
 
 <!--
@@ -18,16 +53,20 @@
 	lead story, so the page states its own argument (four desks, one place)
 	as a layout rather than as another headline.
 -->
-<div class="channel-band" role="group" aria-label="Mindplex editorial desks">
-	{#each channels as channel}
+<div class="channel-band" role="radiogroup" aria-label="Mindplex editorial desks">
+	{#each channels as channel, index}
 		<button
 			class="band-cell"
 			type="button"
+			role="radio"
+			bind:this={cells[index]}
 			style="--ch: {channel.hex}"
-			aria-pressed={channel.id === active}
+			aria-checked={channel.id === active}
+			tabindex={channel.id === active ? 0 : -1}
 			onclick={() => onselect(channel.id)}
 			onmouseenter={() => onselect(channel.id)}
 			onfocus={() => onselect(channel.id)}
+			onkeydown={(event) => onkeydown(event, index)}
 		>
 			<span class="label desk">{channel.label}</span>
 			<span class="headline">{stories[channel.id]}</span>
@@ -83,7 +122,7 @@
 		transition: opacity 240ms var(--ease-out);
 	}
 
-	.band-cell[aria-pressed='true']::before {
+	.band-cell[aria-checked='true']::before {
 		opacity: 1;
 	}
 
@@ -93,7 +132,7 @@
 		transition: opacity 240ms var(--ease-out);
 	}
 
-	.band-cell[aria-pressed='true'] .desk {
+	.band-cell[aria-checked='true'] .desk {
 		opacity: 1;
 	}
 
@@ -108,7 +147,7 @@
 		transition: color 240ms var(--ease-out);
 	}
 
-	.band-cell[aria-pressed='true'] .headline {
+	.band-cell[aria-checked='true'] .headline {
 		color: var(--ink);
 	}
 
