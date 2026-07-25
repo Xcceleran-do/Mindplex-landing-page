@@ -1,8 +1,12 @@
 import type { Action } from 'svelte/action';
 
 interface RevealOptions {
-	/** Fraction of the element that must be visible before it reveals. */
-	threshold?: number;
+	/**
+	 * How far up from the viewport's bottom edge the element must travel
+	 * before it reveals, as a CSS length or percentage. Larger values
+	 * reveal later.
+	 */
+	revealMargin?: string;
 }
 
 /**
@@ -12,6 +16,10 @@ interface RevealOptions {
  * CSS scroll-driven animation is still missing from Firefox and older
  * Safari, and a page that silently never reveals is worse than one that
  * never animates.
+ *
+ * Uses rootMargin with a zero threshold rather than an area ratio. A
+ * ratio is a fraction of the ELEMENT's area, so anything taller than
+ * `viewport / ratio` can never reach it and would stay hidden forever.
  */
 export const reveal: Action<HTMLElement, RevealOptions | undefined> = (node, options) => {
 	const prefersReducedMotion =
@@ -30,7 +38,7 @@ export const reveal: Action<HTMLElement, RevealOptions | undefined> = (node, opt
 				observer.unobserve(entry.target);
 			}
 		},
-		{ threshold: options?.threshold ?? 0.12 }
+		{ threshold: 0, rootMargin: `0px 0px -${options?.revealMargin ?? '12%'} 0px` }
 	);
 
 	observer.observe(node);
