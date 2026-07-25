@@ -142,6 +142,7 @@
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
+		line-clamp: 2;
 		overflow: hidden;
 	}
 
@@ -149,6 +150,7 @@
 		display: -webkit-box;
 		-webkit-line-clamp: 3;
 		-webkit-box-orient: vertical;
+		line-clamp: 3;
 		overflow: hidden;
 	}
 </style>

@@ -5,7 +5,7 @@
 	const roadmap = data.navigationData;
 	const roadmapContent = data.contentData;
 	const filteredContent = roadmapContent[0]?.steps;
-	const active = data.active;
+	const active = data.active ?? '';
 
 	const colorPalette = [
 		{
@@ -40,7 +40,8 @@
 
 	const getYear = (slug: string) => {
 		const delimiter = slug.includes('_') ? '_' : '-';
-		return slug.split(delimiter)[1];
+		const [, year = String(baseYear)] = slug.split(delimiter);
+		return year;
 	};
 
 	const activeColors = getColors(getYear(active));

@@ -4,14 +4,23 @@
 	const { data } = $props();
 	let searchQuery = $state('');
 
+	type Blog = {
+		id: number;
+		title: string;
+		description: string;
+		photo_url: string;
+		post_slug: string;
+		created_at: string;
+	};
+
+	const blogs = data.blogs as Blog[];
 	const filteredBlogs = $derived(
-		data.blogs.filter(
-			(blog) =>
+		blogs.filter(
+			(blog: Blog) =>
 				blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
 				blog.description.toLowerCase().includes(searchQuery.toLowerCase())
 		)
 	);
-	$inspect(data);
 </script>
 
 <div class="min-h-screen bg-background">
