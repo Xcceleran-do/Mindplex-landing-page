@@ -272,7 +272,7 @@ Photographs are not duotoned or recoloured. Reporting imagery keeps its integrit
 
 **The current reveal implementation is the bug being fixed.** It sits inside `@supports (animation-timeline: view())` with no fallback, so in Firefox and older Safari the page is entirely static. The `IntersectionObserver` path becomes the baseline and the scroll-driven version the enhancement.
 
-Only `transform` and `opacity` are animated. The destination grid's current `padding` transition on hover is replaced with `transform`.
+No layout-triggering property is animated: no `width`, `height`, `padding`, `margin`, `top` or `left`. All movement is carried by `transform` and `opacity`; paint-only transitions such as `background-color` and `box-shadow` are permitted on interactive states. The destination grid's current `padding` transition on hover is replaced with `transform`.
 
 `prefers-reduced-motion: reduce` collapses all of the above to static or to short opacity cross-fades. Nothing loops perpetually at any setting.
 

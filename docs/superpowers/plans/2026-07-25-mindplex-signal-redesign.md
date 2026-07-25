@@ -25,7 +25,7 @@ Every task's requirements implicitly include this section. Values are copied ver
 - **Display headline budget:** at most three Display XL/L moments on the homepage (hero, manifesto, final CTA). The footer gets none.
 - **Zero em-dashes (`—`) and zero en-dashes (`–`)** in any user-visible string on any route.
 - **`Al` is never used where `AI` is meant** anywhere in the tree.
-- **Only `transform` and `opacity` are animated.** No `padding`, `width`, `height`, `top` or `left` transitions.
+- **No layout-triggering property is ever animated:** no `width`, `height`, `padding`, `margin`, `top`, `left`, `right`, `bottom`. All movement is carried by `transform` and `opacity`. Paint-only transitions (`background-color`, `border-color`, `color`, `box-shadow`, `filter`) are permitted on interactive states.
 - **Preserved without change:** route slugs, anchor IDs `#why` `#inside` `#trust` `#community`, all `beta.mindplex.ai` outbound links, the Mindplex mark asset, and the load functions in `src/routes/blog/+page.server.ts`, `src/routes/blog/[slug]/+page.server.ts` and `src/routes/roadmap/[quarter]/+layout.server.ts`.
 - **Accessibility floor:** WCAG AA contrast for all text and controls; every form control has a label above the field; visible focus ring at 2px offset 4px; `prefers-reduced-motion`, `prefers-reduced-transparency` and `prefers-contrast` all honoured.
 - **Commands:** `pnpm check` and `pnpm lint` must pass before each commit. Unit tests run with `pnpm test:unit --run`, e2e with `pnpm test:e2e`.
