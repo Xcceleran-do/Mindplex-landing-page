@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "landing",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--port", "5199"],
+      "port": 5199
+    },
+    {
+      "name": "live-mindplex",
+      "url": "https://mindplex.ai"
+    }
+  ]
+}
