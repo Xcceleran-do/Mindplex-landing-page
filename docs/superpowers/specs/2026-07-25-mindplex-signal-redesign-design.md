@@ -50,7 +50,8 @@ Every desk label links to a real beta topic route. A desk is a landing-page grou
 **The rule that keeps four hues from becoming noise:**
 
 - Channel hues are used **only** for semantic category marking: topic labels, story categories, desk headings, channel band cells, roadmap year markers.
-- **Every interactive element on the site uses one accent: `--accent`, set to `--ch-intelligence`.** Every button, link hover, focus ring and inline link is that one green, sitewide. No blue CTAs, no magenta buttons.
+- **One accent hue for interaction: `--accent`, set to `--ch-intelligence`.** Buttons, inline content links, focus rings and selection are that one green, sitewide. No blue CTAs, no magenta buttons.
+- Muted navigational links (nav bar, footer columns, legal row) brighten to `--ink` on hover instead. They are wayfinding, not calls to action; `--ink` is the foreground rather than a second accent, so the rule holds.
 - A channel hue never appears as a large fill. Maximum surface for a channel is a label, a 1px rule, a small chip, or a gradient at ≤26% opacity.
 
 This is categorical data colour, not decoration, which is why it does not break the single-accent discipline.

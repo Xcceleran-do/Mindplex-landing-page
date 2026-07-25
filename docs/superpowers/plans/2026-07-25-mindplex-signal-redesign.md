@@ -14,7 +14,8 @@ Every task's requirements implicitly include this section. Values are copied ver
 
 - **Branch:** all work happens on `redesign/signal`.
 - **Channel hues, exact:** `--ch-intelligence: #22D07F`, `--ch-cosmos: #87B9FC`, `--ch-mind: #F598D9`, `--ch-commons: #EAAB3F`. Each must measure 9.19:1 (± 0.02) against `#121317`.
-- **Single accent:** `--accent` is `--ch-intelligence`. Every button, link hover, focus ring and inline link on every route uses `--accent`. No blue CTAs, no magenta buttons. Channel hues appear only as semantic category marks.
+- **Single accent:** `--accent` is `--ch-intelligence`. It is the only hue used for interaction on any route: buttons, inline content links, focus rings and selection. No blue CTAs, no magenta buttons. Channel hues appear only as semantic category marks.
+  - Muted navigational links (nav bar, footer columns, footer legal row) brighten from `--ink-muted` to `--ink` on hover rather than turning green. They are wayfinding, not calls to action, and a wall of green links reads as noise. `--ink` is the foreground, not a competing hue, so this does not break the single-accent rule.
 - **Channel surface cap:** a channel hue never exceeds a label, a 1px rule, a small chip, or a gradient at 26% opacity.
 - **Surfaces, exact:** `--page: #121317`, `--surface: #191B20`, `--surface-strong: #202329`, `--ink: #EDF0F3`, `--ink-muted: #A8ADB5`, `--ink-faint: #747A84`, `--line: rgba(237, 240, 243, 0.13)`, `--line-strong: rgba(237, 240, 243, 0.24)`, `--on-accent: #0B1410`.
 - **Radii:** exactly two values, `--radius-control: 0.625rem` and `--radius-media: 0.75rem`. No pills, no sharp corners.
