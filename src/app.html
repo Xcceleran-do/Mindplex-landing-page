@@ -5,6 +5,23 @@
 	<meta charset="utf-8" />
 	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link
+		rel="preload"
+		href="%sveltekit.assets%/fonts/archivo-var-latin.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+	<link
+		rel="preload"
+		href="%sveltekit.assets%/fonts/michroma-latin.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+	<script>
+		window.addEventListener('load', () => document.fonts.load('400 1em Michroma'));
+	</script>
 	%sveltekit.head%
 </head>
 
