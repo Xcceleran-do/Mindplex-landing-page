@@ -1888,7 +1888,7 @@ describe('Hero', () => {
 
 	it('starts with one desk active and one lead visible', async () => {
 		const { container } = render(Hero);
-		expect(container.querySelectorAll('[aria-pressed="true"]')).toHaveLength(1);
+		expect(container.querySelectorAll('[aria-checked="true"]')).toHaveLength(1);
 		expect(container.querySelectorAll('.hero-lead-image.is-active')).toHaveLength(1);
 	});
 
@@ -1897,7 +1897,7 @@ describe('Hero', () => {
 		const { container } = render(Hero);
 
 		const before = container.querySelector('.hero-lead-image.is-active');
-		await page.getByRole('button', { name: /Commons/ }).click();
+		await page.getByRole('radio', { name: /Commons/ }).click();
 		const after = container.querySelector('.hero-lead-image.is-active');
 
 		expect(after).not.toBe(before);
@@ -1907,7 +1907,7 @@ describe('Hero', () => {
 	it('names the active desk in the eyebrow', async () => {
 		await page.viewport(1440, 900);
 		const { container } = render(Hero);
-		await page.getByRole('button', { name: /Cosmos/ }).click();
+		await page.getByRole('radio', { name: /Cosmos/ }).click();
 		expect(container.querySelector('.eyebrow')!.textContent).toContain('Cosmos');
 	});
 
