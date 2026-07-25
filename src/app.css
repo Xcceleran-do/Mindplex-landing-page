@@ -34,67 +34,43 @@
 
 :root {
 	color-scheme: dark;
-	--radius: 0.75rem;
-	--background: 220 14% 8%;
-	--foreground: 210 20% 94%;
-	--card: 220 13% 12%;
-	--card-foreground: 210 20% 94%;
-	--popover: 220 13% 12%;
-	--popover-foreground: 210 20% 94%;
-	--primary: 158 56% 54%;
-	--primary-foreground: 220 18% 7%;
-	--secondary: 220 13% 18%;
-	--secondary-foreground: 210 20% 94%;
-	--muted: 220 11% 16%;
-	--muted-foreground: 214 10% 68%;
-	--accent: 158 56% 54%;
-	--accent-foreground: 220 18% 7%;
-	--destructive: 2 68% 55%;
-	--border: 220 10% 24%;
-	--input: 220 10% 24%;
-	--ring: 158 56% 54%;
+
+	/* Surfaces */
 	--page: #121317;
-	--surface: #191b20;
+	--surface: #191B20;
 	--surface-strong: #202329;
-	--ink: #edf0f3;
-	--ink-muted: #a8adb5;
-	--ink-faint: #747a84;
+
+	/* Ink */
+	--ink: #EDF0F3;
+	--ink-muted: #A8ADB5;
+	--ink-faint: #747A84;
+
+	/* Hairlines */
 	--line: rgba(237, 240, 243, 0.13);
 	--line-strong: rgba(237, 240, 243, 0.24);
-	--mint: #59c99b;
-	--mint-dark: #0e2a21;
+
+	/* Editorial channels. Semantic category marks only, never interaction. */
+	--ch-intelligence: #22D07F;
+	--ch-cosmos: #87B9FC;
+	--ch-mind: #F598D9;
+	--ch-commons: #EAAB3F;
+
+	/* The one interactive accent, used sitewide. */
+	--accent: var(--ch-intelligence);
+	--on-accent: #0B1410;
+
+	/* Shape */
+	--radius-control: 0.625rem;
+	--radius-media: 0.75rem;
+
+	/* Motion */
 	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 	--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-@theme inline {
-	--radius-sm: calc(var(--radius) - 4px);
-	--radius-md: calc(var(--radius) - 2px);
-	--radius-lg: var(--radius);
-	--radius-xl: calc(var(--radius) + 4px);
-	--color-background: hsl(var(--background));
-	--color-foreground: hsl(var(--foreground));
-	--color-card: hsl(var(--card));
-	--color-card-foreground: hsl(var(--card-foreground));
-	--color-popover: hsl(var(--popover));
-	--color-popover-foreground: hsl(var(--popover-foreground));
-	--color-primary: hsl(var(--primary));
-	--color-primary-foreground: hsl(var(--primary-foreground));
-	--color-secondary: hsl(var(--secondary));
-	--color-secondary-foreground: hsl(var(--secondary-foreground));
-	--color-muted: hsl(var(--muted));
-	--color-muted-foreground: hsl(var(--muted-foreground));
-	--color-accent: hsl(var(--accent));
-	--color-accent-foreground: hsl(var(--accent-foreground));
-	--color-destructive: hsl(var(--destructive));
-	--color-border: hsl(var(--border));
-	--color-input: hsl(var(--input));
-	--color-ring: hsl(var(--ring));
-}
-
 * {
 	box-sizing: border-box;
-	border-color: hsl(var(--border));
+	border-color: var(--line);
 }
 
 html {
