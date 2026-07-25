@@ -980,8 +980,6 @@ img {
 }
 
 @media (hover: hover) and (pointer: fine) {
-	.desktop-links a:hover,
-	.text-link:hover,
 	.footer-columns a:hover,
 	.footer-bottom a:hover {
 		color: var(--ink);
@@ -1062,19 +1060,6 @@ img {
 }
 
 @media (max-width: 68rem) {
-	.desktop-links,
-	.desktop-actions {
-		display: none;
-	}
-
-	.nav-shell {
-		grid-template-columns: 1fr auto;
-	}
-
-	.menu-button {
-		display: block;
-	}
-
 	.hero {
 		grid-template-columns: 1fr 0.78fr;
 		gap: 2rem;
@@ -1109,9 +1094,7 @@ img {
 
 @media (max-width: 48rem) {
 	.page-shell,
-	.nav-shell,
-	.footer-shell,
-	.mobile-navigation-inner {
+	.footer-shell {
 		width: min(100% - 2rem, 88rem);
 	}
 
@@ -1330,14 +1313,5 @@ img {
 
 	.topic-set[aria-hidden='true'] {
 		display: none;
-	}
-}
-
-@media (prefers-reduced-transparency: reduce) {
-	.site-header,
-	.mobile-navigation {
-		background: var(--page);
-		-webkit-backdrop-filter: none;
-		backdrop-filter: none;
 	}
 }

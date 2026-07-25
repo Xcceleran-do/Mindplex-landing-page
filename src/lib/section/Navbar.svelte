@@ -21,7 +21,7 @@
 			<span class="wordmark">Mindplex</span>
 		</a>
 
-		<div class="desktop-links">
+		<div class="desktop-links" aria-label="Landing page sections">
 			{#each navigationLinks as link}
 				<a href={link.href}>{link.name}</a>
 			{/each}
