@@ -14,11 +14,32 @@ import UserCheck from '@lucide/svelte/icons/user-check';
  * brief hedges ("possible future beats"), the copy hedges too.
  */
 
-/** The beat OmegaPlex covers at first release, and what may follow. */
+/** The beat OmegaPlex covers at first release, and what is planned after it. */
 export const beat = {
 	current: 'AGI and Frontier AI',
-	possibleFuture: ['Decentralized AI', 'Biotech', 'Geopolitics of compute']
+	// Named as planned expansion in the memory-layer architecture doc, which is
+	// firmer than the earlier brief's "possible". Wording follows that doc.
+	planned: ['Decentralized AI and Crypto-AI', 'Biotech and Longevity', 'Geopolitics of Compute']
 };
+
+/**
+ * How a drafted claim is dispositioned by the self-critique pass. Blocked
+ * claims are cut before an editor ever sees the draft.
+ */
+export const dispositions = [
+	{
+		name: 'Backed',
+		body: 'The claim traces to an acceptable-tier source and agrees with what memory already holds.'
+	},
+	{
+		name: 'Flagged',
+		body: 'Something is off. The editor sees which rule fired, why, and the suggested fix.'
+	},
+	{
+		name: 'Blocked',
+		body: 'No acceptable backing. The claim is cut from the draft before review.'
+	}
+];
 
 export type Phase = {
 	name: string;
@@ -92,8 +113,9 @@ export const differentiators: Differentiator[] = [
 	},
 	{
 		icon: ListTree,
-		title: 'Sources are ranked, not assumed',
-		description: 'What to monitor and what to trust are stated rules, not whatever surfaced first.'
+		title: 'Sources sit on a ladder',
+		description:
+			'Every source has a tier. A social post can flag that something happened; it can never be the evidence that it did.'
 	},
 	{
 		icon: BrainCircuit,
@@ -109,8 +131,9 @@ export const differentiators: Differentiator[] = [
 	},
 	{
 		icon: Fingerprint,
-		title: 'Provenance per claim',
-		description: 'Results come back with their sources, and where useful, the trace behind them.'
+		title: 'Every claim gets a verdict',
+		description:
+			'Each one is marked backed, flagged, or blocked, with the rule that decided it and the source behind it.'
 	},
 	{
 		icon: UserCheck,

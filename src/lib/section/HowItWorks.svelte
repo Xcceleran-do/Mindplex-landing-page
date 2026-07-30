@@ -17,7 +17,7 @@
 <section id="how-it-works" class="section section-tint">
 	<div class="section-wide">
 		<div use:reveal class="max-w-3xl">
-			<h2 class="display">Every story, the same ten steps</h2>
+			<h2 class="display-sm">Every story, the same ten steps</h2>
 			<p class="lead mt-6 max-w-[50ch]">
 				From first source to published piece, with a human editor between the draft and you.
 			</p>
@@ -27,7 +27,9 @@
 			{#each numbered as phase, i (phase.name)}
 				<div use:reveal={i * 90}>
 					<div class="flex items-baseline gap-4">
-						<span class="font-mono text-5xl leading-none font-semibold text-accent/25 tabular-nums">
+						<span
+							class="tnum font-[family-name:var(--font-display)] text-6xl leading-none font-medium text-accent/30"
+						>
 							{String(i + 1).padStart(2, '0')}
 						</span>
 						<div>
@@ -39,7 +41,7 @@
 					<ol class="mt-8 space-y-0 border-t border-border">
 						{#each phase.steps as step, j (step)}
 							<li class="flex items-baseline gap-4 border-b border-border py-3.5">
-								<span class="font-mono text-xs text-muted-foreground tabular-nums">
+								<span class="tnum text-xs font-semibold text-muted-foreground">
 									{String(phase.offset + j + 1).padStart(2, '0')}
 								</span>
 								<span class="text-[0.9375rem] font-medium">{step}</span>

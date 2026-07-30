@@ -47,7 +47,9 @@
 		<div class="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr] lg:gap-12">
 			<div>
 				<a href="/" class="inline-flex items-center gap-2.5" aria-label="Mindplex home">
-					<img src="/logo.png" alt="" width="32" height="32" class="h-8 w-8" />
+					<!-- logo.png has an opaque dark background baked in, so it is presented
+			     as a solid mark rather than keyed out, which would fringe the glyph. -->
+					<img src="/logo.png" alt="" width="32" height="32" class="h-8 w-8 rounded-md" />
 					<span class="text-[0.9375rem] font-semibold tracking-tight">Mindplex</span>
 				</a>
 

@@ -8,7 +8,7 @@
 <section class="section section-tint">
 	<div class="section-wide">
 		<div use:reveal class="mx-auto max-w-3xl text-center">
-			<h2 class="display">Argue with it</h2>
+			<h2 class="display-sm">Argue with it</h2>
 
 			<p class="lead mx-auto mt-6 max-w-[46ch]">
 				Read the reporting, check its sources, push back on the conclusions. Good discussion becomes

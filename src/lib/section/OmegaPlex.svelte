@@ -9,9 +9,9 @@
 	<div class="section-wide">
 		<div use:reveal class="max-w-4xl">
 			<!-- Eyebrow 1 of 3 for the page. -->
-			<p class="eyebrow">OmegaPlex</p>
+			<p class="kicker">OmegaPlex</p>
 
-			<h2 class="display mt-5">
+			<h2 class="display-sm mt-5">
 				Not a newsletter written by AI.<br class="hidden sm:block" />
 				<span class="text-accent">A newsletter that is an AI.</span>
 			</h2>
@@ -39,9 +39,9 @@
 				</div>
 
 				<div class="p-8 lg:p-12">
-					<p class="panel-label">Next, possibly</p>
+					<p class="panel-label">Planned next</p>
 					<ul class="mt-4 flex flex-wrap gap-2">
-						{#each beat.possibleFuture as topic (topic)}
+						{#each beat.planned as topic (topic)}
 							<li
 								class="rounded-md border border-border-strong px-3 py-1.5 text-[0.9375rem] font-medium"
 							>
@@ -49,7 +49,10 @@
 							</li>
 						{/each}
 					</ul>
-					<p class="mt-5 text-sm text-muted-foreground">Under consideration, not yet committed.</p>
+					<p class="mt-5 max-w-[38ch] text-sm text-muted-foreground">
+						All four columns run on the same engine and the same memory. They differ only in
+						configuration.
+					</p>
 				</div>
 			</div>
 		</div>

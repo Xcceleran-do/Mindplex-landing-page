@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { afterNavigate } from '$app/navigation';
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import Menu from '@lucide/svelte/icons/menu';
 	import X from '@lucide/svelte/icons/x';
 
@@ -51,7 +52,9 @@
 			class="flex flex-shrink-0 items-center gap-2.5 rounded-sm"
 			aria-label="Mindplex home"
 		>
-			<img src="/logo.png" alt="" width="32" height="32" class="h-8 w-8" />
+			<!-- logo.png has an opaque dark background baked in, so it is presented
+			     as a solid mark rather than keyed out, which would fringe the glyph. -->
+			<img src="/logo.png" alt="" width="32" height="32" class="h-8 w-8 rounded-md" />
 			<span class="text-[0.9375rem] font-semibold tracking-tight">Mindplex</span>
 		</a>
 
@@ -74,6 +77,7 @@
 		</ul>
 
 		<div class="hidden items-center gap-2 lg:flex">
+			<ThemeToggle />
 			<a
 				href={contactHref}
 				class="rounded-md px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
@@ -88,20 +92,24 @@
 			</a>
 		</div>
 
-		<button
-			type="button"
-			class="-mr-2 rounded-md p-2 text-foreground lg:hidden"
-			aria-expanded={mobileMenuOpen}
-			aria-controls="mobile-menu"
-			aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-			onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
-		>
-			{#if mobileMenuOpen}
-				<X size={20} strokeWidth={1.75} />
-			{:else}
-				<Menu size={20} strokeWidth={1.75} />
-			{/if}
-		</button>
+		<div class="flex items-center gap-1 lg:hidden">
+			<ThemeToggle />
+
+			<button
+				type="button"
+				class="-mr-2 rounded-md p-2 text-foreground"
+				aria-expanded={mobileMenuOpen}
+				aria-controls="mobile-menu"
+				aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+				onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
+			>
+				{#if mobileMenuOpen}
+					<X size={20} strokeWidth={1.75} />
+				{:else}
+					<Menu size={20} strokeWidth={1.75} />
+				{/if}
+			</button>
+		</div>
 	</nav>
 
 	{#if mobileMenuOpen}

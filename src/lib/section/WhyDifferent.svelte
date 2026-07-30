@@ -7,10 +7,7 @@
 <section id="approach" class="section section-tint">
 	<div class="section-wide">
 		<div use:reveal class="max-w-3xl">
-			<!-- Eyebrow 3 of 3 for the page. -->
-			<p class="eyebrow">The difference</p>
-
-			<h2 class="display mt-5">Most AI news tools summarize. This one covers a beat.</h2>
+			<h2 class="display-sm">Most AI news tools summarize. This one covers a beat.</h2>
 			<p class="lead mt-6 max-w-[52ch]">
 				The things that only start to matter once a system has to show up again tomorrow.
 			</p>

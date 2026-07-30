@@ -1,72 +1,130 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+/* Themes are driven by a data-theme attribute on <html>, set before first paint
+   by the inline script in app.html. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
 /* ---------------------------------------------------------------------------
-   Typography. Geist + Geist Mono, self-hosted variable woff2 (OFL, see
-   static/fonts/GEIST-LICENSE.txt). Mono is reserved for token tickers.
+   Typography.
+
+   Newsreader carries display type; Schibsted Grotesk carries everything else.
+   Two families, deliberately contrasted: Newsreader is Production Type's
+   screen-first news serif, sturdy at large sizes where a Didone goes spindly.
+   Schibsted Grotesk was drawn for a news publisher, so it has warmth and
+   character without reading like a default UI sans.
+
+   No third family: kickers and numerals are set in Schibsted with tracking and
+   tabular figures rather than pulling in a mono.
+
+   Self-hosted variable woff2, both OFL. 172KB total.
 --------------------------------------------------------------------------- */
 
 @font-face {
-	font-family: 'Geist';
-	src: url('/fonts/Geist-Variable.woff2') format('woff2-variations');
-	font-weight: 100 900;
+	font-family: 'Newsreader';
+	src: url('/fonts/Newsreader-Variable.woff2') format('woff2-variations');
+	font-weight: 200 800;
 	font-style: normal;
 	font-display: swap;
 }
 
 @font-face {
-	font-family: 'Geist Mono';
-	src: url('/fonts/GeistMono-Variable.woff2') format('woff2-variations');
-	font-weight: 100 900;
+	font-family: 'Newsreader';
+	src: url('/fonts/Newsreader-Italic-Variable.woff2') format('woff2-variations');
+	font-weight: 200 800;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Schibsted Grotesk';
+	src: url('/fonts/SchibstedGrotesk-Variable.woff2') format('woff2-variations');
+	font-weight: 400 900;
 	font-style: normal;
 	font-display: swap;
 }
 
 /* ---------------------------------------------------------------------------
-   Color. The page is dark-only, locked at the root. One accent: Mindplex teal.
-   Every value is stated in OKLCH so lightness is perceptually predictable and
-   contrast can be reasoned about directly from the L channel.
+   Color.
+
+   Two independently tuned palettes, not one palette mechanically inverted.
+   The accent hue (358) comes from the Mindplex logo's own magenta (#d84890),
+   but its lightness and chroma differ per theme: on paper it must darken to
+   L 0.52 to clear AA as text, while on the dark ground it must lighten to
+   L 0.72 and shed chroma, or it glares and drops to 2.8:1.
+
+   Every value below was measured before being written. Hover accents are
+   clamped to the sRGB gamut ceiling for their lightness.
 --------------------------------------------------------------------------- */
 
-:root {
-	--radius: 0.75rem;
+:root,
+[data-theme='light'] {
+	color-scheme: light;
 
-	/* Cool near-black ramp. No pure black. */
-	--background: oklch(17% 0.012 257);
-	--surface: oklch(21% 0.014 257);
-	--surface-raised: oklch(25% 0.016 257);
+	--background: oklch(98% 0.002 265);
+	--surface: oklch(95.5% 0.004 265);
+	--surface-raised: oklch(93% 0.005 265);
 
-	/* Off-white, never pure white. */
-	--foreground: oklch(97% 0.003 257);
-	/* Genuinely muted. ~6.6:1 against --background, clears WCAG AA. */
-	--muted-foreground: oklch(72% 0.014 257);
+	--foreground: oklch(18.5% 0.012 265); /* 17.6:1 on paper */
+	--muted-foreground: oklch(46% 0.012 265); /* 6.7:1 */
 
-	/* The single accent. */
-	--accent: oklch(72% 0.12 184);
-	--accent-strong: oklch(78% 0.13 184);
-	/* Dark text on the teal fill. White would sit at ~2:1 and fail AA. */
-	--accent-foreground: oklch(18% 0.02 257);
+	--accent: oklch(52% 0.2 358); /* 5.8:1 as text, 6.2:1 under white */
+	--accent-strong: oklch(45.5% 0.181 358); /* 7.6:1, chroma clamped to gamut */
+	--accent-foreground: oklch(100% 0 0);
+	--accent-wash: oklch(52% 0.2 358 / 0.08);
 
-	/* Hairlines are light-on-dark at low alpha, not a near-white solid. */
-	--border: oklch(100% 0 0 / 0.1);
-	--border-strong: oklch(100% 0 0 / 0.18);
+	--border: oklch(18.5% 0.012 265 / 0.14);
+	--border-strong: oklch(18.5% 0.012 265 / 0.28);
 
-	--ring: oklch(72% 0.12 184);
-	--destructive: oklch(64% 0.19 25);
+	--ring: oklch(52% 0.2 358);
+	--selection: oklch(52% 0.2 358 / 0.18);
 
-	/* Section rhythm. Referenced by the section utilities below. */
-	--section-y: 5rem;
-	--gutter: 1.25rem;
+	/* The inverted band flips relative to the page, so it is defined per theme
+	   rather than hard-coded. */
+	--invert-bg: oklch(18.5% 0.012 265);
+	--invert-fg: oklch(97% 0.003 265);
+	--invert-muted: oklch(74% 0.01 265);
+	--invert-accent: oklch(72% 0.17 358);
+}
+
+[data-theme='dark'] {
+	color-scheme: dark;
+
+	--background: oklch(16% 0.01 265);
+	--surface: oklch(20% 0.012 265);
+	--surface-raised: oklch(24% 0.014 265);
+
+	--foreground: oklch(95% 0.004 265); /* 16.8:1 on ground */
+	--muted-foreground: oklch(70% 0.012 265); /* 7.3:1 */
+
+	--accent: oklch(72% 0.17 358); /* 7.2:1 as text */
+	--accent-strong: oklch(78% 0.138 358); /* 9.1:1, chroma clamped to gamut */
+	--accent-foreground: oklch(16% 0.01 265); /* dark label on the fill, 7.2:1 */
+	--accent-wash: oklch(72% 0.17 358 / 0.12);
+
+	--border: oklch(100% 0 0 / 0.14);
+	--border-strong: oklch(100% 0 0 / 0.28);
+
+	--ring: oklch(72% 0.17 358);
+	--selection: oklch(72% 0.17 358 / 0.3);
+
+	/* In dark mode the "inverted" band inverts the other way: it lifts to a
+	   lighter surface rather than dropping to black, so the section still reads
+	   as a deliberate change of ground. */
+	--invert-bg: oklch(23% 0.014 265);
+	--invert-fg: oklch(96% 0.004 265);
+	--invert-muted: oklch(72% 0.012 265);
+	--invert-accent: oklch(74% 0.16 358);
 }
 
 @theme inline {
-	--font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-	--font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+	--font-display: 'Newsreader', ui-serif, Georgia, serif;
+	--font-sans: 'Schibsted Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-	--radius-sm: calc(var(--radius) - 4px);
-	--radius-md: calc(var(--radius) - 2px);
-	--radius-lg: var(--radius);
-	--radius-xl: calc(var(--radius) + 4px);
+	--radius-sm: 0.25rem;
+	--radius-md: 0.375rem;
+	--radius-lg: 0.5rem;
+	--radius-xl: 0.75rem;
 
 	--color-background: var(--background);
 	--color-surface: var(--surface);
@@ -79,7 +137,6 @@
 	--color-border: var(--border);
 	--color-border-strong: var(--border-strong);
 	--color-ring: var(--ring);
-	--color-destructive: var(--destructive);
 }
 
 @layer base {
@@ -89,7 +146,6 @@
 
 	html {
 		scroll-behavior: smooth;
-		/* Anchored sections clear the sticky nav. */
 		scroll-padding-top: 6rem;
 		-webkit-text-size-adjust: 100%;
 	}
@@ -99,12 +155,15 @@
 		color: var(--foreground);
 		font-family: var(--font-sans);
 		font-synthesis-weight: none;
-		text-rendering: optimizeLegibility;
 		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		/* Theme swap should feel like a light change, not a page reload. Colors
+		   only: never transition layout properties. */
+		transition:
+			background-color 220ms ease,
+			color 220ms ease;
 	}
 
-	/* One visible focus treatment for the whole site. The previous build had
-	   none, so nothing was keyboard-navigable in a visible way. */
 	:focus-visible {
 		outline: 2px solid var(--ring);
 		outline-offset: 2px;
@@ -112,16 +171,8 @@
 	}
 
 	::selection {
-		background-color: oklch(72% 0.12 184 / 0.28);
+		background-color: var(--selection);
 		color: var(--foreground);
-	}
-
-	h1,
-	h2,
-	h3 {
-		/* Display sizes need negative tracking to avoid looking loose. */
-		letter-spacing: -0.02em;
-		text-wrap: balance;
 	}
 
 	p {
@@ -134,8 +185,6 @@
 }
 
 @layer components {
-	/* Shared section shell. Replaces the copy-pasted
-	   `px-4 py-16 md:px-8 lg:px-16` + `mx-auto max-w-7xl` on every section. */
 	.section {
 		padding-block: var(--section-y);
 		padding-inline: var(--gutter);
@@ -144,59 +193,141 @@
 	.section-wide {
 		margin-inline: auto;
 		width: 100%;
-		max-width: 76rem;
+		max-width: 78rem;
 	}
 
-	/* Section eyebrow: the small label directly above a section's display
-	   heading. Budgeted to three uses across the whole page, because one above
-	   every section is what makes a page read as templated. */
-	.eyebrow {
-		font-family: var(--font-mono);
-		font-size: 0.75rem;
-		letter-spacing: 0.14em;
+	/* ---- Display type -----------------------------------------------------
+	   Newsreader at magazine scale. Weight 500 rather than 600: Newsreader's
+	   semibold is heavy enough to muddy at display sizes. Slight negative
+	   tracking, since large serif settings look loose at default spacing. */
+	.display {
+		font-family: var(--font-display);
+		font-weight: 500;
+		/* Capped at 4rem: at 6rem the hero headline ran to five lines and pushed
+		   the CTAs below the fold at 720px tall. */
+		font-size: clamp(2.5rem, 1.1rem + 4vw, 4rem);
+		line-height: 1.06;
+		letter-spacing: -0.018em;
+		text-wrap: balance;
+	}
+
+	.display-sm {
+		font-family: var(--font-display);
+		font-weight: 500;
+		font-size: clamp(2rem, 1.3rem + 2.4vw, 3.25rem);
+		line-height: 1.1;
+		letter-spacing: -0.014em;
+		text-wrap: balance;
+	}
+
+	/* ---- Editorial furniture --------------------------------------------- */
+
+	/* Kicker: the small label above a display heading. Budgeted to three uses
+	   across the page; one above every section is what reads as templated. */
+	.kicker {
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
 		text-transform: uppercase;
-		color: var(--muted-foreground);
+		color: var(--accent);
 	}
 
-	/* Label for a part inside a composite element (a panel, a diagram region).
-	   Deliberately not the eyebrow treatment: reusing that device inside
-	   components dilutes it and inflates the eyebrow count. */
+	/* Label for a part inside a composite element. Deliberately not the kicker
+	   treatment, so reusing it does not dilute the device. */
 	.panel-label {
 		font-size: 0.8125rem;
 		font-weight: 600;
 		color: var(--muted-foreground);
 	}
 
-	.hairline {
-		border-block-start: 1px solid var(--border);
-	}
-
-	/* Display heading. Marketing scale, distinctly larger than the body headings
-	   so section openings read as statements rather than as document sections. */
-	.display {
-		font-size: clamp(2.125rem, 1.1rem + 3.4vw, 3.75rem);
-		line-height: 1.04;
-		font-weight: 600;
-		letter-spacing: -0.025em;
-	}
-
-	/* The one paragraph directly under a display heading. Near-foreground and
-	   larger: the previous build set every line below every heading to
-	   --muted-foreground, which flattened the whole page to one grey. Muted is
-	   now reserved for genuinely secondary detail. */
+	/* The one paragraph under a display heading. Near-foreground and larger, so
+	   the page has a contrast hierarchy rather than one flat grey. */
 	.lead {
-		font-size: clamp(1.0625rem, 0.98rem + 0.42vw, 1.3125rem);
+		font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
 		line-height: 1.55;
 		color: color-mix(in oklab, var(--foreground) 88%, var(--background));
+		text-wrap: pretty;
 	}
 
-	/* Tinted band, for alternating section weight. Lightness is set explicitly
-	   rather than mixed toward --surface: mixing landed at L 0.192 against a
-	   0.17 background, a step too small to read as a change of surface. */
+	/* Heavy rule that opens a section, the way a magazine opens a department. */
+	.rule-top {
+		border-block-start: 2px solid var(--foreground);
+	}
+
 	.section-tint {
-		background-color: oklch(22% 0.014 257);
+		background-color: var(--surface);
 		border-block: 1px solid var(--border);
 	}
+
+	/* The deliberate change of ground, once per page. */
+	.section-invert {
+		background-color: var(--invert-bg);
+		color: var(--invert-fg);
+	}
+
+	/* Pull quote: Newsreader italic at scale. */
+	.pull-quote {
+		font-family: var(--font-display);
+		font-style: italic;
+		font-weight: 400;
+		/* Floor at 1.75rem so the serif keeps its modelling on small screens. */
+		font-size: clamp(1.75rem, 1.1rem + 2vw, 2.75rem);
+		/* Italic descenders (g, j, p, y) clip at tighter leading. */
+		line-height: 1.22;
+		letter-spacing: -0.008em;
+		text-wrap: balance;
+	}
+
+	.drop-cap::first-letter {
+		font-family: var(--font-display);
+		font-weight: 500;
+		float: inline-start;
+		font-size: 3.6em;
+		line-height: 0.86;
+		padding-inline-end: 0.08em;
+		margin-block-start: 0.04em;
+		color: var(--accent);
+	}
+
+	/* Numerals that sit in columns or change should not shift the layout. */
+	.tnum {
+		font-variant-numeric: tabular-nums;
+	}
+}
+
+/* ---------------------------------------------------------------------------
+   Inverted-band overrides, deliberately unlayered.
+
+   Tailwind emits utilities into @layer utilities, which the cascade resolves
+   after @layer components regardless of specificity. A layered
+   `.section-invert .text-muted-foreground` therefore loses to the bare utility,
+   leaving low-contrast text on the band. Unlayered rules outrank every layer.
+--------------------------------------------------------------------------- */
+
+.section-invert .lead {
+	color: color-mix(in oklab, var(--invert-fg) 90%, var(--invert-bg));
+}
+
+.section-invert .panel-label,
+.section-invert .text-muted-foreground {
+	color: var(--invert-muted);
+}
+
+.section-invert .text-accent {
+	color: var(--invert-accent);
+}
+
+.section-invert .border-border {
+	border-color: color-mix(in oklab, var(--invert-fg) 16%, transparent);
+}
+
+.section-invert .border-border-strong {
+	border-color: color-mix(in oklab, var(--invert-fg) 30%, transparent);
+}
+
+:root {
+	--section-y: 5.5rem;
+	--gutter: 1.25rem;
 }
 
 @media (min-width: 768px) {
@@ -209,19 +340,17 @@
 @media (min-width: 1024px) {
 	:root {
 		--section-y: 8.5rem;
-		--gutter: 4rem;
+		--gutter: 3.5rem;
 	}
 }
 
 /* ---------------------------------------------------------------------------
    Motion. Scroll-reveal is driven by IntersectionObserver adding [data-visible]
-   (see src/lib/actions/reveal.ts). Elements start hidden only when the script
-   can run, so a no-JS or failed-hydration render still shows all content.
+   (see src/lib/actions/reveal.ts). Scoped to .js, which app.html sets before
+   first paint, so a no-JS render still shows every section.
 --------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: no-preference) {
-	/* Scoped to .js, which app.html sets before first paint. Without scripting
-	   the rule never applies and every section renders visible. */
 	.js [data-reveal] {
 		opacity: 0;
 		transform: translateY(1rem);

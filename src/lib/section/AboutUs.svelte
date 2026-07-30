@@ -23,33 +23,41 @@
 	];
 </script>
 
-<!-- Layout family: problem statement over a tinted band. Tinting alternates the
-     section weight so the page has rhythm rather than one continuous surface. -->
+<!-- Layout family: opening feature. Heavy department rule, display heading, and
+     a drop-capped opening paragraph, the way a magazine opens a piece. -->
 <section id="about" class="section section-tint">
 	<div class="section-wide">
-		<div use:reveal class="max-w-3xl">
-			<h2 class="display">Generative AI broke the feed</h2>
-			<p class="lead mt-6 max-w-[54ch]">
-				The problem is no longer producing content. It is knowing which of it is worth your time.
-			</p>
+		<div use:reveal class="rule-top pt-8">
+			<h2 class="display-sm max-w-[15ch]">Generative AI broke the feed</h2>
 		</div>
 
-		<div class="mt-14 grid gap-x-10 gap-y-8 sm:grid-cols-3 lg:mt-16">
-			{#each problems as problem, i (problem.title)}
-				<div use:reveal={i * 80} class="border-t border-border pt-6">
-					<problem.icon size={20} strokeWidth={1.75} class="text-accent" />
-					<h3 class="mt-4 text-lg font-semibold">{problem.title}</h3>
-					<p class="mt-2 text-[0.9375rem] leading-relaxed text-muted-foreground">
-						{problem.body}
-					</p>
-				</div>
-			{/each}
+		<div class="mt-12 grid gap-x-16 gap-y-10 lg:grid-cols-[1.1fr_0.9fr]">
+			<p class="drop-cap text-lg leading-[1.65]">
+				The problem is no longer producing content. Anyone can produce content. The problem is
+				knowing which of it is worth your time, and at the scale the feed now runs there is no good
+				answer to that question.
+			</p>
+
+			<div class="flex flex-col justify-center gap-6">
+				{#each problems as problem, i (problem.title)}
+					<div use:reveal={i * 80} class="flex gap-4 border-t border-border pt-5">
+						<problem.icon size={19} strokeWidth={1.75} class="mt-0.5 flex-none text-accent" />
+						<div>
+							<h3 class="font-semibold">{problem.title}</h3>
+							<p class="mt-1 text-[0.9375rem] leading-relaxed text-muted-foreground">
+								{problem.body}
+							</p>
+						</div>
+					</div>
+				{/each}
+			</div>
 		</div>
 
-		<div use:reveal={200} class="mt-16 border-t border-border-strong pt-10 lg:mt-20">
-			<p class="max-w-[46ch] text-2xl leading-snug font-semibold sm:text-3xl">
-				Mindplex is our answer. Agents do the research and the drafting. People keep the final word.
-			</p>
-		</div>
+		<!-- Pull quote: the classic magazine interruption, and the section's thesis. -->
+		<figure use:reveal={200} class="mt-16 border-t border-border pt-10 lg:mt-20">
+			<blockquote class="pull-quote max-w-[24ch]">
+				Agents do the research and the drafting. People keep the final word.
+			</blockquote>
+		</figure>
 	</div>
 </section>

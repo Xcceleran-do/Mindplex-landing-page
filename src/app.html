@@ -4,20 +4,53 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="theme-color" content="#12161d" />
 
 		<link
 			rel="preload"
-			href="%sveltekit.assets%/fonts/Geist-Variable.woff2"
+			href="%sveltekit.assets%/fonts/Newsreader-Variable.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+		<link
+			rel="preload"
+			href="%sveltekit.assets%/fonts/SchibstedGrotesk-Variable.woff2"
 			as="font"
 			type="font/woff2"
 			crossorigin
 		/>
 
-		<!-- Marks that scripting is available, before first paint. Scroll-reveal
-		     styles are scoped to .js so content stays visible without it. -->
+		<!--
+			Runs before first paint, so the correct theme is on <html> by the time
+			anything renders. Doing this in a component would paint the default
+			theme first and then swap, which is the flash everyone hates.
+
+			Also marks that scripting is available: scroll-reveal styles are scoped
+			to .js so content stays visible without it.
+		-->
 		<script>
-			document.documentElement.classList.add('js');
+			(function () {
+				var el = document.documentElement;
+				el.classList.add('js');
+				var stored = null;
+				try {
+					stored = localStorage.getItem('theme');
+				} catch (e) {
+					/* private mode or blocked storage; fall through to the system value */
+				}
+				var theme =
+					stored === 'light' || stored === 'dark'
+						? stored
+						: window.matchMedia('(prefers-color-scheme: dark)').matches
+							? 'dark'
+							: 'light';
+				el.setAttribute('data-theme', theme);
+				// Keeps browser UI (address bar, form controls) in step with the page.
+				var meta = document.createElement('meta');
+				meta.name = 'theme-color';
+				meta.content = theme === 'dark' ? '#15181f' : '#f8f8fa';
+				document.head.appendChild(meta);
+			})();
 		</script>
 
 		%sveltekit.head%

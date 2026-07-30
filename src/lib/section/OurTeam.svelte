@@ -9,7 +9,7 @@
 <section id="team" class="section">
 	<div class="section-wide">
 		<div use:reveal class="max-w-3xl">
-			<h2 class="display">The people behind it</h2>
+			<h2 class="display-sm">The people behind it</h2>
 			<p class="lead mt-6 max-w-[46ch]">
 				Researchers, editors, and engineers building what comes after the feed.
 			</p>

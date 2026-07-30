@@ -23,9 +23,9 @@
 		<div class="grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
 			<div use:reveal>
 				<!-- Eyebrow 2 of 3 for the page. -->
-				<p class="eyebrow">OmegaClaw</p>
+				<p class="kicker">OmegaClaw</p>
 
-				<h2 class="display mt-5">
+				<h2 class="display-sm mt-5">
 					Mindplex controls.<br />
 					<span class="text-accent">OmegaClaw reasons.</span>
 				</h2>
@@ -68,7 +68,7 @@
 
 					<!-- The boundary itself, given weight because it is the whole point. -->
 					<div class="relative border-y border-border-strong bg-background/60 px-6 py-3 lg:px-8">
-						<p class="font-mono text-xs tracking-[0.14em] text-accent uppercase">
+						<p class="text-xs font-semibold tracking-[0.16em] text-accent uppercase">
 							Tasks down · typed JSON up
 						</p>
 					</div>
