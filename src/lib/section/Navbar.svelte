@@ -1,145 +1,143 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { afterNavigate } from '$app/navigation';
+	import Menu from '@lucide/svelte/icons/menu';
+	import X from '@lucide/svelte/icons/x';
+
+	type NavLink = {
+		name: string;
+		href: string;
+		exactMatch?: boolean;
+		external?: boolean;
+	};
 
 	let mobileMenuOpen = $state(false);
 
-	const navigationLinks = [
+	const navigationLinks: NavLink[] = [
 		{ name: 'About', href: '/#about' },
-		{ name: 'Our AI', href: '/#ourAi' },
+		{ name: 'OmegaPlex', href: '/#omegaplex' },
+		{ name: 'OmegaClaw', href: '/#omegaclaw' },
 		{ name: 'Roadmap', href: '/roadmap', exactMatch: true },
-		{ name: 'Tokens', href: '/#mindplexTokens' },
 		{ name: 'Blog', href: '/blog', exactMatch: true },
 		{ name: 'Team', href: '/#team' },
 		{ name: 'Whitepaper', href: 'https://docs.mindplex.ai', external: true }
 	];
 
-	const ctaLinks = [
-		{
-			name: 'Contact Us',
-			href: 'https://magazine.mindplex.ai/contact-us',
-			variant: 'outline'
-		},
-		{
-			name: 'Join Mindplex',
-			href: 'https://magazine.mindplex.ai/?type=register&source=landingPage',
-			variant: 'primary'
-		}
-	];
+	const contactHref = 'https://magazine.mindplex.ai/contact-us';
+	const joinHref = 'https://magazine.mindplex.ai/?type=register&source=landingPage';
 
-	const isActiveLink = (link: typeof navigationLinks) => {
-		if (link.exactMatch) {
-			return page.url.pathname === link.href;
-		}
-		return false;
-	};
+	const isActive = (link: NavLink) => link.exactMatch === true && page.url.pathname === link.href;
+
+	// Close on navigation, so tapping an anchor link on mobile does not leave the
+	// panel covering the section it just scrolled to.
+	afterNavigate(() => {
+		mobileMenuOpen = false;
+	});
 </script>
 
-<nav
-	class="relative z-50 border-b border-border/50 bg-background/80 px-4 py-4 backdrop-blur-md md:px-8 lg:px-16"
->
-	<div class="mx-auto flex max-w-7xl items-center justify-between">
-		<div class="flex-shrink-0">
-			<a href="/" class="group flex items-center gap-2">
-				<img src="/logo.png" alt="logo" class="h-15 w-15" />
-				<span class="hidden text-xl font-bold text-foreground sm:block">Mindplex</span>
-			</a>
-		</div>
+<svelte:window
+	onkeydown={(e) => {
+		if (e.key === 'Escape') mobileMenuOpen = false;
+	}}
+/>
 
-		<div class="hidden items-center gap-8 lg:flex">
-			{#each navigationLinks as link}
-				<a
-					href={link.href}
-					target={link.external ? '_blank' : undefined}
-					class="text-sm font-medium transition-colors duration-200 hover:text-foreground"
-					class:text-foreground={isActiveLink(link)}
-					class:text-muted-foreground={!isActiveLink(link)}
-				>
-					{link.name}
-				</a>
-			{/each}
-		</div>
-
-		<div class="hidden items-center gap-3 lg:flex">
-			{#each ctaLinks as cta}
-				<a
-					href={cta.href}
-					class="rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200"
-					class:border={cta.variant === 'outline'}
-					class:border-border={cta.variant === 'outline'}
-					class:text-foreground={cta.variant === 'outline'}
-					class:hover:bg-card={cta.variant === 'outline'}
-					class:bg-gradient-to-r={cta.variant === 'primary'}
-					class:from-primary={cta.variant === 'primary'}
-					class:to-secondary={cta.variant === 'primary'}
-					class:text-primary-foreground={cta.variant === 'primary'}
-					class:hover:opacity-90={cta.variant === 'primary'}
-					class:hover:shadow-lg={cta.variant === 'primary'}
-				>
-					<!-- class:hover:shadow-primary/20={cta.variant === 'primary'} -->
-					{cta.name}
-				</a>
-			{/each}
-		</div>
-
-		<button
-			class="p-2 text-foreground lg:hidden"
-			onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
+<header class="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md">
+	<nav
+		aria-label="Main"
+		class="section-wide flex h-[68px] items-center justify-between gap-6 px-[var(--gutter)]"
+	>
+		<a
+			href="/"
+			class="flex flex-shrink-0 items-center gap-2.5 rounded-sm"
+			aria-label="Mindplex home"
 		>
-			<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				{#if mobileMenuOpen}
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M6 18L18 6M6 6l12 12"
-					></path>
-				{:else}
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M4 6h16M4 12h16M4 18h16"
-					></path>
-				{/if}
-			</svg>
-		</button>
-	</div>
+			<img src="/logo.png" alt="" width="32" height="32" class="h-8 w-8" />
+			<span class="text-[0.9375rem] font-semibold tracking-tight">Mindplex</span>
+		</a>
 
-	{#if mobileMenuOpen}
-		<div
-			class="absolute top-full right-0 left-0 border-b border-border/50 bg-background/95 p-4 backdrop-blur-md lg:hidden"
-		>
-			<div class="flex flex-col gap-4">
-				{#each navigationLinks as link}
+		<ul class="hidden items-center gap-7 lg:flex">
+			{#each navigationLinks as link (link.href)}
+				<li>
 					<a
 						href={link.href}
 						target={link.external ? '_blank' : undefined}
-						class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+						rel={link.external ? 'noreferrer' : undefined}
+						aria-current={isActive(link) ? 'page' : undefined}
+						class="text-sm transition-colors hover:text-foreground {isActive(link)
+							? 'text-foreground'
+							: 'text-muted-foreground'}"
 					>
 						{link.name}
 					</a>
-				{/each}
+				</li>
+			{/each}
+		</ul>
 
-				<div class="flex flex-col gap-2 border-t border-border/50 pt-4">
-					{#each ctaLinks as cta}
+		<div class="hidden items-center gap-2 lg:flex">
+			<a
+				href={contactHref}
+				class="rounded-md px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
+			>
+				Contact
+			</a>
+			<a
+				href={joinHref}
+				class="rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-strong active:translate-y-px"
+			>
+				Join Mindplex
+			</a>
+		</div>
+
+		<button
+			type="button"
+			class="-mr-2 rounded-md p-2 text-foreground lg:hidden"
+			aria-expanded={mobileMenuOpen}
+			aria-controls="mobile-menu"
+			aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+			onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
+		>
+			{#if mobileMenuOpen}
+				<X size={20} strokeWidth={1.75} />
+			{:else}
+				<Menu size={20} strokeWidth={1.75} />
+			{/if}
+		</button>
+	</nav>
+
+	{#if mobileMenuOpen}
+		<div
+			id="mobile-menu"
+			class="border-t border-border bg-background px-[var(--gutter)] py-5 lg:hidden"
+		>
+			<ul class="flex flex-col">
+				{#each navigationLinks as link (link.href)}
+					<li>
 						<a
-							href={cta.href}
-							class="rounded-lg px-5 py-2.5 text-center text-sm font-medium transition-all duration-200"
-							class:border={cta.variant === 'outline'}
-							class:border-border={cta.variant === 'outline'}
-							class:text-foreground={cta.variant === 'outline'}
-							class:hover:bg-card={cta.variant === 'outline'}
-							class:bg-gradient-to-r={cta.variant === 'primary'}
-							class:from-primary={cta.variant === 'primary'}
-							class:to-secondary={cta.variant === 'primary'}
-							class:text-primary-foreground={cta.variant === 'primary'}
-							class:hover:opacity-90={cta.variant === 'primary'}
+							href={link.href}
+							target={link.external ? '_blank' : undefined}
+							rel={link.external ? 'noreferrer' : undefined}
+							class="block py-2.5 text-[0.9375rem] text-muted-foreground transition-colors hover:text-foreground"
 						>
-							{cta.name}
+							{link.name}
 						</a>
-					{/each}
-				</div>
+					</li>
+				{/each}
+			</ul>
+
+			<div class="mt-5 flex flex-col gap-2 border-t border-border pt-5">
+				<a
+					href={contactHref}
+					class="rounded-md border border-border-strong px-4 py-2.5 text-center text-sm text-foreground"
+				>
+					Contact
+				</a>
+				<a
+					href={joinHref}
+					class="rounded-md bg-accent px-4 py-2.5 text-center text-sm font-medium text-accent-foreground"
+				>
+					Join Mindplex
+				</a>
 			</div>
 		</div>
 	{/if}
-</nav>
+</header>

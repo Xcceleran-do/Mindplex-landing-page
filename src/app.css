@@ -1,184 +1,249 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
 @plugin '@tailwindcss/typography';
-@custom-variant dark (&:is(.dark *));
 
-:root {
- --radius: 0.625rem;
- --background: oklch(20.4% 0.034 257);
- --foreground:oklch(100.0% 0.000 263);
- --card: oklch(28.6% 0.049 256);
- --card-foreground: oklch(100.0% 0.000 263);
- --popover: oklch(25.6% 0.047 256);
- --popover-foreground: oklch(100.0% 0.000 263);
- --primary: oklch(67.6% 0.114 184);
- --primary-foreground: oklch(100.0% 0.000 263);
- --secondary: oklch(57.5% 0.170 272);
- --secondary-foreground: oklch(100.0% 0.000 263);
- --muted: oklch( 35.5% 0.051 255);
- --muted-foreground: oklch(100.0% 0.000 263);
- --accent: oklch(100.0% 0.000 263);
- --accent-foreground: oklch(100.0% 0.000 263);
- --destructive: oklch(63.6% 0.208 25);
+/* ---------------------------------------------------------------------------
+   Typography. Geist + Geist Mono, self-hosted variable woff2 (OFL, see
+   static/fonts/GEIST-LICENSE.txt). Mono is reserved for token tickers.
+--------------------------------------------------------------------------- */
 
- --border: oklch(0.922 0 0);
- --input: oklch(0.922 0 0);
- --ring: oklch(0.708 0 0);
- --chart-1: oklch(0.646 0.222 41.116);
- --chart-2: oklch(0.6 0.118 184.704);
- --chart-3: oklch(0.398 0.07 227.392);
- --chart-4: oklch(0.828 0.189 84.429);
- --chart-5: oklch(0.769 0.188 70.08);
- --sidebar: oklch(0.985 0 0);
- --sidebar-foreground: oklch(0.145 0 0);
- --sidebar-primary: oklch(0.205 0 0);
- --sidebar-primary-foreground: oklch(0.985 0 0);
- --sidebar-accent: oklch(0.97 0 0);
- --sidebar-accent-foreground: oklch(0.205 0 0);
- --sidebar-border: oklch(0.922 0 0);
- --sidebar-ring: oklch(0.708 0 0);
+@font-face {
+	font-family: 'Geist';
+	src: url('/fonts/Geist-Variable.woff2') format('woff2-variations');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
 }
 
-.dark {
- --background: oklch(0.145 0 0);
- --foreground: oklch(0.985 0 0);
- --card: oklch(0.205 0 0);
- --card-foreground: oklch(0.985 0 0);
- --popover: oklch(0.269 0 0);
- --popover-foreground: oklch(0.985 0 0);
- --primary: oklch(0.922 0 0);
- --primary-foreground: oklch(0.205 0 0);
- --secondary: oklch(0.269 0 0);
- --secondary-foreground: oklch(0.985 0 0);
- --muted: oklch(0.269 0 0);
- --muted-foreground: oklch(0.708 0 0);
- --accent: oklch(0.371 0 0);
- --accent-foreground: oklch(0.985 0 0);
- --destructive: oklch(0.704 0.191 22.216);
- --border: oklch(0.922 0 0);
- --input: oklch(25.9 24.77 273.44);
- --ring: oklch(0.922 0 0);
+@font-face {
+	font-family: 'Geist Mono';
+	src: url('/fonts/GeistMono-Variable.woff2') format('woff2-variations');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
 
- --chart-1: oklch(0.488 0.243 264.376);
- --chart-2: oklch(0.696 0.17 162.48);
- --chart-3: oklch(0.769 0.188 70.08);
- --chart-4: oklch(0.627 0.265 303.9);
- --chart-5: oklch(0.645 0.246 16.439);
- --sidebar: oklch(0.205 0 0);
+/* ---------------------------------------------------------------------------
+   Color. The page is dark-only, locked at the root. One accent: Mindplex teal.
+   Every value is stated in OKLCH so lightness is perceptually predictable and
+   contrast can be reasoned about directly from the L channel.
+--------------------------------------------------------------------------- */
 
- --sidebar-foreground: oklch(0.985 0 0);
- --sidebar-primary: oklch(62.61 52.5 265.14);
- --sidebar-primary-foreground: oklch(0.985 0 0);
- --sidebar-accent: oklch(15.8 14.38 270.98);
- --sidebar-accent-foreground: oklch(0.985 0 0);
- --sidebar-border: oklch(62.61 52.5 265.14);
- --sidebar-ring: oklch(62.61 52.5 265.14);
+:root {
+	--radius: 0.75rem;
+
+	/* Cool near-black ramp. No pure black. */
+	--background: oklch(17% 0.012 257);
+	--surface: oklch(21% 0.014 257);
+	--surface-raised: oklch(25% 0.016 257);
+
+	/* Off-white, never pure white. */
+	--foreground: oklch(97% 0.003 257);
+	/* Genuinely muted. ~6.6:1 against --background, clears WCAG AA. */
+	--muted-foreground: oklch(72% 0.014 257);
+
+	/* The single accent. */
+	--accent: oklch(72% 0.12 184);
+	--accent-strong: oklch(78% 0.13 184);
+	/* Dark text on the teal fill. White would sit at ~2:1 and fail AA. */
+	--accent-foreground: oklch(18% 0.02 257);
+
+	/* Hairlines are light-on-dark at low alpha, not a near-white solid. */
+	--border: oklch(100% 0 0 / 0.1);
+	--border-strong: oklch(100% 0 0 / 0.18);
+
+	--ring: oklch(72% 0.12 184);
+	--destructive: oklch(64% 0.19 25);
+
+	/* Section rhythm. Referenced by the section utilities below. */
+	--section-y: 5rem;
+	--gutter: 1.25rem;
 }
 
 @theme inline {
- --radius-sm: calc(var(--radius) - 4px);
- --radius-md: calc(var(--radius) - 2px);
- --radius-lg: var(--radius);
- --radius-xl: calc(var(--radius) + 4px);
- --color-background: var(--background);
- --color-foreground: var(--foreground);
- --color-card: var(--card);
- --color-card-foreground: var(--card-foreground);
- --color-popover: var(--popover);
- --color-popover-foreground: var(--popover-foreground);
- --color-primary: var(--primary);
- --color-primary-foreground: var(--primary-foreground);
- --color-secondary: var(--secondary);
- --color-secondary-foreground: var(--secondary-foreground);
- --color-muted: var(--muted);
- --color-muted-foreground: var(--muted-foreground);
- --color-accent: var(--accent);
- --color-accent-foreground: var(--accent-foreground);
- --color-destructive: var(--destructive);
- --color-border: var(--border);
- --color-input: var(--input);
- --color-ring: var(--ring);
- --color-chart-1: var(--chart-1);
- --color-chart-2: var(--chart-2);
- --color-chart-3: var(--chart-3);
- --color-chart-4: var(--chart-4);
- --color-chart-5: var(--chart-5);
- --color-sidebar: var(--sidebar);
- --color-sidebar-foreground: var(--sidebar-foreground);
- --color-sidebar-primary: var(--sidebar-primary);
- --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
- --color-sidebar-accent: var(--sidebar-accent);
- --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
- --color-sidebar-border: var(--sidebar-border);
- --color-sidebar-ring: var(--sidebar-ring);
+	--font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+
+	--color-background: var(--background);
+	--color-surface: var(--surface);
+	--color-surface-raised: var(--surface-raised);
+	--color-foreground: var(--foreground);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-strong: var(--accent-strong);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-border: var(--border);
+	--color-border-strong: var(--border-strong);
+	--color-ring: var(--ring);
+	--color-destructive: var(--destructive);
 }
 
 @layer base {
-    * {
-        @apply border-border outline-ring/50;
-    }
+	* {
+		border-color: var(--border);
+	}
 
-    body {
-        @apply bg-background text-foreground;
-    }
+	html {
+		scroll-behavior: smooth;
+		/* Anchored sections clear the sticky nav. */
+		scroll-padding-top: 6rem;
+		-webkit-text-size-adjust: 100%;
+	}
+
+	body {
+		background-color: var(--background);
+		color: var(--foreground);
+		font-family: var(--font-sans);
+		font-synthesis-weight: none;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	/* One visible focus treatment for the whole site. The previous build had
+	   none, so nothing was keyboard-navigable in a visible way. */
+	:focus-visible {
+		outline: 2px solid var(--ring);
+		outline-offset: 2px;
+		border-radius: 2px;
+	}
+
+	::selection {
+		background-color: oklch(72% 0.12 184 / 0.28);
+		color: var(--foreground);
+	}
+
+	h1,
+	h2,
+	h3 {
+		/* Display sizes need negative tracking to avoid looking loose. */
+		letter-spacing: -0.02em;
+		text-wrap: balance;
+	}
+
+	p {
+		text-wrap: pretty;
+	}
+
+	img {
+		max-width: 100%;
+	}
 }
-@theme {
-    @keyframes spotlight {
-      0% {
-        opacity: 0;
-        transform: translate(-72%, -62%) scale(0.5);
-      }
-      100% {
-        opacity: 1;
-        transform: translate(-50%, -40%) scale(1);
-      }
-    }
-  
-    @keyframes moveHorizontal {
-      0% {
-        transform: translateX(-50%) translateY(-10%);
-      }
-      50% {
-        transform: translateX(50%) translateY(10%);
-      }
-      100% {
-        transform: translateX(-50%) translateY(-10%);
-      }
-    }
-  
-    @keyframes moveInCircle {
-      0% {
-        transform: rotate(0deg);
-      }
-      50% {
-        transform: rotate(180deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  
-    @keyframes moveVertical {
-      0% {
-        transform: translateY(-50%);
-      }
-      50% {
-        transform: translateY(50%);
-      }
-      100% {
-        transform: translateY(-50%);
-      }
-    }
-  
-    --animate-first: moveVertical 30s ease infinite;
-    --animate-second: moveInCircle 20s reverse infinite;
-    --animate-third: moveInCircle 40s linear infinite;
-    --animate-fourth: moveHorizontal 40s ease infinite;
-    --animate-fifth: moveInCircle 20s ease infinite;
-    --animate-spotlight: spotlight 2s ease .75s 1 forwards;
-  }
 
-  body{
-    font-family: 'Inter', sans-serif;
-  }
+@layer components {
+	/* Shared section shell. Replaces the copy-pasted
+	   `px-4 py-16 md:px-8 lg:px-16` + `mx-auto max-w-7xl` on every section. */
+	.section {
+		padding-block: var(--section-y);
+		padding-inline: var(--gutter);
+	}
+
+	.section-wide {
+		margin-inline: auto;
+		width: 100%;
+		max-width: 76rem;
+	}
+
+	/* Section eyebrow: the small label directly above a section's display
+	   heading. Budgeted to three uses across the whole page, because one above
+	   every section is what makes a page read as templated. */
+	.eyebrow {
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--muted-foreground);
+	}
+
+	/* Label for a part inside a composite element (a panel, a diagram region).
+	   Deliberately not the eyebrow treatment: reusing that device inside
+	   components dilutes it and inflates the eyebrow count. */
+	.panel-label {
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--muted-foreground);
+	}
+
+	.hairline {
+		border-block-start: 1px solid var(--border);
+	}
+
+	/* Display heading. Marketing scale, distinctly larger than the body headings
+	   so section openings read as statements rather than as document sections. */
+	.display {
+		font-size: clamp(2.125rem, 1.1rem + 3.4vw, 3.75rem);
+		line-height: 1.04;
+		font-weight: 600;
+		letter-spacing: -0.025em;
+	}
+
+	/* The one paragraph directly under a display heading. Near-foreground and
+	   larger: the previous build set every line below every heading to
+	   --muted-foreground, which flattened the whole page to one grey. Muted is
+	   now reserved for genuinely secondary detail. */
+	.lead {
+		font-size: clamp(1.0625rem, 0.98rem + 0.42vw, 1.3125rem);
+		line-height: 1.55;
+		color: color-mix(in oklab, var(--foreground) 88%, var(--background));
+	}
+
+	/* Tinted band, for alternating section weight. Lightness is set explicitly
+	   rather than mixed toward --surface: mixing landed at L 0.192 against a
+	   0.17 background, a step too small to read as a change of surface. */
+	.section-tint {
+		background-color: oklch(22% 0.014 257);
+		border-block: 1px solid var(--border);
+	}
+}
+
+@media (min-width: 768px) {
+	:root {
+		--section-y: 7rem;
+		--gutter: 2rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	:root {
+		--section-y: 8.5rem;
+		--gutter: 4rem;
+	}
+}
+
+/* ---------------------------------------------------------------------------
+   Motion. Scroll-reveal is driven by IntersectionObserver adding [data-visible]
+   (see src/lib/actions/reveal.ts). Elements start hidden only when the script
+   can run, so a no-JS or failed-hydration render still shows all content.
+--------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+	/* Scoped to .js, which app.html sets before first paint. Without scripting
+	   the rule never applies and every section renders visible. */
+	.js [data-reveal] {
+		opacity: 0;
+		transform: translateY(1rem);
+		transition:
+			opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+			transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+		transition-delay: var(--reveal-delay, 0ms);
+	}
+
+	.js [data-reveal][data-visible] {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}

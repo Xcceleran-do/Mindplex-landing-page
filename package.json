@@ -50,7 +50,6 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^0.525.0",
-		"@splinetool/runtime": "^1.10.34",
 		"clsx": "^2.1.1",
 		"marked": "^16.2.1",
 		"svelte-motion": "^0.12.2",

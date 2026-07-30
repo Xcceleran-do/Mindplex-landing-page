@@ -1,4 +1,13 @@
-export const ourTeam = [
+export type TeamMember = {
+	name: string;
+	imageUrl: string;
+	position: string;
+	/** Empty when the member has no public profile; the link is then omitted. */
+	socialLink: string;
+	customImageStyle?: string;
+};
+
+export const ourTeam: TeamMember[] = [
 	{
 		name: 'Dr. Ben Goertzel',
 		imageUrl:
@@ -14,7 +23,7 @@ export const ourTeam = [
 		socialLink: 'https://www.linkedin.com/in/amaraa'
 	},
 	{
-		name: 'Conor O`Higgins',
+		name: "Conor O'Higgins",
 		imageUrl:
 			'https://console.mindplex.ai/wp-content/plugins/mp-general/public/assets/authors/conor.png',
 		position: 'Managing Editor',
@@ -37,7 +46,7 @@ export const ourTeam = [
 		name: 'Lewis Farrell',
 		imageUrl: 'https://console.mindplex.ai/wp-content/uploads/2025/07/Luis-800x800-1.jpeg',
 		position: 'Advisor',
-		socialLink: ' https://www.linkedin.com/in/lewis-e-farrell-b271784/'
+		socialLink: 'https://www.linkedin.com/in/lewis-e-farrell-b271784/'
 	},
 	{
 		name: 'Lisa Rein',
