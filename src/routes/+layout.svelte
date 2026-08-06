@@ -2,15 +2,13 @@
 	import '../app.css';
 	import Navbar from '$lib/section/Navbar.svelte';
 	import Footer from '$lib/section/Footer.svelte';
-	import { theme } from '$lib/theme.svelte';
 
 	let { children } = $props();
-
-	// Track the OS preference while the user has not chosen for themselves, so
-	// the page follows a system theme change without a reload.
-	$effect(() => theme.watchSystem());
 </script>
 
+<a href="#main-content" class="skip-link">Skip to content</a>
 <Navbar />
-{@render children()}
+<main id="main-content" tabindex="-1">
+	{@render children()}
+</main>
 <Footer />

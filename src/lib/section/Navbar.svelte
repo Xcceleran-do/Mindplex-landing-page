@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { afterNavigate } from '$app/navigation';
-	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import Menu from '@lucide/svelte/icons/menu';
 	import X from '@lucide/svelte/icons/x';
 
@@ -15,17 +14,15 @@
 	let mobileMenuOpen = $state(false);
 
 	const navigationLinks: NavLink[] = [
-		{ name: 'About', href: '/#about' },
-		{ name: 'OmegaPlex', href: '/#omegaplex' },
-		{ name: 'OmegaClaw', href: '/#omegaclaw' },
+		{ name: 'How it works', href: '/#how-it-works' },
+		{ name: 'Memory', href: '/#memory' },
+		{ name: 'Trust', href: '/#trust' },
 		{ name: 'Roadmap', href: '/roadmap', exactMatch: true },
 		{ name: 'Blog', href: '/blog', exactMatch: true },
-		{ name: 'Team', href: '/#team' },
 		{ name: 'Whitepaper', href: 'https://docs.mindplex.ai', external: true }
 	];
 
-	const contactHref = 'https://magazine.mindplex.ai/contact-us';
-	const joinHref = 'https://magazine.mindplex.ai/?type=register&source=landingPage';
+	const publicationHref = 'https://magazine.mindplex.ai';
 
 	const isActive = (link: NavLink) => link.exactMatch === true && page.url.pathname === link.href;
 
@@ -42,7 +39,7 @@
 	}}
 />
 
-<header class="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur-md">
+<header class="sticky top-0 z-50 border-b border-border bg-background/92 backdrop-blur-xl">
 	<nav
 		aria-label="Main"
 		class="section-wide flex h-[68px] items-center justify-between gap-6 px-[var(--gutter)]"
@@ -52,13 +49,18 @@
 			class="flex flex-shrink-0 items-center gap-2.5 rounded-sm"
 			aria-label="Mindplex home"
 		>
-			<!-- logo.png has an opaque dark background baked in, so it is presented
-			     as a solid mark rather than keyed out, which would fringe the glyph. -->
 			<img src="/logo.png" alt="" width="32" height="32" class="h-8 w-8 rounded-md" />
-			<span class="text-[0.9375rem] font-semibold tracking-tight">Mindplex</span>
+			<span class="flex items-baseline gap-2 text-[0.9375rem] font-semibold tracking-tight">
+				Mindplex
+				<span
+					class="hidden text-[0.6875rem] font-bold tracking-[0.15em] text-accent uppercase sm:inline"
+				>
+					/ OmegaPlex
+				</span>
+			</span>
 		</a>
 
-		<ul class="hidden items-center gap-7 lg:flex">
+		<ul class="hidden items-center gap-5 xl:flex">
 			{#each navigationLinks as link (link.href)}
 				<li>
 					<a
@@ -76,28 +78,19 @@
 			{/each}
 		</ul>
 
-		<div class="hidden items-center gap-2 lg:flex">
-			<ThemeToggle />
+		<div class="hidden items-center xl:flex">
 			<a
-				href={contactHref}
-				class="rounded-md px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
+				href={publicationHref}
+				class="inline-flex min-h-11 items-center rounded-full bg-accent px-5 text-sm font-semibold whitespace-nowrap text-accent-foreground transition-transform hover:-translate-y-0.5 hover:bg-accent-strong active:translate-y-px"
 			>
-				Contact
-			</a>
-			<a
-				href={joinHref}
-				class="rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-strong active:translate-y-px"
-			>
-				Join Mindplex
+				Read OmegaPlex
 			</a>
 		</div>
 
-		<div class="flex items-center gap-1 lg:hidden">
-			<ThemeToggle />
-
+		<div class="flex items-center xl:hidden">
 			<button
 				type="button"
-				class="-mr-2 rounded-md p-2 text-foreground"
+				class="-mr-2 flex h-11 w-11 items-center justify-center rounded-full text-foreground"
 				aria-expanded={mobileMenuOpen}
 				aria-controls="mobile-menu"
 				aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
@@ -115,7 +108,7 @@
 	{#if mobileMenuOpen}
 		<div
 			id="mobile-menu"
-			class="border-t border-border bg-background px-[var(--gutter)] py-5 lg:hidden"
+			class="border-t border-border bg-background px-[var(--gutter)] py-5 xl:hidden"
 		>
 			<ul class="flex flex-col">
 				{#each navigationLinks as link (link.href)}
@@ -124,7 +117,7 @@
 							href={link.href}
 							target={link.external ? '_blank' : undefined}
 							rel={link.external ? 'noreferrer' : undefined}
-							class="block py-2.5 text-[0.9375rem] text-muted-foreground transition-colors hover:text-foreground"
+							class="flex min-h-11 items-center text-[0.9375rem] text-muted-foreground transition-colors hover:text-foreground"
 						>
 							{link.name}
 						</a>
@@ -132,18 +125,12 @@
 				{/each}
 			</ul>
 
-			<div class="mt-5 flex flex-col gap-2 border-t border-border pt-5">
+			<div class="mt-5 border-t border-border pt-5">
 				<a
-					href={contactHref}
-					class="rounded-md border border-border-strong px-4 py-2.5 text-center text-sm text-foreground"
+					href={publicationHref}
+					class="flex min-h-11 items-center justify-center rounded-full bg-accent px-4 text-center text-sm font-semibold text-accent-foreground"
 				>
-					Contact
-				</a>
-				<a
-					href={joinHref}
-					class="rounded-md bg-accent px-4 py-2.5 text-center text-sm font-medium text-accent-foreground"
-				>
-					Join Mindplex
+					Read OmegaPlex
 				</a>
 			</div>
 		</div>
