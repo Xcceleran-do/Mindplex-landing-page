@@ -7,20 +7,20 @@
 	type NavLink = {
 		name: string;
 		href: string;
-		exactMatch?: boolean;
-		external?: boolean;
 	};
 
 	let mobileMenuOpen = $state(false);
 
 	const navigationLinks: NavLink[] = [
-		{ name: 'OmegaPlex', href: '/omegaplex', exactMatch: true },
-		{ name: 'Blog', href: '/blog', exactMatch: true }
+		{ name: 'OmegaPlex', href: '/omegaplex' },
+		{ name: 'Blog', href: '/blog' }
 	];
 
 	const publicationHref = 'https://magazine.mindplex.ai';
 
-	const isActive = (link: NavLink) => link.exactMatch === true && page.url.pathname === link.href;
+	// Section match, so /blog/some-post still lights up "Blog".
+	const isActive = (link: NavLink) =>
+		page.url.pathname === link.href || page.url.pathname.startsWith(link.href + '/');
 
 	// Close on navigation, so tapping an anchor link on mobile does not leave the
 	// panel covering the section it just scrolled to.
@@ -54,12 +54,10 @@
 				<li>
 					<a
 						href={link.href}
-						target={link.external ? '_blank' : undefined}
-						rel={link.external ? 'noreferrer' : undefined}
 						aria-current={isActive(link) ? 'page' : undefined}
-						class="text-sm transition-colors hover:text-foreground {isActive(link)
-							? 'text-foreground'
-							: 'text-muted-foreground'}"
+						class="text-sm transition-colors {isActive(link)
+							? 'font-semibold text-accent'
+							: 'text-muted-foreground hover:text-foreground'}"
 					>
 						{link.name}
 					</a>
@@ -104,9 +102,10 @@
 					<li>
 						<a
 							href={link.href}
-							target={link.external ? '_blank' : undefined}
-							rel={link.external ? 'noreferrer' : undefined}
-							class="flex min-h-11 items-center text-[0.9375rem] text-muted-foreground transition-colors hover:text-foreground"
+							aria-current={isActive(link) ? 'page' : undefined}
+							class="flex min-h-11 items-center text-[0.9375rem] transition-colors {isActive(link)
+								? 'font-semibold text-accent'
+								: 'text-muted-foreground hover:text-foreground'}"
 						>
 							{link.name}
 						</a>
