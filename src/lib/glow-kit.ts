@@ -6,9 +6,9 @@ import type * as ThreeNS from 'three';
  * keeping it out of the initial bundle.
  */
 
-/** Brand pink, hardcoded: THREE.Color cannot parse the oklch tokens. */
-export const PINK = 0xf06daa;
-export const PINK_SOFT = 0xff9ccb;
+/** Brand green (logo, hsl(158 56% 54%)), hardcoded: THREE.Color cannot parse the oklch tokens. */
+export const GREEN = 0x48cb9b;
+export const GREEN_SOFT = 0x9ce8cb;
 
 export function makeKit(THREE: typeof ThreeNS) {
 	const disposables: { dispose(): void }[] = [];
@@ -23,13 +23,13 @@ export function makeKit(THREE: typeof ThreeNS) {
 	const g = c.getContext('2d')!;
 	const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
 	grad.addColorStop(0, 'rgba(255,255,255,1)');
-	grad.addColorStop(0.3, 'rgba(255,156,203,0.6)');
-	grad.addColorStop(1, 'rgba(240,109,170,0)');
+	grad.addColorStop(0.3, 'rgba(156,232,203,0.6)');
+	grad.addColorStop(1, 'rgba(72,203,155,0)');
 	g.fillStyle = grad;
 	g.fillRect(0, 0, 64, 64);
 	const glow = track(new THREE.CanvasTexture(c));
 
-	const sprite = (scale: number, opacity: number, color: number = PINK_SOFT) => {
+	const sprite = (scale: number, opacity: number, color: number = GREEN_SOFT) => {
 		const s = new THREE.Sprite(
 			track(
 				new THREE.SpriteMaterial({
@@ -50,7 +50,7 @@ export function makeKit(THREE: typeof ThreeNS) {
 		positions: Float32Array,
 		size: number,
 		opacity: number,
-		color: number = PINK,
+		color: number = GREEN,
 		dynamic = false,
 		colors?: Float32Array
 	) => {

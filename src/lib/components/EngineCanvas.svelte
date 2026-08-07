@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { makeKit, PINK, PINK_SOFT } from '$lib/glow-kit';
+	import { makeKit, GREEN, GREEN_SOFT } from '$lib/glow-kit';
 
 	/**
-	 * One particle-built 3D symbol per stage — Observe: eye, Remember: brain,
+	 * One particle-built 3D symbol per stage — Observe: eye, Patterns: spiral galaxy,
 	 * Verify: shield with check, Hand off: human at the gate. The cloud
 	 * dissolves and reforms into the next symbol as the reader scrolls, and
 	 * sways gently so the depth reads. A faint dust field sits behind it.
@@ -85,7 +85,7 @@
 			from.set(shapePos[shown]);
 			fromB.set(shapeBri[shown]);
 
-			const cloud = kit.points(pos, 0.11, 0.95, PINK, true, col);
+			const cloud = kit.points(pos, 0.11, 0.95, GREEN, true, col);
 			cloud.obj.scale.setScalar(1.85);
 			cloud.obj.position.y = 1.05;
 			cloud.obj.rotation.x = -0.06;
@@ -133,7 +133,7 @@
 				dustPos[i * 3 + 1] = rand(-4.5, 4.5);
 				dustPos[i * 3 + 2] = rand(-2, 0.5);
 			}
-			const dust = kit.points(dustPos, 0.09, 0.3, PINK_SOFT, true);
+			const dust = kit.points(dustPos, 0.09, 0.3, GREEN_SOFT, true);
 			scene.add(dust.obj);
 
 			const clock = new THREE.Clock();

@@ -3,7 +3,7 @@
 	import EngineCanvas from '$lib/components/EngineCanvas.svelte';
 
 	/**
-	 * Chapters 01–02 of the story: triage (eye) and pattern detection (brain).
+	 * Chapters 01–02 of the story: triage (eye) and pattern detection (spiral galaxy).
 	 * The sticky particle symbol morphs as the reader scrolls between them.
 	 */
 

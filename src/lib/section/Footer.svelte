@@ -20,15 +20,13 @@
 	];
 
 	const productLinks = [
-		{ name: 'How it works', url: '/#how-it-works' },
-		{ name: 'Memory', url: '/#memory' },
-		{ name: 'Trust', url: '/#trust' },
-		{ name: 'Roadmap', url: '/roadmap' }
+		{ name: 'How it thinks', url: '/omegaplex#how-it-works' },
+		{ name: 'Memory', url: '/omegaplex#memory' },
+		{ name: 'Trust', url: '/omegaplex#trust' }
 	];
 
 	const companyLinks = [
 		{ name: 'Blog', url: '/blog' },
-		{ name: 'Whitepaper', url: 'https://docs.mindplex.ai' },
 		{ name: 'Contact', url: 'https://magazine.mindplex.ai/contact-us' },
 		{ name: 'Privacy', url: 'https://magazine.mindplex.ai/privacy-policy' }
 	];

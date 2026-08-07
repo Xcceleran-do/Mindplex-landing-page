@@ -99,24 +99,24 @@
 				out[2] = z0[i] * (1 - g) + z1[i] * g + Math.cos(t * freq[i] * 0.6 + phase[i]) * 0.1;
 			};
 
-			/* dim magenta → pink → hot orange-pink → white only at the very tip */
+			/* dim sea-green → brand green → hot lime → white only at the very tip */
 			const ramp = (t: number, k: number, out: [number, number, number]) => {
 				let r: number, g: number, b: number;
 				if (t < 0.6) {
 					const u = t / 0.6;
-					r = 0.5 + 0.45 * u;
-					g = 0.12 + 0.16 * u;
-					b = 0.32 + 0.26 * u;
+					r = 0.1 + 0.08 * u;
+					g = 0.42 + 0.38 * u;
+					b = 0.28 + 0.33 * u;
 				} else if (t < 0.9) {
 					const u = (t - 0.6) / 0.3;
-					r = 0.95 + 0.05 * u;
-					g = 0.28 + 0.14 * u;
-					b = 0.58 - 0.23 * u;
+					r = 0.18 + 0.37 * u;
+					g = 0.8 + 0.15 * u;
+					b = 0.61 - 0.23 * u;
 				} else {
 					const u = (t - 0.9) / 0.1;
-					r = 1;
-					g = 0.42 + 0.43 * u;
-					b = 0.35 + 0.35 * u;
+					r = 0.55 + 0.45 * u;
+					g = 0.95 + 0.05 * u;
+					b = 0.38 + 0.52 * u;
 				}
 				// taper as strands bunch up, or the additive overlap sums to white
 				const f = k * smooth(0, 0.06, t) * (1 - 0.4 * smooth(0.5, 0.9, t));
@@ -233,7 +233,7 @@
 				chips.setMatrixAt(i, m4);
 				const warm = Math.random();
 				chipTint
-					.set(warm < 0.6 ? 0xff9d5c : warm < 0.85 ? 0xffd2b0 : 0xff7fb0)
+					.set(warm < 0.6 ? 0x48cb9b : warm < 0.85 ? 0xb7eed6 : 0xffd2b0)
 					.multiplyScalar(rand(0.7, 1.1));
 				chips.setColorAt(i, chipTint);
 			}
@@ -279,8 +279,8 @@
 								face += 0.026 * exp(-pow((diag + 0.45 - uStreak) * 7.0, 2.0));
 								face *= uFace;
 								vec3 cool = vec3(0.62, 0.70, 0.82);
-								vec3 pink = vec3(1.00, 0.55, 0.75);
-								vec3 col = mix(cool, pink, uPink) * (rim * 1.7 + face);
+								vec3 brand = vec3(0.55, 1.00, 0.80);
+								vec3 col = mix(cool, brand, uPink) * (rim * 1.7 + face);
 								gl_FragColor = vec4(col * uIn, 1.0);
 							}`,
 						transparent: true,
@@ -363,11 +363,13 @@
 							vec3 n = normalize(vN);
 							float diff = 0.5 + 0.5 * dot(n, normalize(vec3(-0.65, 0.5, 0.6)));
 							float fres = pow(1.0 - abs(dot(n, normalize(vV))), 2.0);
-							// the side the fibers pour into burns orange-hot
+							// the side the fibers pour into burns lime-hot. Channel values
+							// sit well below the pink original's: green dominates perceived
+							// luminance, so equal numbers read blinding.
 							float hot = smoothstep(0.5, -1.1, vP.x);
-							vec3 body = vec3(0.6, 0.09, 0.32) * (0.15 + 1.4 * diff * diff);
-							vec3 rim = vec3(1.0, 0.72, 0.85) * pow(fres, 1.4) * 1.0;
-							vec3 core = vec3(1.0, 0.55, 0.3) * hot * (0.4 + 0.8 * diff);
+							vec3 body = vec3(0.05, 0.32, 0.20) * (0.15 + 1.4 * diff * diff);
+							vec3 rim = vec3(0.55, 0.85, 0.70) * pow(fres, 1.4) * 1.0;
+							vec3 core = vec3(0.50, 0.70, 0.32) * hot * (0.4 + 0.8 * diff);
 							// dark glass until the light arrives; >1 overshoots into flare
 							gl_FragColor = vec4((body + rim + core) * mix(0.1, 1.0, uIg), 0.96);
 						}`,
@@ -385,11 +387,11 @@
 			   keeps depth testing on so the gem occludes it into a halo. */
 			const glows: [number, number, number, number, number, number, number, number][] = [
 				// sx, sy, opacity, color, x, y, z, behind
-				[2.8, 1.2, 0.75, 0xffd9a8, 3.9, 0, 0.5, 0],
-				[3.6, 2.2, 0.4, 0xff8bbf, 4.15, 0, 0.4, 0],
-				[1.7, 1.7, 0.6, 0xffc2a0, 5.0, 0.15, 1.2, 0],
-				[7.0, 7.0, 0.3, 0xff9ccb, 5.0, 0, -1.4, 1],
-				[9.5, 9.5, 0.13, 0xf06daa, 4.4, 0, -1.6, 1],
+				[2.8, 1.2, 0.55, 0xd9f0c4, 3.9, 0, 0.5, 0],
+				[3.6, 2.2, 0.28, 0x8be4c0, 4.15, 0, 0.4, 0],
+				[1.7, 1.7, 0.4, 0xb9ecd0, 5.0, 0.15, 1.2, 0],
+				[7.0, 7.0, 0.24, 0x9ce8cb, 5.0, 0, -1.4, 1],
+				[9.5, 9.5, 0.11, 0x48cb9b, 4.4, 0, -1.6, 1],
 				[11.0, 11.0, 0.06, 0xbfd0ff, 8.0, 4.5, -2.5, 1]
 			];
 			// [material, base opacity, ambient] — ambient sprites (the corner

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
+	import Layers from '@lucide/svelte/icons/layers';
 	import { reveal } from '$lib/actions/reveal';
 </script>
 
@@ -7,18 +8,22 @@
 	<div use:reveal class="section-wide closing-inner">
 		<div>
 			<h2 class="landing-heading closing-heading">
-				Don't read another AI summary. <span>Watch a reasoning system follow the story.</span>
+				Built for a <span>different kind</span> of publishing.
 			</h2>
 			<p class="landing-lead">
-				OmegaPlex is live on the AGI &amp; Frontier AI beat. It remembers yesterday, investigates
-				today, and carries the unanswered questions into tomorrow.
+				OmegaPlex runs on OmegaClaw: persistent symbolic memory and neurosymbolic reasoning through
+				MeTTa, Atomspace, NAL and PLN.
 			</p>
 		</div>
 
 		<div class="closing-actions">
 			<a class="closing-primary" href="https://magazine.mindplex.ai">
-				Visit Mindplex
+				Read Mindplex
 				<ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+			</a>
+			<a class="closing-secondary" href="/omegaplex#stack">
+				<Layers size={17} strokeWidth={1.9} aria-hidden="true" />
+				Explore the architecture
 			</a>
 		</div>
 	</div>
@@ -106,6 +111,15 @@
 
 	.closing-primary:hover {
 		background: var(--accent-strong);
+	}
+
+	.closing-secondary {
+		border: 1px solid var(--border-strong);
+		background: var(--surface);
+	}
+
+	.closing-secondary:hover {
+		border-color: var(--accent);
 	}
 
 	@media (max-width: 767px) {

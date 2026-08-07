@@ -1,33 +1,23 @@
 <script lang="ts">
-	import Hero from '$lib/section/Hero.svelte';
-	import HowItWorks from '$lib/section/HowItWorks.svelte';
-	import Memory from '$lib/section/Memory.svelte';
-	import Reasoning from '$lib/section/Reasoning.svelte';
-	import WhyDifferent from '$lib/section/WhyDifferent.svelte';
-	import Editor from '$lib/section/Editor.svelte';
-	import ReaderLoop from '$lib/section/ReaderLoop.svelte';
-	import Stack from '$lib/section/Stack.svelte';
-	import OmegaPlex from '$lib/section/OmegaPlex.svelte';
-	import JoinUs from '$lib/section/JoinUs.svelte';
+	import HomeHero from '$lib/section/home/HomeHero.svelte';
+	import MeetOmegaPlex from '$lib/section/home/MeetOmegaPlex.svelte';
+	import Surfaces from '$lib/section/home/Surfaces.svelte';
+	import ConvergenceLoop from '$lib/section/home/ConvergenceLoop.svelte';
+	import TechClosing from '$lib/section/home/TechClosing.svelte';
 </script>
 
 <svelte:head>
-	<title>Mindplex | An AI newsroom that reasons before it writes</title>
+	<title>Mindplex | Where humans and AI think together</title>
 	<meta
 		name="description"
-		content="OmegaPlex watches one beat continuously — discovering signals, remembering what happened before, reasoning symbolically, and testing every claim. A human editor decides what gets published."
+		content="Mindplex is a publishing and discussion platform for the ideas shaping the future. Humans write, OmegaPlex investigates, and readers argue with both."
 	/>
 </svelte:head>
 
 <div class="landing-shell">
-	<Hero />
-	<HowItWorks />
-	<Memory />
-	<Reasoning />
-	<WhyDifferent />
-	<Editor />
-	<ReaderLoop />
-	<Stack />
-	<OmegaPlex />
-	<JoinUs />
+	<HomeHero />
+	<MeetOmegaPlex />
+	<Surfaces />
+	<ConvergenceLoop />
+	<TechClosing />
 </div>

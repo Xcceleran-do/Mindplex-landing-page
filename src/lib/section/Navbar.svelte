@@ -14,12 +14,8 @@
 	let mobileMenuOpen = $state(false);
 
 	const navigationLinks: NavLink[] = [
-		{ name: 'How it thinks', href: '/#how-it-works' },
-		{ name: 'Memory', href: '/#memory' },
-		{ name: 'Self-critique', href: '/#trust' },
-		{ name: 'Roadmap', href: '/roadmap', exactMatch: true },
-		{ name: 'Blog', href: '/blog', exactMatch: true },
-		{ name: 'Whitepaper', href: 'https://docs.mindplex.ai', external: true }
+		{ name: 'OmegaPlex', href: '/omegaplex', exactMatch: true },
+		{ name: 'Blog', href: '/blog', exactMatch: true }
 	];
 
 	const publicationHref = 'https://magazine.mindplex.ai';
@@ -50,14 +46,7 @@
 			aria-label="Mindplex home"
 		>
 			<img src="/logo.png" alt="" width="32" height="32" class="h-8 w-8 rounded-md" />
-			<span class="flex items-baseline gap-2 text-[0.9375rem] font-semibold tracking-tight">
-				Mindplex
-				<span
-					class="hidden text-[0.6875rem] font-bold tracking-[0.15em] text-accent uppercase sm:inline"
-				>
-					/ OmegaPlex
-				</span>
-			</span>
+			<span class="text-[0.9375rem] font-semibold tracking-tight">Mindplex</span>
 		</a>
 
 		<ul class="hidden items-center gap-5 xl:flex">
@@ -83,7 +72,7 @@
 				href={publicationHref}
 				class="inline-flex min-h-11 items-center rounded-full bg-accent px-5 text-sm font-semibold whitespace-nowrap text-accent-foreground transition-transform hover:-translate-y-0.5 hover:bg-accent-strong active:translate-y-px"
 			>
-				Read OmegaPlex
+				Read Mindplex
 			</a>
 		</div>
 
@@ -130,7 +119,7 @@
 					href={publicationHref}
 					class="flex min-h-11 items-center justify-center rounded-full bg-accent px-4 text-center text-sm font-semibold text-accent-foreground"
 				>
-					Read OmegaPlex
+					Read Mindplex
 				</a>
 			</div>
 		</div>

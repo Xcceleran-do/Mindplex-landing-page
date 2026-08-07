@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { makeKit, PINK } from '$lib/glow-kit';
+	import { makeKit, GREEN } from '$lib/glow-kit';
 
 	/**
 	 * "300 comments in. One piece of knowledge out." — literally. Three
@@ -120,7 +120,7 @@
 			scene.add(dots.obj);
 
 			// The single bright thing 300 comments became.
-			const core = kit.sprite(1, 0, PINK);
+			const core = kit.sprite(1, 0, GREEN);
 			scene.add(core);
 
 			/* ---- Layout -------------------------------------------------------- */
@@ -185,9 +185,9 @@
 					pos[i * 3 + 1] = syp + (ry * sc - syp) * c;
 					pos[i * 3 + 2] = szp + (rz * sc - szp) * c;
 					const b = 0.5 + 0.5 * c;
-					col[i * 3] = b;
-					col[i * 3 + 1] = 0.55 * b;
-					col[i * 3 + 2] = 0.74 * b;
+					col[i * 3] = 0.36 * b;
+					col[i * 3 + 1] = b;
+					col[i * 3 + 2] = 0.76 * b;
 				}
 				dots.attr.needsUpdate = true;
 				dots.colAttr!.needsUpdate = true;
@@ -205,12 +205,12 @@
 					linePos[o + 4] = pos[b * 3 + 1];
 					linePos[o + 5] = pos[b * 3 + 2];
 					const f = ((settled - 0.82) / 0.18) * (1 - d / CONN) * 0.85;
-					lineCol[o] = f;
-					lineCol[o + 1] = 0.5 * f;
-					lineCol[o + 2] = 0.7 * f;
-					lineCol[o + 3] = f;
-					lineCol[o + 4] = 0.5 * f;
-					lineCol[o + 5] = 0.7 * f;
+					lineCol[o] = 0.36 * f;
+					lineCol[o + 1] = f;
+					lineCol[o + 2] = 0.76 * f;
+					lineCol[o + 3] = 0.36 * f;
+					lineCol[o + 4] = f;
+					lineCol[o + 5] = 0.76 * f;
 					lit++;
 				}
 				lineGeo.setDrawRange(0, lit * 2);

@@ -1,6 +1,6 @@
 /**
  * Dev-time generator for static/engine-shapes.bin — the particle point clouds
- * EngineCanvas.svelte morphs between (eye, brain, shield, person). Sampled
+ * EngineCanvas.svelte morphs between (eye, spiral galaxy, shield, person). Sampled
  * from real meshes so the shapes read; only the ~96KB point file ships.
  *
  * Model source (downloaded at generation time, never committed or shipped):
@@ -323,88 +323,32 @@ const put = (s, i, x, y, z, b) => {
 	}
 }
 
-/* 1 — Remember: brain as icon line-art — scalloped side profile with
-   fold curls and a cerebellum tuck. Tested an anatomical mesh (Allen brain);
-   at particle resolution it reads as a blob, the drawn glyph reads. */
+/* 1 — Patterns: spiral galaxy — a dim scattered signal field with two bright
+   logarithmic arms resolving into a hot core. Replaced the earlier brain
+   glyph, which read as "memory" rather than "pattern detection". */
 {
-	const qbez = (p0, pc, p1, u) => {
-		const a = (1 - u) * (1 - u),
-			b = 2 * u * (1 - u),
-			c = u * u;
-		return [a * p0[0] + b * pc[0] + c * p1[0], a * p0[1] + b * pc[1] + c * p1[1]];
-	};
-	const folds = [
-		[
-			[-1.0, 0.05],
-			[-0.85, 0.8],
-			[-0.15, 0.7]
-		],
-		[
-			[-0.35, -0.45],
-			[0.05, -0.05],
-			[0.45, 0.5]
-		],
-		[
-			[0.15, 0.8],
-			[0.95, 0.7],
-			[0.85, 0.05]
-		],
-		[
-			[-0.6, -0.7],
-			[0.0, -0.85],
-			[0.45, -0.5]
-		]
-	];
-	const R = (t) => {
-		// egg profile, scalloped; slightly fuller at the front (t = pi side)
-		const base = 1.32 * (1 + 0.1 * Math.cos(t)) * (1 - 0.18 * Math.max(0, -Math.sin(t)));
-		return base * (1 + 0.05 * Math.sin(6.5 * t + 1.2));
-	};
 	for (let i = 0; i < P; i++) {
 		const f = i / P;
-		if (f < 0.4) {
-			// outline, leaving the lower-back open for the cerebellum
-			const t = rand(-0.35 * Math.PI, 1.12 * Math.PI);
-			const r = R(t);
-			put(
-				1,
-				i,
-				r * Math.cos(t) * 1.15 + rand(-0.03, 0.03),
-				r * Math.sin(t) * 0.82 + 0.18 + rand(-0.03, 0.03),
-				rand(-0.06, 0.06),
-				0.8
-			);
-		} else if (f < 0.68) {
-			const fold = folds[Math.floor(rand(0, folds.length))];
-			const [x, y] = qbez(fold[0], fold[1], fold[2], Math.random());
-			put(
-				1,
-				i,
-				x * 1.15 + rand(-0.035, 0.035),
-				y * 0.9 + 0.18 + rand(-0.035, 0.035),
-				0.1 + rand(-0.04, 0.04),
-				0.7
-			);
-		} else if (f < 0.86) {
-			// dim interior fill with a shallow dome
+		if (f < 0.3) {
+			// the unstructured noise field the pattern emerges from
 			const t = rand(0, Math.PI * 2);
-			const rr = Math.sqrt(Math.random()) * 0.92;
-			const r = R(t) * rr;
-			const x = r * Math.cos(t) * 1.15;
-			const y = r * Math.sin(t) * 0.82 + 0.18;
-			put(1, i, x, y, 0.18 * (1 - rr * rr) + rand(-0.03, 0.03), 0.24);
+			const r = 1.55 * Math.sqrt(Math.random());
+			put(1, i, r * Math.cos(t), r * Math.sin(t) * 0.78, rand(-0.12, 0.12), rand(0.12, 0.3));
+		} else if (f < 0.85) {
+			// two logarithmic arms, tighter and brighter toward the core
+			const arm = Math.random() < 0.5 ? 0 : Math.PI;
+			const th = rand(0, 2.3 * Math.PI);
+			const r = 0.16 * Math.exp(0.28 * th);
+			const spread = 0.03 + r * 0.09;
+			const x = r * Math.cos(th + arm) + gauss() * spread;
+			const y = (r * Math.sin(th + arm) + gauss() * spread) * 0.78;
+			const rr = Math.min(1, r / 1.5);
+			put(1, i, x, y, 0.14 * (1 - rr * rr) + rand(-0.03, 0.03), 0.9 - 0.45 * rr);
 		} else {
-			// cerebellum: striped half-disc tucked at the lower back
-			const t = rand(-0.45 * Math.PI, 0.55 * Math.PI);
-			const rr = 0.42 * (0.55 + 0.45 * Math.random());
-			put(
-				1,
-				i,
-				1.02 + rr * Math.cos(t) + rand(-0.02, 0.02),
-				-0.78 + rr * Math.sin(t) * 0.75 + rand(-0.02, 0.02),
-				rand(-0.04, 0.04),
-				0.65
-			);
+			// hot core: the derived pattern
+			const t = rand(0, Math.PI * 2);
+			const r = 0.2 * Math.sqrt(Math.random());
+			put(1, i, r * Math.cos(t), r * Math.sin(t) * 0.85, 0.18 + rand(-0.02, 0.02), 1);
 		}
 	}
 }

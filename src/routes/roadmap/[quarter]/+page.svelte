@@ -14,9 +14,9 @@
 			boxColors: ['#529890', '#62AABA']
 		},
 		{
-			text: '#EE83FF',
-			bg: '#EE83FF',
-			boxColors: ['#904490', '#A562BA']
+			text: '#48CB9B',
+			bg: '#48CB9B',
+			boxColors: ['#448F72', '#62BA9E']
 		},
 		{
 			text: '#5BFFB0',

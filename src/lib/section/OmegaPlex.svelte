@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ArrowUpRight from '@lucide/svelte/icons/arrow-up-right';
 	import { reveal } from '$lib/actions/reveal';
 
 	/**
@@ -7,10 +6,10 @@
 	 */
 
 	const beats = [
-		{ name: 'AGI & Frontier AI', live: true },
-		{ name: 'Decentralized AI', live: false },
-		{ name: 'Biotech & Longevity', live: false },
-		{ name: 'Geopolitics of Compute', live: false }
+		'AGI & Frontier AI',
+		'Decentralized AI',
+		'Biotech & Longevity',
+		'Geopolitics of Compute'
 	];
 
 	const perBeat = [
@@ -38,17 +37,12 @@
 			<div class="beats-tree">
 				<p class="tree-root">OmegaClaw</p>
 				<ul>
-					{#each beats as beat, i (beat.name)}
+					{#each beats as beat, i (beat)}
 						<li use:reveal={150 + i * 80}>
-							{beat.name}
-							{#if beat.live}<span class="live-badge">Live</span>{/if}
+							{beat}
 						</li>
 					{/each}
 				</ul>
-				<a href="https://magazine.mindplex.ai">
-					Open the publication
-					<ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
-				</a>
 			</div>
 
 			<div class="beats-config">
@@ -141,36 +135,6 @@
 		height: 2px;
 		background: var(--border-strong);
 		content: '';
-	}
-
-	.live-badge {
-		border: 1px solid color-mix(in oklab, var(--accent) 55%, transparent);
-		border-radius: 999px;
-		padding: 0.2rem 0.7rem;
-		font-size: 0.6875rem;
-		font-weight: 750;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--accent);
-	}
-
-	.beats-tree a {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		margin-top: 2.25rem;
-		border-bottom: 1px solid var(--border-strong);
-		padding-bottom: 0.3rem;
-		font-size: 0.9375rem;
-		font-weight: 680;
-		transition:
-			border-color 180ms ease,
-			color 180ms ease;
-	}
-
-	.beats-tree a:hover {
-		border-color: var(--accent);
-		color: var(--accent);
 	}
 
 	.beats-config {

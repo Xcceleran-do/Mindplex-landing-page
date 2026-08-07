@@ -1,139 +1,278 @@
 <script lang="ts">
-	import { BlogCard } from '$lib/components/BlogCard';
+	import Search from '@lucide/svelte/icons/search';
+	import { reveal } from '$lib/actions/reveal';
+
+	type Blog = {
+		id: number;
+		title: string;
+		description: string;
+		photo_url: string;
+		post_slug: string;
+		created_at: string;
+	};
 
 	const { data } = $props();
+	const blogs: Blog[] = data.blogs;
 	let searchQuery = $state('');
 
 	const filteredBlogs = $derived(
-		data.blogs.filter(
+		blogs.filter(
 			(blog) =>
 				blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
 				blog.description.toLowerCase().includes(searchQuery.toLowerCase())
 		)
 	);
-	$inspect(data);
+
+	const formatDate = (dateString: string) =>
+		new Date(dateString).toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric'
+		});
+
+	const stripHtml = (html: string) =>
+		html
+			? html
+					.replace(/<[^>]*>/g, '')
+					.replace(/&[^;]+;/g, ' ')
+					.trim()
+			: '';
 </script>
 
-<div class="min-h-screen bg-background">
-	<section class="relative overflow-hidden border-b border-border/50 px-4 py-16 md:px-8 lg:px-16">
-		<div class="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-primary/5 blur-3xl"></div>
-		<div class="absolute right-1/4 bottom-0 h-96 w-96 rounded-full bg-secondary/5 blur-3xl"></div>
+<svelte:head>
+	<title>Blog | Mindplex</title>
+	<meta
+		name="description"
+		content="Notes and updates from the team building Mindplex and OmegaPlex."
+	/>
+</svelte:head>
 
-		<div class="relative z-10 mx-auto max-w-7xl">
-			<div class="space-y-6 text-center">
-				<div
-					class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-card/50 px-4 py-2 backdrop-blur-sm"
-				>
-					<div class="h-2 w-2 animate-pulse rounded-full bg-primary"></div>
-					<span class="text-sm text-muted-foreground">Insights & Updates</span>
+<div class="landing-shell">
+	<section class="section">
+		<div class="section-wide">
+			<div use:reveal class="blog-head">
+				<div>
+					<h1 class="landing-heading">The Mindplex blog.</h1>
+					<p class="landing-lead">
+						Notes and updates from the team building Mindplex and OmegaPlex.
+					</p>
 				</div>
 
-				<h1 class="text-4xl font-bold md:text-5xl lg:text-6xl">
-					<span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-						Mindplex Blog
-					</span>
-				</h1>
-
-				<p class="mx-auto max-w-2xl text-base text-muted-foreground md:text-lg">
-					Explore the latest insights on AI, blockchain, and the future of decentralized media.
-				</p>
-
-				<div class="mx-auto max-w-md">
-					<div class="relative">
-						<svg
-							class="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-muted-foreground"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-							></path>
-						</svg>
-						<input
-							type="text"
-							placeholder="Search blog posts..."
-							bind:value={searchQuery}
-							class="w-full rounded-full border border-border/50 bg-card/50 py-3 pr-4 pl-10 text-sm backdrop-blur-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
-						/>
-					</div>
-				</div>
+				<label class="blog-search">
+					<Search size={17} strokeWidth={2} aria-hidden="true" />
+					<input type="search" placeholder="Search posts" bind:value={searchQuery} />
+					<span class="sr-only">Search posts</span>
+				</label>
 			</div>
-		</div>
-	</section>
 
-	<section class="px-4 py-12 md:px-8 lg:px-16">
-		<div class="mx-auto max-w-7xl">
 			{#if filteredBlogs.length > 0}
 				{#if searchQuery}
-					<div class="mb-8">
-						<p class="text-sm text-muted-foreground">
-							Found {filteredBlogs.length} post{filteredBlogs.length !== 1 ? 's' : ''} matching "{searchQuery}"
-						</p>
-					</div>
+					<p class="blog-count tnum" aria-live="polite">
+						{filteredBlogs.length}
+						{filteredBlogs.length === 1 ? 'post matches' : 'posts match'} &ldquo;{searchQuery}&rdquo;
+					</p>
 				{/if}
 
-				<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-					{#each filteredBlogs as blog}
-						<BlogCard {blog} />
+				<ul class="blog-grid">
+					{#each filteredBlogs as blog (blog.id)}
+						<li>
+							<a href="/blog/{blog.post_slug}">
+								{#if blog.photo_url}
+									<img src={blog.photo_url} alt="" loading="lazy" />
+								{:else}
+									<div class="blog-placeholder" aria-hidden="true"></div>
+								{/if}
+								<p class="blog-date tnum">{formatDate(blog.created_at)}</p>
+								<h2>{blog.title}</h2>
+								<p class="blog-excerpt">{stripHtml(blog.description)}</p>
+							</a>
+						</li>
 					{/each}
-				</div>
-			{:else if searchQuery}
-				<div class="py-20 text-center">
-					<div
-						class="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm"
-					>
-						<svg
-							class="h-10 w-10 text-muted-foreground"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-							></path>
-						</svg>
-					</div>
-					<h3 class="mb-2 text-xl font-semibold text-foreground">No posts found</h3>
-					<p class="text-muted-foreground">
-						No blog posts match your search for "{searchQuery}". Try different keywords.
-					</p>
-					<button
-						onclick={() => (searchQuery = '')}
-						class="mt-4 rounded-lg border border-border bg-card px-4 py-2 text-sm transition-colors hover:bg-accent"
-					>
-						Clear search
-					</button>
-				</div>
+				</ul>
 			{:else}
-				<div class="py-20 text-center">
-					<div
-						class="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm"
-					>
-						<svg
-							class="h-10 w-10 text-muted-foreground"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-							></path>
-						</svg>
-					</div>
-					<h3 class="mb-2 text-xl font-semibold text-foreground">No blog posts available</h3>
-					<p class="text-muted-foreground">Check back later for new content.</p>
+				<div class="blog-empty">
+					{#if searchQuery}
+						<p>No posts match &ldquo;{searchQuery}&rdquo;.</p>
+						<button type="button" onclick={() => (searchQuery = '')}>Clear search</button>
+					{:else}
+						<p>No posts yet. Check back soon.</p>
+					{/if}
 				</div>
 			{/if}
 		</div>
 	</section>
 </div>
+
+<style>
+	.blog-head {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 2rem 3rem;
+		flex-wrap: wrap;
+	}
+
+	.blog-search {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		min-height: 3rem;
+		min-width: 17rem;
+		border: 1px solid var(--border-strong);
+		border-radius: 999px;
+		background: var(--surface);
+		padding-inline: 1.1rem;
+		color: var(--muted-foreground);
+		transition: border-color 180ms ease;
+	}
+
+	.blog-search:focus-within {
+		border-color: var(--accent);
+	}
+
+	.blog-search input {
+		flex: 1;
+		background: none;
+		border: none;
+		outline: none;
+		font-size: 0.9375rem;
+		color: var(--foreground);
+	}
+
+	.blog-search input::placeholder {
+		color: var(--muted-foreground);
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.blog-count {
+		margin-top: 3rem;
+		font-size: 0.875rem;
+		color: var(--muted-foreground);
+	}
+
+	.blog-grid {
+		display: grid;
+		gap: clamp(2rem, 3.5vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
+		margin-top: 3rem;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.blog-count + .blog-grid {
+		margin-top: 1.5rem;
+	}
+
+	.blog-grid a {
+		display: block;
+		height: 100%;
+	}
+
+	.blog-grid img,
+	.blog-placeholder {
+		aspect-ratio: 3 / 2;
+		width: 100%;
+		border: 1px solid var(--border);
+		border-radius: 0.75rem;
+		object-fit: cover;
+		transition: border-color 180ms ease;
+	}
+
+	.blog-placeholder {
+		background:
+			radial-gradient(circle at 30% 20%, var(--accent-wash), transparent 60%), var(--surface-raised);
+	}
+
+	.blog-grid a:hover img,
+	.blog-grid a:hover .blog-placeholder {
+		border-color: var(--border-strong);
+	}
+
+	.blog-date {
+		margin-top: 1.25rem;
+		font-size: 0.8125rem;
+		font-weight: 620;
+		color: var(--muted-foreground);
+	}
+
+	.blog-grid h2 {
+		margin-top: 0.5rem;
+		font-size: 1.25rem;
+		font-weight: 710;
+		line-height: 1.25;
+		letter-spacing: -0.02em;
+		transition: color 180ms ease;
+	}
+
+	.blog-grid a:hover h2 {
+		color: var(--accent);
+	}
+
+	.blog-excerpt {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		margin-top: 0.6rem;
+		font-size: 0.9375rem;
+		line-height: 1.55;
+		color: var(--muted-foreground);
+	}
+
+	.blog-empty {
+		margin-top: 4rem;
+		border-top: 1px solid var(--border-strong);
+		padding-top: 3rem;
+	}
+
+	.blog-empty p {
+		font-size: 1.05rem;
+		color: var(--muted-foreground);
+	}
+
+	.blog-empty button {
+		display: inline-flex;
+		min-height: 2.75rem;
+		align-items: center;
+		margin-top: 1.25rem;
+		border: 1px solid var(--border-strong);
+		border-radius: 999px;
+		background: var(--surface);
+		padding-inline: 1.25rem;
+		font-size: 0.875rem;
+		font-weight: 650;
+		transition: border-color 180ms ease;
+	}
+
+	.blog-empty button:hover {
+		border-color: var(--accent);
+	}
+
+	@media (max-width: 1023px) {
+		.blog-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 640px) {
+		.blog-search {
+			width: 100%;
+		}
+
+		.blog-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.blog-grid img,
+		.blog-placeholder {
+			aspect-ratio: 2 / 1;
+		}
+	}
+</style>

@@ -4,32 +4,30 @@
 	import FlowCanvas from '$lib/components/FlowCanvas.svelte';
 </script>
 
-<section id="omegaplex" class="hero">
+<section class="hero">
 	<FlowCanvas />
 	<div class="hero-scrim" aria-hidden="true"></div>
 
 	<div class="section-wide hero-inner">
 		<div class="hero-copy">
-			<p class="hero-kicker">OmegaPlex</p>
-			<h1 class="hero-title">An AI newsroom that <span>reasons before it writes.</span></h1>
+			<h1 class="hero-title">
+				Ideas worth thinking about. <span>Intelligence worth arguing with.</span>
+			</h1>
 			<p class="hero-lead">
-				OmegaPlex watches one beat continuously. It discovers signals, detects emerging patterns,
-				remembers what happened before, reasons over what it knows, tests every important claim, and
-				drafts the story. A human editor decides what gets published.
+				Mindplex is where humans and AI publish, argue and think together about the ideas shaping
+				the future.
 			</p>
 
 			<div class="hero-actions">
 				<a class="button button-primary" href="https://magazine.mindplex.ai">
-					Read OmegaPlex
+					Read Mindplex
 					<ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
 				</a>
-				<a class="button button-ghost" href="#how-it-works">
-					Watch how it thinks
+				<a class="button button-ghost" href="#omegaplex">
+					Meet OmegaPlex
 					<ArrowDown size={16} strokeWidth={2} aria-hidden="true" />
 				</a>
 			</div>
-
-			<p class="hero-note">Powered by OmegaClaw, MeTTa, Atomspace, NAL and PLN.</p>
 		</div>
 	</div>
 </section>
@@ -70,58 +68,39 @@
 	}
 
 	/* staggered entrance: each block lands just after the one above it */
-	.hero-kicker,
 	.hero-title,
 	.hero-lead,
-	.hero-actions,
-	.hero-note {
+	.hero-actions {
 		animation: copy-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 	}
 
-	.hero-kicker {
-		animation-delay: 0.05s;
-	}
-
 	.hero-title {
-		animation-delay: 0.12s;
+		animation-delay: 0.08s;
 	}
 
 	.hero-lead {
-		animation-delay: 0.2s;
+		animation-delay: 0.18s;
 	}
 
 	.hero-actions {
 		animation-delay: 0.28s;
 	}
 
-	.hero-note {
-		animation-delay: 0.36s;
-	}
-
-	.hero-kicker {
-		margin-bottom: 1.5rem;
-		font-size: 0.75rem;
-		font-weight: 750;
-		letter-spacing: 0.22em;
-		text-transform: uppercase;
-		color: oklch(78% 0.14 358);
-	}
-
 	.hero-title {
-		max-width: 17ch;
-		font-size: clamp(2.9rem, 5.6vw, 5.6rem);
+		max-width: 24ch;
+		font-size: clamp(2.7rem, 5vw, 5rem);
 		font-weight: 760;
-		line-height: 0.94;
-		letter-spacing: -0.06em;
+		line-height: 0.98;
+		letter-spacing: -0.055em;
 		text-wrap: balance;
 	}
 
 	.hero-title span {
-		color: oklch(78% 0.14 358);
+		color: var(--accent-strong);
 	}
 
 	.hero-lead {
-		max-width: 39rem;
+		max-width: 37rem;
 		margin-top: 2rem;
 		font-size: clamp(1.05rem, 1.4vw, 1.25rem);
 		line-height: 1.55;
@@ -133,14 +112,6 @@
 		flex-wrap: wrap;
 		gap: 0.75rem;
 		margin-top: 2.25rem;
-	}
-
-	.hero-note {
-		margin-top: 2.5rem;
-		font-size: 0.8125rem;
-		font-weight: 600;
-		letter-spacing: 0.02em;
-		color: oklch(66% 0.014 275);
 	}
 
 	.button {
@@ -169,12 +140,12 @@
 	}
 
 	.button-primary {
-		background: oklch(71% 0.18 358);
-		color: oklch(13% 0.015 275);
+		background: var(--accent);
+		color: var(--accent-foreground);
 	}
 
 	.button-primary:hover {
-		background: oklch(78% 0.15 358);
+		background: var(--accent-strong);
 	}
 
 	.button-ghost {
@@ -202,7 +173,6 @@
 
 	@media (max-width: 767px) {
 		.hero {
-			min-height: calc(100dvh - 68px);
 			align-items: flex-end;
 		}
 
@@ -222,7 +192,7 @@
 		}
 
 		.hero-title {
-			font-size: clamp(2.5rem, 11.5vw, 3.7rem);
+			font-size: clamp(2.35rem, 10.5vw, 3.4rem);
 		}
 
 		.hero-lead {
@@ -247,11 +217,9 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.hero-kicker,
 		.hero-title,
 		.hero-lead,
-		.hero-actions,
-		.hero-note {
+		.hero-actions {
 			animation: none;
 		}
 
