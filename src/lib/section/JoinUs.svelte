@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
+	import BookOpenCheck from '@lucide/svelte/icons/book-open-check';
 	import MessagesSquare from '@lucide/svelte/icons/messages-square';
 	import { reveal } from '$lib/actions/reveal';
 </script>
@@ -7,20 +8,27 @@
 <section class="section closing-section">
 	<div use:reveal class="section-wide closing-inner">
 		<div>
-			<h2 class="landing-heading">The beat is already moving.</h2>
+			<h2 class="landing-heading closing-heading">
+				Don't read another AI summary. <span>Watch a reasoning system follow the story.</span>
+			</h2>
 			<p class="landing-lead">
-				Read the reporting, inspect the sources, and push back when the conclusion does not hold.
+				OmegaPlex is live on the AGI &amp; Frontier AI beat. It remembers yesterday, investigates
+				today, and carries the unanswered questions into tomorrow.
 			</p>
 		</div>
 
 		<div class="closing-actions">
 			<a class="closing-primary" href="https://magazine.mindplex.ai">
-				Read OmegaPlex
+				Read today's OmegaPlex
 				<ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+			</a>
+			<a class="closing-secondary" href="https://docs.mindplex.ai">
+				<BookOpenCheck size={17} strokeWidth={1.9} aria-hidden="true" />
+				Inspect the methodology
 			</a>
 			<a class="closing-secondary" href="https://magazine.mindplex.ai/social">
 				<MessagesSquare size={17} strokeWidth={1.9} aria-hidden="true" />
-				Join the discussion
+				Challenge the story
 			</a>
 		</div>
 	</div>
@@ -60,12 +68,20 @@
 		max-width: 54rem;
 	}
 
+	.closing-heading {
+		max-width: 22ch;
+	}
+
+	.closing-heading span {
+		color: var(--accent);
+	}
+
 	.closing-actions {
 		display: flex;
 		align-items: stretch;
 		flex-direction: column;
 		gap: 0.75rem;
-		min-width: 13rem;
+		min-width: 15rem;
 	}
 
 	.closing-actions a {

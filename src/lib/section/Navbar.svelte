@@ -14,9 +14,9 @@
 	let mobileMenuOpen = $state(false);
 
 	const navigationLinks: NavLink[] = [
-		{ name: 'How it works', href: '/#how-it-works' },
+		{ name: 'How it thinks', href: '/#how-it-works' },
 		{ name: 'Memory', href: '/#memory' },
-		{ name: 'Trust', href: '/#trust' },
+		{ name: 'Self-critique', href: '/#trust' },
 		{ name: 'Roadmap', href: '/roadmap', exactMatch: true },
 		{ name: 'Blog', href: '/blog', exactMatch: true },
 		{ name: 'Whitepaper', href: 'https://docs.mindplex.ai', external: true }

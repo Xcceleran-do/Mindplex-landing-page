@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
-	import Play from '@lucide/svelte/icons/play';
+	import ArrowDown from '@lucide/svelte/icons/arrow-down';
 	import FlowCanvas from '$lib/components/FlowCanvas.svelte';
 </script>
 
@@ -11,10 +11,11 @@
 	<div class="section-wide hero-inner">
 		<div class="hero-copy">
 			<p class="hero-kicker">OmegaPlex</p>
-			<h1 class="hero-title">A newsroom that <span>never forgets.</span></h1>
+			<h1 class="hero-title">An AI newsroom that <span>reasons before it writes.</span></h1>
 			<p class="hero-lead">
-				OmegaPlex follows one beat continuously, checks every claim, and publishes only when a human
-				editor signs off.
+				OmegaPlex watches one beat continuously. It discovers signals, detects emerging patterns,
+				remembers what happened before, reasons over what it knows, tests every important claim, and
+				drafts the story. A human editor decides what gets published.
 			</p>
 
 			<div class="hero-actions">
@@ -23,10 +24,12 @@
 					<ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
 				</a>
 				<a class="button button-ghost" href="#how-it-works">
-					<Play size={16} strokeWidth={2} aria-hidden="true" />
-					See how it works
+					Watch how it thinks
+					<ArrowDown size={16} strokeWidth={2} aria-hidden="true" />
 				</a>
 			</div>
+
+			<p class="hero-note">Powered by OmegaClaw, MeTTa, Atomspace, NAL and PLN.</p>
 		</div>
 	</div>
 </section>
@@ -70,7 +73,8 @@
 	.hero-kicker,
 	.hero-title,
 	.hero-lead,
-	.hero-actions {
+	.hero-actions,
+	.hero-note {
 		animation: copy-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 	}
 
@@ -90,6 +94,10 @@
 		animation-delay: 0.28s;
 	}
 
+	.hero-note {
+		animation-delay: 0.36s;
+	}
+
 	.hero-kicker {
 		margin-bottom: 1.5rem;
 		font-size: 0.75rem;
@@ -100,11 +108,11 @@
 	}
 
 	.hero-title {
-		max-width: 14ch;
-		font-size: clamp(3.4rem, 7vw, 6.9rem);
+		max-width: 17ch;
+		font-size: clamp(2.9rem, 5.6vw, 5.6rem);
 		font-weight: 760;
-		line-height: 0.92;
-		letter-spacing: -0.065em;
+		line-height: 0.94;
+		letter-spacing: -0.06em;
 		text-wrap: balance;
 	}
 
@@ -125,6 +133,14 @@
 		flex-wrap: wrap;
 		gap: 0.75rem;
 		margin-top: 2.25rem;
+	}
+
+	.hero-note {
+		margin-top: 2.5rem;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		color: oklch(66% 0.014 275);
 	}
 
 	.button {
@@ -206,7 +222,7 @@
 		}
 
 		.hero-title {
-			font-size: clamp(3.15rem, 15vw, 4.6rem);
+			font-size: clamp(2.5rem, 11.5vw, 3.7rem);
 		}
 
 		.hero-lead {
@@ -234,7 +250,8 @@
 		.hero-kicker,
 		.hero-title,
 		.hero-lead,
-		.hero-actions {
+		.hero-actions,
+		.hero-note {
 			animation: none;
 		}
 

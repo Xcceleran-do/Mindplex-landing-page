@@ -68,6 +68,12 @@
 	--ring: oklch(72% 0.17 358);
 	--selection: oklch(72% 0.17 358 / 0.3);
 
+	/* Claim dispositions (sections 04–05). Chroma kept low so the three status
+	   hues sit inside the dark, pink-accented palette instead of fighting it. */
+	--backed: oklch(80% 0.13 155);
+	--flagged: oklch(83% 0.12 90);
+	--blocked: oklch(72% 0.15 25);
+
 	--invert-bg: oklch(23% 0.014 265);
 	--invert-fg: oklch(96% 0.004 265);
 	--invert-muted: oklch(72% 0.012 265);

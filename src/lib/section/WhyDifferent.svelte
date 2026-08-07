@@ -1,70 +1,149 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import BadgeCheck from '@lucide/svelte/icons/badge-check';
 	import CircleAlert from '@lucide/svelte/icons/circle-alert';
 	import CircleSlash from '@lucide/svelte/icons/circle-slash';
 	import { reveal } from '$lib/actions/reveal';
-	import { differentiators, dispositions } from '$lib/data/omegaplex';
 
-	const verdicts = dispositions.map((item, i) => ({
-		...item,
-		icon: [BadgeCheck, CircleAlert, CircleSlash][i]
-	}));
+	/**
+	 * Chapter 05: the self-critique pipeline. One claim per disposition, played
+	 * through the verdict machine — auto-cycling until the reader takes over.
+	 */
 
-	const principles = [differentiators[1], differentiators[3], differentiators[5]];
+	const claims = [
+		{
+			name: 'Backed',
+			icon: BadgeCheck,
+			tone: 'backed',
+			claim: 'Model Y was released on Thursday.',
+			findings: ['Primary source found.', 'Consistent with existing memory.']
+		},
+		{
+			name: 'Flagged',
+			icon: CircleAlert,
+			tone: 'flagged',
+			claim: 'Model Y appears to outperform every competitor.',
+			findings: ['Evidence is incomplete.', 'Comparative claim requires stronger corroboration.']
+		},
+		{
+			name: 'Blocked',
+			icon: CircleSlash,
+			tone: 'blocked',
+			claim: 'Company X has secretly cancelled Project Z.',
+			findings: ['Only source: an anonymous social post.', 'Removed before editorial review.']
+		}
+	] as const;
+
+	const checkedAgainst = [
+		'Its cited sources',
+		'The source hierarchy',
+		'The methodology rules',
+		'Existing symbolic memory',
+		'Previously published claims',
+		'Unresolved reader disputes'
+	];
+
+	let active = $state(0);
+	let timer: ReturnType<typeof setInterval> | undefined;
+
+	onMount(() => {
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		timer = setInterval(() => (active = (active + 1) % claims.length), 5000);
+		return () => clearInterval(timer);
+	});
+
+	// First manual pick ends the auto-cycle for good: the reader is driving now.
+	function select(i: number) {
+		clearInterval(timer);
+		active = i;
+	}
 </script>
 
-<section id="trust" class="section trust-section">
+<section id="trust" class="section critique-section">
 	<div class="section-wide">
 		<div use:reveal class="section-intro">
-			<h2 class="landing-heading">Trust is built into the draft.</h2>
+			<p class="section-kicker tnum">05 · Self-critique</p>
+			<h2 class="landing-heading">The AI argues with its own draft.</h2>
 			<p class="landing-lead">
-				Every claim leaves a source trail, meets an explicit rule, and reaches a person before it
-				reaches you.
+				Writing is only the first pass. After OmegaPlex drafts a story, a separate analysis step
+				extracts the important claims from the prose and sends each one back through the evidence.
+				NAL and PLN produce a disposition for every claim.
 			</p>
 		</div>
 
-		<div class="trust-layout">
+		<div class="critique-layout">
 			<div use:reveal={100} class="verdict-machine">
-				<div class="claim-input">
-					<span>Draft claim</span>
-					<strong>Evidence and memory checked</strong>
-				</div>
-
-				<div class="verdict-rule" aria-hidden="true"></div>
-
-				<div class="verdicts">
-					{#each verdicts as item (item.name)}
-						<div>
-							<item.icon
-								class="mt-0.5 text-accent"
-								size={20}
-								strokeWidth={1.9}
-								aria-hidden="true"
-							/>
-							<h3>{item.name}</h3>
-							<p>{item.body}</p>
-						</div>
+				<div class="verdict-tabs" role="group" aria-label="Claim dispositions">
+					{#each claims as c, i (c.name)}
+						<button
+							type="button"
+							class:selected={active === i}
+							data-tone={c.tone}
+							aria-pressed={active === i}
+							onclick={() => select(i)}
+						>
+							<c.icon size={16} strokeWidth={2.1} aria-hidden="true" />
+							{c.name}
+						</button>
 					{/each}
 				</div>
+
+				{#key active}
+					<div class="verdict-panel">
+						<blockquote class="verdict-claim">
+							&ldquo;{claims[active].claim}&rdquo;
+						</blockquote>
+						<ul class="verdict-findings">
+							{#each claims[active].findings as finding, f (finding)}
+								<li style="--i: {f}">{finding}</li>
+							{/each}
+						</ul>
+						<p class="verdict-stamp" data-tone={claims[active].tone}>
+							{claims[active].name}
+						</p>
+					</div>
+				{/key}
 			</div>
 
-			<div class="trust-principles">
-				{#each principles as item, i (item.title)}
-					<article use:reveal={i * 80}>
-						<item.icon class="mt-0.5 text-accent" size={21} strokeWidth={1.75} aria-hidden="true" />
+			<div class="critique-side">
+				<article use:reveal class="extraction">
+					<p class="extraction-label">A claim, extracted from the draft</p>
+					<p class="extraction-claim">&ldquo;Company X released model Y.&rdquo;</p>
+					<dl class="tnum">
 						<div>
-							<h3>{item.title}</h3>
-							<p>{item.description}</p>
+							<dt>Claim type</dt>
+							<dd>factual</dd>
 						</div>
-					</article>
-				{/each}
+						<div>
+							<dt>Source</dt>
+							<dd>company announcement</dd>
+						</div>
+						<div>
+							<dt>Source tier</dt>
+							<dd>1</dd>
+						</div>
+						<div>
+							<dt>Corroborated</dt>
+							<dd>yes</dd>
+						</div>
+					</dl>
+				</article>
+
+				<div use:reveal={90} class="checked-against">
+					<h3>Every claim is checked against</h3>
+					<ul>
+						{#each checkedAgainst as item (item)}
+							<li>{item}</li>
+						{/each}
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
 </section>
 
 <style>
-	.trust-section {
+	.critique-section {
 		border-block: 1px solid var(--border);
 		background: var(--surface);
 	}
@@ -73,13 +152,15 @@
 		max-width: 57rem;
 	}
 
-	.trust-layout {
+	.critique-layout {
 		display: grid;
 		align-items: start;
 		gap: clamp(3rem, 7vw, 7rem);
 		margin-top: 4.5rem;
 		grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.65fr);
 	}
+
+	/* ---- The verdict machine ---- */
 
 	.verdict-machine {
 		overflow: hidden;
@@ -88,163 +169,255 @@
 		background: var(--background);
 	}
 
-	.claim-input {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 2rem;
-		padding: 1.35rem 1.5rem;
+	.verdict-tabs {
+		display: grid;
+		border-bottom: 1px solid var(--border);
+		grid-template-columns: repeat(3, 1fr);
 	}
 
-	.claim-input span {
-		font-size: 0.75rem;
+	.verdict-tabs button {
+		display: flex;
+		min-height: 3.25rem;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		border-inline-end: 1px solid var(--border);
+		font-size: 0.875rem;
 		font-weight: 680;
-		letter-spacing: 0.08em;
+		color: var(--muted-foreground);
+		transition:
+			color 180ms ease,
+			background-color 180ms ease,
+			box-shadow 180ms ease;
+	}
+
+	.verdict-tabs button:last-child {
+		border-inline-end: 0;
+	}
+
+	.verdict-tabs button:hover {
+		color: var(--foreground);
+	}
+
+	.verdict-tabs button.selected {
+		color: var(--tone);
+		background: color-mix(in oklab, var(--tone) 8%, transparent);
+		box-shadow: inset 0 -2px 0 var(--tone);
+	}
+
+	.verdict-tabs button[data-tone='backed'],
+	.verdict-stamp[data-tone='backed'] {
+		--tone: var(--backed);
+	}
+
+	.verdict-tabs button[data-tone='flagged'],
+	.verdict-stamp[data-tone='flagged'] {
+		--tone: var(--flagged);
+	}
+
+	.verdict-tabs button[data-tone='blocked'],
+	.verdict-stamp[data-tone='blocked'] {
+		--tone: var(--blocked);
+	}
+
+	.verdict-panel {
+		display: flex;
+		min-height: 21rem;
+		flex-direction: column;
+		padding: clamp(1.75rem, 4vw, 3rem);
+	}
+
+	/* The analyzer reads the sentence: the claim wipes in left to right. */
+	.verdict-claim {
+		max-width: 22ch;
+		font-family: var(--font-display);
+		font-style: italic;
+		font-weight: 440;
+		font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+		line-height: 1.2;
+		letter-spacing: -0.01em;
+		text-wrap: balance;
+		animation: claim-scan 0.5s ease-out both;
+	}
+
+	.verdict-findings {
+		flex: 1;
+		margin-top: 1.75rem;
+	}
+
+	.verdict-findings li {
+		position: relative;
+		padding-block: 0.35rem;
+		padding-inline-start: 1.25rem;
+		font-size: 0.9375rem;
+		line-height: 1.55;
+		color: var(--muted-foreground);
+		animation: finding-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+		animation-delay: calc(0.4s + var(--i) * 0.14s);
+	}
+
+	.verdict-findings li::before {
+		position: absolute;
+		inset-inline-start: 0;
+		content: '—';
+		color: var(--accent);
+	}
+
+	/* The copy desk's rubber stamp: lands late, slightly crooked, with a thump. */
+	.verdict-stamp {
+		align-self: flex-start;
+		margin-top: 1.5rem;
+		border: 2px solid var(--tone);
+		border-radius: 0.5rem;
+		padding: 0.4rem 1rem;
+		font-size: 1rem;
+		font-weight: 800;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--tone);
+		rotate: -3deg;
+		animation: stamp-land 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+		animation-delay: 0.85s;
+	}
+
+	@keyframes claim-scan {
+		from {
+			clip-path: inset(0 100% 0 0);
+		}
+		to {
+			clip-path: inset(0 0 0 0);
+		}
+	}
+
+	@keyframes finding-enter {
+		from {
+			opacity: 0;
+			transform: translateY(0.5rem);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	@keyframes stamp-land {
+		from {
+			opacity: 0;
+			scale: 1.7;
+			rotate: -9deg;
+		}
+		to {
+			opacity: 1;
+			scale: 1;
+			rotate: -3deg;
+		}
+	}
+
+	/* ---- Side column ---- */
+
+	.extraction {
+		border: 1px solid var(--border-strong);
+		border-radius: 1rem;
+		padding: 1.5rem;
+	}
+
+	.extraction-label {
+		font-size: 0.6875rem;
+		font-weight: 720;
+		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--muted-foreground);
 	}
 
-	.claim-input strong {
-		font-size: 0.875rem;
-		font-weight: 650;
-		text-align: end;
+	.extraction-claim {
+		margin-top: 0.9rem;
+		font-family: var(--font-display);
+		font-style: italic;
+		font-size: 1.25rem;
 	}
 
-	.verdict-rule {
-		position: relative;
-		overflow: hidden;
-		height: 4.5rem;
-		border-block: 1px solid var(--border);
-		background: linear-gradient(90deg, transparent, var(--accent-wash), transparent);
-	}
-
-	/* Full-width carrier with the dot painted at its left edge: translateX in
-	   percent then moves the dot relative to the strip, staying off layout. */
-	.verdict-rule::before {
-		position: absolute;
-		top: 50%;
-		left: 0;
-		width: 100%;
-		height: 0.65rem;
-		background: radial-gradient(circle closest-side, var(--accent) 62%, transparent) left center /
-			0.65rem 0.65rem no-repeat;
-		filter: drop-shadow(0 0 0.75rem color-mix(in oklab, var(--accent) 55%, transparent));
-		content: '';
-		transform: translate(30%, -50%);
-		animation: scan 3.2s ease-in-out infinite;
-	}
-
-	.verdicts > div {
-		display: grid;
-		align-items: start;
-		gap: 1rem;
+	.extraction dl {
+		margin-top: 1.25rem;
 		border-top: 1px solid var(--border);
-		padding: 1.5rem;
-		grid-template-columns: auto minmax(5rem, 0.35fr) minmax(0, 1fr);
 	}
 
-	.verdicts > div:first-child {
-		border-top: 0;
+	.extraction dl div {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		border-bottom: 1px solid var(--border);
+		padding-block: 0.55rem;
+		font-size: 0.845rem;
 	}
 
-	.verdicts h3 {
-		font-size: 0.9375rem;
-		font-weight: 720;
-	}
-
-	.verdicts p {
-		font-size: 0.875rem;
-		line-height: 1.6;
+	.extraction dt {
 		color: var(--muted-foreground);
 	}
 
-	.trust-principles article {
-		display: grid;
-		gap: 1.1rem;
-		border-top: 1px solid var(--border-strong);
-		padding-block: 1.75rem;
-		grid-template-columns: auto 1fr;
+	.extraction dd {
+		font-weight: 650;
 	}
 
-	.trust-principles article:first-child {
-		padding-top: 0;
+	.checked-against {
+		margin-top: 2.5rem;
 	}
 
-	.trust-principles h3 {
+	.checked-against h3 {
 		font-size: 1rem;
 		font-weight: 700;
 	}
 
-	.trust-principles p {
-		margin-top: 0.5rem;
+	.checked-against ul {
+		margin-top: 1rem;
+	}
+
+	.checked-against li {
+		border-top: 1px solid var(--border);
+		padding-block: 0.65rem;
 		font-size: 0.9rem;
-		line-height: 1.65;
 		color: var(--muted-foreground);
 	}
 
-	@keyframes scan {
-		0%,
-		100% {
-			transform: translate(30%, -50%);
-		}
-		50% {
-			transform: translate(66%, -50%);
-		}
-	}
-
 	@media (max-width: 900px) {
-		.trust-layout {
+		.critique-layout {
 			grid-template-columns: 1fr;
 		}
 
-		.trust-principles {
+		.critique-side {
 			display: grid;
-			gap: 1.5rem;
-			grid-template-columns: repeat(3, minmax(0, 1fr));
+			align-items: start;
+			gap: 2.5rem;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 
-		.trust-principles article {
-			display: block;
-			border-top: 1px solid var(--border-strong);
-			padding-top: 1.5rem;
-		}
-
-		.trust-principles h3 {
-			margin-top: 1.1rem;
+		.checked-against {
+			margin-top: 0;
 		}
 	}
 
 	@media (max-width: 700px) {
-		.trust-layout {
+		.critique-layout {
 			margin-top: 3rem;
 		}
 
-		.claim-input {
-			align-items: flex-start;
-			flex-direction: column;
-			gap: 0.5rem;
-		}
-
-		.claim-input strong {
-			text-align: start;
-		}
-
-		.verdicts > div {
-			gap: 0.75rem;
-			grid-template-columns: auto 1fr;
-		}
-
-		.verdicts p {
-			grid-column: 2;
-		}
-
-		.trust-principles {
+		.critique-side {
 			grid-template-columns: 1fr;
+		}
+
+		.verdict-panel {
+			min-height: 23rem;
+		}
+
+		.verdict-tabs button {
+			font-size: 0.8125rem;
+			gap: 0.35rem;
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.verdict-rule::before {
+		.verdict-claim,
+		.verdict-findings li,
+		.verdict-stamp {
 			animation: none;
 		}
 	}
