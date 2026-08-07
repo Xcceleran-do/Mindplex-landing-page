@@ -51,12 +51,19 @@ export function makeKit(THREE: typeof ThreeNS) {
 		size: number,
 		opacity: number,
 		color: number = PINK,
-		dynamic = false
+		dynamic = false,
+		colors?: Float32Array
 	) => {
 		const geo = track(new THREE.BufferGeometry());
 		const attr = new THREE.BufferAttribute(positions, 3);
 		if (dynamic) attr.setUsage(THREE.DynamicDrawUsage);
 		geo.setAttribute('position', attr);
+		let colAttr: ThreeNS.BufferAttribute | undefined;
+		if (colors) {
+			colAttr = new THREE.BufferAttribute(colors, 3);
+			if (dynamic) colAttr.setUsage(THREE.DynamicDrawUsage);
+			geo.setAttribute('color', colAttr);
+		}
 		const mat = track(
 			new THREE.PointsMaterial({
 				map: glow,
@@ -64,11 +71,12 @@ export function makeKit(THREE: typeof ThreeNS) {
 				size,
 				transparent: true,
 				opacity,
+				vertexColors: !!colors,
 				blending: THREE.AdditiveBlending,
 				depthWrite: false
 			})
 		);
-		return { obj: new THREE.Points(geo, mat), attr };
+		return { obj: new THREE.Points(geo, mat), attr, colAttr };
 	};
 
 	return { track, glow, sprite, points, dispose: () => disposables.forEach((d) => d.dispose()) };

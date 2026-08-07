@@ -1,18 +1,11 @@
 <script lang="ts">
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import Play from '@lucide/svelte/icons/play';
+	import FlowCanvas from '$lib/components/FlowCanvas.svelte';
 </script>
 
 <section id="omegaplex" class="hero">
-	<img
-		src="/omegaplex-flow.webp"
-		alt=""
-		width="1535"
-		height="1024"
-		fetchpriority="high"
-		decoding="async"
-		class="hero-art"
-	/>
+	<FlowCanvas />
 	<div class="hero-scrim" aria-hidden="true"></div>
 
 	<div class="section-wide hero-inner">
@@ -50,22 +43,9 @@
 		color: oklch(97% 0.005 275);
 	}
 
-	.hero-art,
 	.hero-scrim {
 		position: absolute;
 		inset: 0;
-		width: 100%;
-		height: 100%;
-	}
-
-	.hero-art {
-		z-index: -2;
-		object-fit: cover;
-		object-position: 58% 50%;
-		animation: hero-settle 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-	}
-
-	.hero-scrim {
 		z-index: -1;
 		background:
 			linear-gradient(
@@ -84,7 +64,30 @@
 
 	.hero-copy {
 		max-width: 47rem;
-		animation: copy-enter 0.9s 0.08s cubic-bezier(0.16, 1, 0.3, 1) both;
+	}
+
+	/* staggered entrance: each block lands just after the one above it */
+	.hero-kicker,
+	.hero-title,
+	.hero-lead,
+	.hero-actions {
+		animation: copy-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+	}
+
+	.hero-kicker {
+		animation-delay: 0.05s;
+	}
+
+	.hero-title {
+		animation-delay: 0.12s;
+	}
+
+	.hero-lead {
+		animation-delay: 0.2s;
+	}
+
+	.hero-actions {
+		animation-delay: 0.28s;
 	}
 
 	.hero-kicker {
@@ -170,17 +173,6 @@
 		background: oklch(100% 0 0 / 0.09);
 	}
 
-	@keyframes hero-settle {
-		from {
-			opacity: 0;
-			transform: scale(1.06);
-		}
-		to {
-			opacity: 1;
-			transform: scale(1);
-		}
-	}
-
 	@keyframes copy-enter {
 		from {
 			opacity: 0;
@@ -196,10 +188,6 @@
 		.hero {
 			min-height: calc(100dvh - 68px);
 			align-items: flex-end;
-		}
-
-		.hero-art {
-			object-position: 62% 50%;
 		}
 
 		.hero-scrim {
@@ -243,8 +231,10 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.hero-art,
-		.hero-copy {
+		.hero-kicker,
+		.hero-title,
+		.hero-lead,
+		.hero-actions {
 			animation: none;
 		}
 

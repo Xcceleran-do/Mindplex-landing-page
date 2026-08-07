@@ -7,6 +7,20 @@
       "runtimeArgs": ["run", "dev", "--", "--port", "4321", "--strictPort"],
       "port": 4321,
       "autoPort": false
+    },
+    {
+      "name": "mindplex-landing-4322",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "--port", "4322", "--strictPort"],
+      "port": 4322,
+      "autoPort": false
+    },
+    {
+      "name": "mindplex-landing-4323",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "--port", "4323", "--strictPort"],
+      "port": 4323,
+      "autoPort": false
     }
   ]
 }

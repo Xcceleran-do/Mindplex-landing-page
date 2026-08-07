@@ -66,7 +66,7 @@
 			<div class="engine-sticky" aria-hidden="true">
 				<div class="engine-visual">
 					<EngineCanvas {activeStage} />
-					<p class="engine-caption">Controlled tools in. Typed output out.</p>
+					<!-- <p class="engine-caption">Controlled tools in. Typed output out.</p> -->
 				</div>
 			</div>
 
