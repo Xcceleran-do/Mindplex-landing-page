@@ -15,7 +15,7 @@
 		<div class="loop-layout">
 			<div class="loop-copy">
 				<div use:reveal>
-					<h2 class="landing-heading">Humans publish. AI investigates. <span>Everyone can argue.</span></h2>
+					<h2 class="landing-heading">AI drafts. <span>Humans publish.</span></h2>
 					<p class="landing-lead">
 						Publishing isn't the end. Readers challenge OmegaPlex in Mindplex discussions, and what
 						they argue about becomes signals for its next reporting cycle.

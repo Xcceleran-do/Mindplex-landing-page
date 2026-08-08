@@ -15,7 +15,7 @@
 	<title>OmegaPlex | An AI newsroom that reasons before it writes</title>
 	<meta
 		name="description"
-		content="OmegaPlex watches one beat continuously — discovering signals, remembering what happened before, reasoning symbolically, and testing every claim. A human editor decides what gets published."
+		content="OmegaPlex watches one beat continuously: discovering signals, remembering what happened before, reasoning symbolically, and testing every claim. A human editor decides what gets published."
 	/>
 </svelte:head>
 

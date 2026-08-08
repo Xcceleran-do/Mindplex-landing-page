@@ -18,10 +18,10 @@
 			<p class="editor-body">
 				OmegaClaw does not get a publish button. The completed draft, its source ledger and the
 				reasoning results are handed to Mindplex, where an editor can inspect the evidence, change
-				the story, reject it — or publish it.
+				the story, reject it, or publish it.
 			</p>
 			<p class="editor-close">
-				And the version that becomes authoritative memory is the one the editor published — not the
+				And the version that becomes authoritative memory is the one the editor published, not the
 				AI's original draft.
 			</p>
 		</div>

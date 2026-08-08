@@ -2,50 +2,45 @@
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import { reveal } from '$lib/actions/reveal';
 
-	const pipeline = [
-		'Signals',
-		'Patterns',
-		'Memory',
-		'Reasoning',
-		'Claim check',
-		'Human editor'
-	];
+	const pipeline = ['Signals', 'Patterns', 'Memory', 'Reasoning', 'Claim check', 'Human editor'];
 </script>
 
-<section id="omegaplex" class="section section-tint">
+<section id="omegaplex" class="section">
 	<div class="section-wide">
 		<div use:reveal class="section-intro">
-			<p class="section-kicker">What's new</p>
+			<p class="section-kicker">New inside Mindplex</p>
 			<h2 class="landing-heading">Meet OmegaPlex.</h2>
-			<p class="landing-lead">An AI newsroom that reasons before it writes.</p>
+			<p class="landing-lead">
+				Mindplex brings the conversation together. Now it has an AI that can participate in it: a
+				newsroom that reasons before it writes.
+			</p>
 		</div>
 
-		<div class="meet-layout">
-			<div use:reveal={80} class="meet-copy">
-				<p>
-					OmegaPlex follows one beat continuously. It finds signals, detects patterns, remembers
-					what came before, reasons over the evidence, and tests important claims before drafting
-					the story. A human editor decides what gets published.
-				</p>
-				<p class="meet-close">It doesn't start from a blank prompt.</p>
+		<div use:reveal={80} class="meet-copy">
+			<p>
+				OmegaPlex follows one beat continuously. It finds signals, detects patterns, remembers what
+				came before, reasons over the evidence, and tests important claims before drafting the
+				story. A human editor decides what gets published.
+			</p>
+			<p class="meet-close">It doesn't start from a blank prompt.</p>
+		</div>
 
-				<div class="meet-actions">
-					<a class="meet-cta" href="/omegaplex">
-						See how OmegaPlex thinks
-						<ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
-					</a>
-				</div>
+		<!-- The same continuous-rail device as the reader loop, laid on its side so
+		     the two sections don't read as twins. -->
+		<ol class="pipeline" aria-label="The OmegaPlex reporting pipeline">
+			{#each pipeline as step, i (step)}
+				<li use:reveal={120 + i * 80} class:pipeline-endpoint={i === pipeline.length - 1}>
+					{step}
+				</li>
+			{/each}
+		</ol>
 
-				<p class="panel-label meet-origin">Built inside Mindplex. Powered by OmegaClaw.</p>
-			</div>
-
-			<ol class="pipeline" aria-label="The OmegaPlex reporting pipeline">
-				{#each pipeline as step, i (step)}
-					<li use:reveal={120 + i * 80} class:pipeline-endpoint={i === pipeline.length - 1}>
-						{step}
-					</li>
-				{/each}
-			</ol>
+		<div class="meet-foot">
+			<a class="meet-cta" href="/omegaplex">
+				See how OmegaPlex thinks
+				<ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+			</a>
+			<p class="panel-label">Built inside Mindplex. Powered by OmegaClaw.</p>
 		</div>
 	</div>
 </section>
@@ -55,12 +50,8 @@
 		max-width: 55rem;
 	}
 
-	.meet-layout {
-		display: grid;
-		align-items: start;
-		gap: clamp(3rem, 7vw, 7rem);
-		margin-top: 4.5rem;
-		grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.7fr);
+	.meet-copy {
+		margin-top: 3.5rem;
 	}
 
 	.meet-copy p:first-child {
@@ -78,8 +69,46 @@
 		color: color-mix(in oklab, var(--foreground) 90%, var(--background));
 	}
 
-	.meet-actions {
-		margin-top: 2.25rem;
+	/* The pipeline hangs off one continuous rail, horizontal here. */
+	.pipeline {
+		display: grid;
+		gap: 1rem 1.25rem;
+		margin-top: 4rem;
+		border-block-start: 2px solid var(--accent);
+		grid-template-columns: repeat(6, minmax(0, 1fr));
+	}
+
+	.pipeline li {
+		position: relative;
+		padding-block-start: 1.25rem;
+		font-size: 0.9375rem;
+		font-weight: 620;
+		color: var(--muted-foreground);
+	}
+
+	.pipeline li::before {
+		position: absolute;
+		top: -5px;
+		inset-inline-start: 0;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: var(--accent);
+		content: '';
+	}
+
+	.pipeline-endpoint {
+		font-size: 1.05rem !important;
+		font-weight: 720 !important;
+		color: var(--foreground) !important;
+	}
+
+	.meet-foot {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1rem 2rem;
+		margin-top: 4rem;
 	}
 
 	.meet-cta {
@@ -109,47 +138,33 @@
 		transform: translateY(1px) scale(0.98);
 	}
 
-	.meet-origin {
-		margin-top: 1.5rem;
-	}
-
-	/* The pipeline hangs off one continuous rail, same device as the reader loop. */
-	.pipeline {
-		border-inline-start: 2px solid var(--accent);
-		padding-inline-start: 1.75rem;
-	}
-
-	.pipeline li {
-		position: relative;
-		padding-block: 1.05rem;
-		font-size: 0.9375rem;
-		font-weight: 620;
-		color: var(--muted-foreground);
-	}
-
-	.pipeline li::before {
-		position: absolute;
-		top: 50%;
-		inset-inline-start: calc(-1.75rem - 5px);
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		background: var(--accent);
-		content: '';
-		transform: translateY(-50%);
-	}
-
-	.pipeline-endpoint {
-		font-size: 1.05rem !important;
-		font-weight: 720 !important;
-		color: var(--foreground) !important;
-	}
-
+	/* A row of six labels can't survive narrow screens; fall back to the
+	   vertical rail there. */
 	@media (max-width: 900px) {
-		.meet-layout {
-			gap: 3.5rem;
+		.meet-copy {
 			margin-top: 3rem;
-			grid-template-columns: 1fr;
+		}
+
+		.pipeline {
+			display: block;
+			margin-top: 3rem;
+			border-block-start: 0;
+			border-inline-start: 2px solid var(--accent);
+			padding-inline-start: 1.75rem;
+		}
+
+		.pipeline li {
+			padding-block: 1.05rem;
+		}
+
+		.pipeline li::before {
+			top: 50%;
+			inset-inline-start: calc(-1.75rem - 5px);
+			transform: translateY(-50%);
+		}
+
+		.meet-foot {
+			margin-top: 3rem;
 		}
 	}
 

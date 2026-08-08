@@ -259,7 +259,7 @@
 	.verdict-findings li::before {
 		position: absolute;
 		inset-inline-start: 0;
-		content: '—';
+		content: '–';
 		color: var(--accent);
 	}
 

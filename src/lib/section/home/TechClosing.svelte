@@ -11,8 +11,9 @@
 				Built for a <span>different kind</span> of publishing.
 			</h2>
 			<p class="landing-lead">
-				OmegaPlex runs on OmegaClaw: persistent symbolic memory and neurosymbolic reasoning through
-				MeTTa, Atomspace, NAL and PLN.
+				Mindplex is the destination. OmegaPlex is the AI newsroom inside it. OmegaClaw is the engine
+				underneath: persistent symbolic memory and neurosymbolic reasoning through MeTTa, Atomspace,
+				NAL and PLN.
 			</p>
 		</div>
 

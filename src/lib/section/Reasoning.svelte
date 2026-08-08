@@ -32,7 +32,7 @@
 			<h2 class="landing-heading">Then it reasons.</h2>
 			<p class="landing-lead">
 				The rules are not hidden inside a prompt. OmegaPlex's editorial methodology compiles into
-				symbolic rules that can be inspected, versioned and evaluated by the reasoning system — not
+				symbolic rules that can be inspected, versioned and evaluated by the reasoning system, not
 				reinterpreted from scratch every time an LLM runs.
 			</p>
 		</div>
