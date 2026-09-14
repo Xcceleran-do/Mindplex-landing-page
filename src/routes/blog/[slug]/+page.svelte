@@ -2,11 +2,17 @@
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import { onMount } from 'svelte';
 	import type { PageProps } from './$types';
+	import Seo from '$lib/components/Seo.svelte';
 
 	let { data }: PageProps = $props();
 
 	const blog = data.blogs.blogs[0];
 	const plainTitle = blog?.title?.replace(/<[^>]*>/g, '') ?? 'Blog';
+	const plainDescription = (blog?.description ?? '')
+		.replace(/<[^>]*>/g, ' ')
+		.replace(/\s+/g, ' ')
+		.trim()
+		.slice(0, 160);
 
 	const formatDate = (dateString: string) =>
 		new Date(dateString).toLocaleDateString('en-US', {
@@ -39,9 +45,12 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{plainTitle} | Mindplex</title>
-</svelte:head>
+<Seo
+	title="{plainTitle} | Mindplex"
+	description={plainDescription}
+	image={blog?.photo_url || '/og.jpg'}
+	type="article"
+/>
 
 <div class="landing-shell">
 	<article class="section">
