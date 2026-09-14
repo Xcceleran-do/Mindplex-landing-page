@@ -28,8 +28,8 @@
 			<h1 class="opener-title">An AI newsroom that <span>reasons before it writes.</span></h1>
 			<p class="opener-lead">
 				OmegaPlex watches one beat continuously. It discovers signals, detects emerging patterns,
-				remembers what happened before, reasons over what it knows, tests every important claim, and
-				drafts the story. A human editor decides what gets published.
+				remembers what happened before, reasons over what it knows, checks every source, and drafts
+				the story. A human editor decides what gets published.
 			</p>
 
 			<div class="opener-actions">
@@ -43,7 +43,7 @@
 				</a>
 			</div>
 
-			<p class="opener-note">Powered by OmegaClaw, MeTTa, Atomspace, NAL and PLN.</p>
+			<p class="opener-note">Powered by OmegaClaw, MeTTa, PeTTaChainer, NAL and PLN.</p>
 		</div>
 
 		<nav class="opener-index" aria-label="Chapters on this page">

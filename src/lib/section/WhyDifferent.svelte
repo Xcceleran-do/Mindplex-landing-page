@@ -65,9 +65,9 @@
 			<p class="section-kicker tnum">05 · Self-critique</p>
 			<h2 class="landing-heading">The AI argues with its own draft.</h2>
 			<p class="landing-lead">
-				Writing is only the first pass. After OmegaPlex drafts a story, a separate analysis step
-				extracts the important claims from the prose and sends each one back through the evidence.
-				NAL and PLN produce a disposition for every claim.
+				Writing is only the first pass. No read, no cite: every source in a draft must be a page
+				OmegaPlex actually opened, or the draft is rejected before an editor sees it. Next, each
+				important claim gets its own verdict.
 			</p>
 		</div>
 

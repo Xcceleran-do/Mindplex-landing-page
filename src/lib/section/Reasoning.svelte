@@ -31,9 +31,8 @@
 			<p class="section-kicker tnum">04 · Reasoning</p>
 			<h2 class="landing-heading">Then it reasons.</h2>
 			<p class="landing-lead">
-				The rules are not hidden inside a prompt. OmegaPlex's editorial methodology compiles into
-				symbolic rules that can be inspected, versioned and evaluated by the reasoning system, not
-				reinterpreted from scratch every time an LLM runs.
+				The methodology is written down, versioned, and edited by editors, not buried in a chat.
+				Every change is a new version, and any version can be restored.
 			</p>
 		</div>
 

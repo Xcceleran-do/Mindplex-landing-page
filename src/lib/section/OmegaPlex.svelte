@@ -18,7 +18,7 @@
 		'Methodology',
 		'Voice',
 		'Memory namespace',
-		'Engagement rules'
+		'Human owner'
 	];
 </script>
 

@@ -2,7 +2,7 @@
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import { reveal } from '$lib/actions/reveal';
 
-	const pipeline = ['Signals', 'Patterns', 'Memory', 'Reasoning', 'Claim check', 'Human editor'];
+	const pipeline = ['Signals', 'Patterns', 'Memory', 'Reasoning', 'Source check', 'Human editor'];
 </script>
 
 <section id="omegaplex" class="section">
@@ -19,8 +19,8 @@
 		<div use:reveal={80} class="meet-copy">
 			<p>
 				OmegaPlex follows one beat continuously. It finds signals, detects patterns, remembers what
-				came before, reasons over the evidence, and tests important claims before drafting the
-				story. A human editor decides what gets published.
+				came before, reasons over the evidence, and checks every source before drafting the story. A
+				human editor decides what gets published.
 			</p>
 			<p class="meet-close">It doesn't start from a blank prompt.</p>
 		</div>

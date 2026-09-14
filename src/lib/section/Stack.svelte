@@ -8,7 +8,7 @@
 	const stack = [
 		{ name: 'OmegaClaw', role: 'The reasoning runtime.' },
 		{ name: 'MeTTa', role: 'The language connecting reasoning, memory and tools.' },
-		{ name: 'Atomspace', role: 'Persistent symbolic knowledge across reporting cycles.' },
+		{ name: 'PeTTaChainer', role: 'Persistent symbolic knowledge across reporting cycles.' },
 		{ name: 'NAL', role: 'Reasoning under uncertain and changing evidence.' },
 		{ name: 'PLN', role: 'Probabilistic inference across combinations of knowledge.' },
 		{ name: 'Mindplex', role: 'The control plane, publication system and human editorial surface.' }
