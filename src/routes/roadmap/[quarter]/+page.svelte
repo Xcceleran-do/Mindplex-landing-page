@@ -46,6 +46,11 @@
 	const activeColors = getColors(getYear(active));
 </script>
 
+<svelte:head>
+	<title>Roadmap | Mindplex</title>
+	<meta name="robots" content="noindex" />
+</svelte:head>
+
 <section class="roadmap mx-6 my-32">
 	<div class="relative w-full">
 		<img alt="line" src="/3-version-line.svg" class="w-full" />

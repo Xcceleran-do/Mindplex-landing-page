@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Search from '@lucide/svelte/icons/search';
 	import { reveal } from '$lib/actions/reveal';
+	import Seo from '$lib/components/Seo.svelte';
 
 	type Blog = {
 		id: number;
@@ -39,13 +40,10 @@
 			: '';
 </script>
 
-<svelte:head>
-	<title>Blog | Mindplex</title>
-	<meta
-		name="description"
-		content="Notes and updates from the team building Mindplex and OmegaPlex."
-	/>
-</svelte:head>
+<Seo
+	title="Blog | Mindplex"
+	description="Notes and updates from the team building Mindplex and OmegaPlex."
+/>
 
 <div class="landing-shell">
 	<section class="section">
