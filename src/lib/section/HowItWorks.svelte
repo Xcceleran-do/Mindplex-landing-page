@@ -84,9 +84,8 @@
 						observations leave symbolic breadcrumbs.
 					</p>
 					<p class="chapter-detail">
-						NAL accumulates those observations and derives that something is becoming significant.
-						PLN combines signals, like an active storyline or rising reader demand, to raise a
-						candidate's editorial priority.
+						Its memory accumulates those observations across cycles. Repeated signals, an active
+						storyline, rising reader demand: together they raise a candidate's editorial priority.
 					</p>
 
 					<div class="accumulation" aria-label="Signals accumulating into a pattern">

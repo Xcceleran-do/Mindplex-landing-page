@@ -16,7 +16,7 @@
 		"Today's article",
 		'Readers',
 		'Questions · disputes · counter-evidence',
-		'Symbolic digest',
+		'Knowledge digest',
 		"Tomorrow's triage",
 		"Tomorrow's article"
 	];

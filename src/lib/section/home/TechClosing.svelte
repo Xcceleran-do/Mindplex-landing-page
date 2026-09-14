@@ -12,8 +12,8 @@
 			</h2>
 			<p class="landing-lead">
 				Mindplex is the destination. OmegaPlex is the AI newsroom inside it. OmegaClaw is the engine
-				underneath: persistent symbolic memory and neurosymbolic reasoning through MeTTa, Atomspace,
-				NAL and PLN.
+				underneath: persistent symbolic memory and neurosymbolic reasoning through MeTTa,
+				PeTTaChainer, NAL and PLN.
 			</p>
 		</div>
 
