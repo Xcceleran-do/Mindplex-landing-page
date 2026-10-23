@@ -1,0 +1,235 @@
+[
+	{
+		"slug": "q2_2024",
+		"name": "Q2 2024",
+		"description": "Alpha (MVP) Version\r\n",
+		"background_color": "#",
+		"color": "#",
+		"steps": [
+			{
+				"step": "",
+				"content_title": "Social Media Fork on Mastodon ",
+				"desc": "<p> Mindplex \"Social\" and its Reputation system will be hosted on a decentralized server via Mastodon. Users with a Mindplex account can automatically post to Mastodon without needing a separate Mastodon account. In addition, all publications on the Mindplex platform will be synced as Mastodon posts, enabling decentralized data sharing. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " Reputation Engine ",
+				"desc": "<p> Mindplex community members and users' reputations are managed by the main engine. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " Content Factory ",
+				"desc": "<p> This is the reputation-based matchmaking engine where Mindplex Community members build their network and control the flow of content in a decentralized and democratic manner. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " Recommendation AI ",
+				"desc": "<p> This engine will have AI features to enhance the accuracy and variety of contents according to user preference. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " MPX and MPXR ",
+				"desc": "<p> These will be the tokens that will fuel the Mindplex ecosystem. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			}
+		]
+	},
+	{
+		"slug": "q2-2025",
+		"name": "Q2 2025",
+		"description": "Mindplex Skins and Optimization",
+		"background_color": "#",
+		"color": "#",
+		"steps": [
+			{
+				"step": "",
+				"content_title": "Mindplex Skin",
+				"desc": "<p>Mindplex Skin represents a significant step toward true decentralization on the front-end, empowering users to select entirely different website interfaces and user experiences from the global Mindplex platform. This innovation moves beyond simple theme customization, allowing users to switch to a completely different website with just one click. By decoupling the user interface from the core infrastructure, it gives users unprecedented control over their digital environment and fosters a more personalized, user-centric web.</p>\n",
+				"color": "#",
+				"section_color": "#"
+			}
+		]
+	},
+	{
+		"slug": "q2-2026",
+		"name": "Q2 2026",
+		"description": "Mindplex AIs",
+		"background_color": "#",
+		"color": "#",
+		"steps": [
+			{
+				"step": "",
+				"content_title": "Mindplex Meta Knowledge Graph",
+				"desc": "<p>Integration of Meta Knowledge Graph and Hyperon AI into Mindplex Ecosystem, aka ‘the MPX Hyperon and MKG Assistant AI’. This tool will help content creators via Hyperon Knowledge Graph providing deep traffic analysis. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			}
+		]
+	},
+	{
+		"slug": "q3_2024",
+		"name": "Q3 2024",
+		"description": "Mindplex Competition and mental Capital Tool",
+		"background_color": "#",
+		"color": "#",
+		"steps": [
+			{
+				"step": "",
+				"content_title": "Mental Capital Calcualtor",
+				"desc": "<p>This will start as a \"Trip Page\" on Mindplex, evolving into Hyperon fueled AI analyzing time spent, engagement, sentiment, visit frequency, and more while generating reports organized by topic, platform, content creator, etc. It will help users understand their online investments in terms of time, emotion, energy, finance, and purpose.</p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": "Mindplex Competition Tool",
+				"desc": "<p>The content competition tool lets users submit videos, texts, or images based on selected themes. Winners are chosen using the Mindplex Reputation Score, with past winners and upcoming contests also featured.</p>\n",
+				"color": "#",
+				"section_color": "#"
+			}
+		]
+	},
+	{
+		"slug": "q3-2025",
+		"name": "Q3 2025",
+		"description": "User Experience and Optimization",
+		"background_color": "#",
+		"color": "#",
+		"steps": [
+			{
+				"step": "",
+				"content_title": "Gamification Microservice",
+				"desc": "<p>Mindplex will launch full-stack gamification system with daily/weekly tasks, MPXR rewards, trips tracking, and cross-platform synchronization.</p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": "AI-Powered Listening Experience",
+				"desc": "<p>As part of a high-end virtual AI assistant to revolutionize how users consume content, Mindplex will launch our advanced text-to-speech reader across its platforms. Featuring a remarkably fluent and human-like narrator, it will be  available on the website, iOS, and Android apps, making our content more accessible than ever.</p>\n",
+				"color": "#",
+				"section_color": "#"
+			}
+		]
+	},
+	{
+		"slug": "q4_2023",
+		"name": "Q4 2023",
+		"description": "Beta Version\r\n",
+		"background_color": "#",
+		"color": "#",
+		"steps": [
+			{
+				"step": "",
+				"content_title": "Mindplex Magazine",
+				"desc": "<p>This platform will be dedicated for showcasing Mindplex's AI and blockchain tools. It will feature up-to-date articles, podcasts, and short videos that discuss the future. The platform will include a dedicated section dubbed as 'Magazine' for senior writers, a \"Community\" section for contributions from emerging writers, and a \"Social\" section open to all ecosystem members. The platform will allow users to build their networks by forming \"Friend\" and \"Follower\" relationships, curated through the Mindplex Reputation AI.</p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " Automatic Comment Approval Tool via Sentiment Analysis ",
+				"desc": "<p> With this AI, Mindplex will be able to rate posts, publications, and comments more accurately and make them easier to find. Initially, the tool will approve publication of comments automatically, and later on it will be used for content publication. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " Enhanced Reputation Engine ",
+				"desc": "<p> Mindplex will include an enhanced, generalized Reputation calculator that can be shared across other media networks. It will be released as a plugin. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " Enhanced Recommendation AI ",
+				"desc": "<p> This engine’s AI will be more powerful and more accurate, so it can be shared with other media networks. It will be released as a plugin. It will introduce new concepts like ‘Balance’ in the content ranking and distribution business. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			}
+		]
+	},
+	{
+		"slug": "q4-2024",
+		"name": "Q4 2024",
+		"description": "Platform Expansion ",
+		"background_color": "#",
+		"color": "#",
+		"steps": [
+			{
+				"step": "",
+				"content_title": "Mindplex Android and iOS application",
+				"desc": "<p>Mindplex will launch mobile apps with all the functionalities of its website and social media, optimized for mobile devices.</p>\n",
+				"color": "#",
+				"section_color": "#"
+			}
+		]
+	},
+	{
+		"slug": "q4_2027",
+		"name": "Q4 2027",
+		"description": "Mindplex 2.0\r\n",
+		"background_color": "#",
+		"color": "#",
+		"steps": [
+			{
+				"step": "",
+				"content_title": " Virtual Characters ",
+				"desc": "<p> AI powered virtual characters as influencers and personal assistants (commenting, sharing, etc. on behalf of users) </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " Collaborative Creative Writing Platform and AI ",
+				"desc": "<p> This portal will be where people in the Mindplex Community can work together on creative writing and develop stories in an interactive way while the AI assists content creators and the Mindplex Community in the process of shaping storylines. The later versions will include Storytelling Virtual characters (AI). </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " NFT Market ",
+				"desc": "<p> Market that supports Ethereum and Cardano-based NFTs. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " Generic Reputation System ",
+				"desc": "<p> The reputation engine will be a plug-in that can be used by businesses outside of the media. It will have its own interface. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " Decentralized hosting ",
+				"desc": "<p> Implement censorship-resistant, un-take-down-able hosting using a decentralized protocol like NuNet or Filecoin </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " VR Podcast ",
+				"desc": "<p> This platform will include a virtual 3D studio where interviews and other similar content will be published on a regular basis in VR format. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			},
+			{
+				"step": "",
+				"content_title": " Enhanced MindplexGo ",
+				"desc": "<p> The AI tool will include new features like collaborative generating process that will enable team collaboration, allowing multiple users to contribute and refine their ideas collectively. </p>\n",
+				"color": "#",
+				"section_color": "#"
+			}
+		]
+	}
+]
