@@ -24,13 +24,7 @@ pnpm install
 pnpm dev
 ```
 
-Blog and roadmap read one environment variable. Create `.env`:
-
-```
-PUBLIC_MINDPLEX_API_URL=https://console.mindplex.ai/wp-json
-```
-
-Without it the blog renders its empty state and the roadmap fails.
+The blog reads `type=blog` posts from the Mindplex API (`src/lib/blogs.ts`). The roadmap is a static snapshot in `src/lib/data/roadmap.json`. No environment variables are needed.
 
 ## Checks
 

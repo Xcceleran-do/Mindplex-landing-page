@@ -6,7 +6,7 @@
 
 	let { data }: PageProps = $props();
 
-	const blog = data.blogs.blogs[0];
+	const blog = data.blog;
 	const plainTitle = blog?.title?.replace(/<[^>]*>/g, '') ?? 'Blog';
 	const plainDescription = (blog?.description ?? '')
 		.replace(/<[^>]*>/g, ' ')
@@ -66,7 +66,7 @@
 			{/if}
 
 			<div class="article-body prose prose-invert">
-				{@html blog?.description}
+				{@html blog?.content}
 			</div>
 		</div>
 	</article>
